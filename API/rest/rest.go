@@ -12,7 +12,7 @@ func API(){
 	*=========================GET METHODS================================
 	*/
 	// router.GET("/get/data", GET_data)
-	router.GET("/account/all", GetAccounts)
+	router.GET("/account", GetAccounts)
 
 	/*
 	*=========================POST METHODS================================
