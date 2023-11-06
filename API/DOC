@@ -1,0 +1,6 @@
+main.go: main driver of API
+conn: database connection driver
+models: all structs used throughout code
+rest: API logic and endpoints
+json_templates: templates of how json data will appear in requests
+SQL: all sql queries that are used in the backend
