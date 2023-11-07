@@ -17,12 +17,12 @@ func API(){
 	/*
 	*=========================POST METHODS================================
 	*/
-	router.POST("/post/data", POST_data)
+	router.POST("/account/new", NewAccount)
 
 	/*
 	*=========================PATCH METHODS================================
 	*/
-	router.PATCH("/patch/data", PATCH_data)
+	router.PATCH("/account/update", UpdateAcc)
 
 	//*activate the server
 	router.Run("localhost:8080")

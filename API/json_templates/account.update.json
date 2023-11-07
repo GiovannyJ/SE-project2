@@ -1,0 +1,26 @@
+{
+    "old":
+        {	
+        "id":		4,
+        "fname":    "Adam",
+        "lname":    "Jablonka",
+        "fullname": "Adam Jablonka",
+        "email":    "ajjablonka@gmail.com",
+        "pwd":      "password",
+        "pnum":     17187155801,
+        "age":	    22,
+        "username": "WebsiteLover"
+        },
+    "new":
+        {
+        "id":		4,
+        "fname":    "madA",
+        "lname":    "Jablonka",
+        "fullname": "Adam Jablonka",
+        "email":    "ajjablonka@gmail.com",
+        "pwd":      "password",
+        "pnum":     17187155801,
+        "age":	    22,
+        "username": "WebsiteLover"
+        }
+}

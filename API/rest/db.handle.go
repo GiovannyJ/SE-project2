@@ -2,12 +2,15 @@ package rest
 
 import (
 	db "API/conn"
-	// s "API/models"
+	s "API/models"
 	// "encoding/json"
 	"net/http"
 	"github.com/gin-gonic/gin"
 )
 
+
+type account = s.Account
+type updateAcc = s.UpdateAccount
 
 /*
 *=================GET METHOD HANDLERS==================
@@ -29,58 +32,54 @@ func GetAccounts(c *gin.Context){
 /*
 *=================POST METHOD HANDLERS==================
 */
-func POST_data(c *gin.Context){
+
+func NewAccount(c *gin.Context){
 	c.Header("Access-Control-Allow-Origin", "*")
-}
-
-func samplePost(c *gin.Context) {
-	// c.Header("Access-Control-Allow-Origin", "*")
-	// var newAccount loginDATA
-
-	// if err := c.BindJSON(&newAccount); err != nil {
-	// 	//err handling
-	// 	//c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	c.IndentedJSON(http.StatusBadRequest, nil)
-	// 	return
-	// }
-
-	// if err := db.NewAccount(newAccount); err != nil {
-	// 	//err handing
-	// 	// c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	// 	c.IndentedJSON(http.StatusInternalServerError, nil)
-	// }
 	
-	// d := jsondata{Data: newAccount}
+	var newAcc account
 
-	// c.IndentedJSON(http.StatusCreated, d)
+	if err := c.BindJSON(&newAcc); err != nil{
+		c.IndentedJSON(http.StatusBadRequest, nil)
+		return
+	}
+
+	err := db.CreateNewAccount(newAcc)
+	if err != nil{
+		if _, ok := err.(*s.AccountExistsError); ok{
+			c.IndentedJSON(http.StatusBadRequest, nil)
+		}else{
+			c.IndentedJSON(http.StatusInternalServerError, nil)
+		}
+		return
+	}
+
+	c.IndentedJSON(http.StatusCreated, newAcc)
 }
+
+
 
 /*
 *=================PATCH METHOD HANDLERS==================
 */
-func PATCH_data(c *gin.Context){
-	c.Header("Access-Control-Allow-Origin", "*")
-}
+func UpdateAcc(c *gin.Context) {
+    c.Header("Access-Control-Allow-Origin", "*")
+    
+    var upACC updateAcc
 
-func samplePatch(c *gin.Context) {
-	// c.Header("Access-Control-Allow-Origin", "*")
-	// var upACC updateACC
+    if err := c.BindJSON(&upACC); err != nil {
+        c.IndentedJSON(http.StatusBadRequest, nil)
+        return 
+    }
 
-	// if err := c.BindJSON(&upACC); err != nil {
-	// 	//err handle
-	// 	// c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	c.IndentedJSON(http.StatusBadRequest, nil)
-	// }
-	// if err := db.UpdateData(upACC.Old, upACC.New); err != nil {
-	// 	//err handle
-	// 	// c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	c.IndentedJSON(http.StatusBadRequest, nil)
-	// }
+	err := db.UpdateData(upACC.Old, upACC.New)
 
-	// d := jsondata{Data: updateACC{
-	// 	New: upACC.New,
-	// 	Old: upACC.Old,
-	// },
-	// }
-	// c.IndentedJSON(http.StatusOK, d)
+    if err != nil {
+		if _, ok := err.(*s.UpdateNotCompleteError); ok{
+			c.IndentedJSON(http.StatusFailedDependency, nil)
+		}else{
+			c.IndentedJSON(http.StatusInternalServerError, nil)
+		}
+        return 
+	}
+    c.IndentedJSON(http.StatusOK, upACC.New)
 }

@@ -1,13 +1,13 @@
 package conn
 
-
 import (
 	s "API/models"
 	"database/sql"
 	"fmt"
 	"log"
-	// "reflect"
+	"reflect"
 	"strings"
+
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -42,7 +42,7 @@ func connect(query string) (*sql.Rows, error) {
 	return res, err
 }
 
-//**MAKE ALL GENERIC DATABASE QUERIES HERE
+//**+++++++++++++++++++++SELECT QUERIES++++++++++++++++++++++++++++
 
 /*
 *TESTED WORKING
@@ -81,7 +81,7 @@ func Accounts_GET(params map[string]interface{}) ([]account) {
 				&t.Lname,
 				&t.Fullname,
 				&t.Email,
-				&t.Password,
+				&t.Pwd,
 				&t.Pnum,
 				&t.Age,
 				&t.Username,
@@ -96,6 +96,40 @@ func Accounts_GET(params map[string]interface{}) ([]account) {
     }
         
     return values
+}
+
+
+//**+++++++++++++++++++++INSERT QUERIES++++++++++++++++++++++++++++
+
+/*
+*TESTED WORKING
+POST TO: ACCOUNT_INFO table
+DATA: model after account struct
+RETURN: error when applicable nil if no error
+*/
+func CreateNewAccount(data account) error {
+	if accountExist(data.Username) {
+		return &s.AccountExistsError{Username: data.Username}
+	}
+
+	sql := fmt.Sprintf("INSERT INTO ACCOUNT_INFO(fname, lname, fullname, email, pwd, pnum, age, username) VALUES('%s', '%s', '%s', '%s', '%s', %d, %d, '%s')",
+		data.Fname, data.Lname, data.Fullname, data.Email, data.Pwd, data.Pnum, data.Age, data.Username)
+
+	result, err := connect(sql)
+	if err != nil {
+	    return err
+	}
+	defer result.Close()
+
+	return nil
+}
+
+func accountExist(id string) bool{
+    exist_acc := map[string]interface{}{"username": id}
+
+    exists := Accounts_GET(exist_acc)
+    
+    return len(exists) > 0
 }
 
 
@@ -152,121 +186,87 @@ return true if worked and false if not
 
 //     return nil
 // }
-/*
-*TESTED WORKING
-CREATE AN ACCOUNT
-data: model after login struct
 
-return error if applicable
-*/
-// func NewAccount(data login) error {
-//     tableName := "ACCOUNT_INFO"
+//**+++++++++++++++++++++UPDATE QUERIES++++++++++++++++++++++++++++
 
-//     valueType := reflect.TypeOf(data)
-//     value := reflect.ValueOf(data)
 
-//     var columns []string
-//     var values []string
 
-//     if(accountExist(*data.Username)){
-//         return &reflect.ValueError{}
-//     }
-
-//     for i := 0; i < valueType.NumField(); i++ {
-//         field := valueType.Field(i)
-//         columnName := strings.ToLower(field.Name)
-//         columnValue := value.Field(i).Interface()
-
-        
-        
-//         if columnName == "id" || columnName == "pwd" {
-//             continue
-//         }
-
-//         if columnName == "password" {
-//             if pwd, ok := columnValue.(*string); ok && pwd != nil {
-//                 hashedPwd, err := HashPassword(*pwd)
-//                 if err != nil {
-//                     return err
-//                 }
-//                 columnValue = hashedPwd
-//                 columnName = "pwd"
-//             }
-//         }
-
-//         if ptr, ok := columnValue.(*string); ok && ptr != nil {
-//             columnValue = *ptr
-//         } else if ptr, ok := columnValue.(*int); ok && ptr != nil {
-//             columnValue = *ptr
-//         }
-
-//         columns = append(columns, columnName)
-//         values = append(values, fmt.Sprintf("'%v'", columnValue))
-//     }
-
-//     sql := fmt.Sprintf("INSERT INTO %s(%s) VALUES(%s)", tableName, strings.Join(columns, ","), strings.Join(values, ","))
-//     result, err := connect(sql)
-
-//     if err != nil {
-//         return err
-//     }
-//     defer result.Close()
-// }
   /*
 !NEEDS FIXING
 *TESTED PASSING
-UPDATING DATA ON THE health, pr_tracker, and account table
-old data must grab all values and be shaped like table struct
-new data must grab all values and be shaped like table struct
-note: make sure that columns are not empty bc then it will not work
-
-return bool- true if worked and false if not
+GENERIC UPDATE METHOD WILL MATCH INTERFACE OF OLD AND NEW DATA
+RETURN: error if applicable
+!NEED TO IMPLEMENT WAY TO CHECK IF CHANGES ARE MADE PROPERLY
 */
-// func UpdateData(oldData interface{}, newData interface{}) error {
-//     var (
-//         tableName string
-//         setValues []string
-//         whereValues []string
-//     )
+func UpdateData(oldData interface{}, newData interface{}) error {
+    var (
+        tableName string
+        setValues []string
+        whereValues []string
+    )
 
     
-//     oldType := reflect.TypeOf(oldData)
-//     oldValue := reflect.ValueOf(oldData)
-//     newType := reflect.TypeOf(newData)
-//     newValue := reflect.ValueOf(newData)
+    oldType := reflect.TypeOf(oldData)
+    oldValue := reflect.ValueOf(oldData)
+    newType := reflect.TypeOf(newData)
+    newValue := reflect.ValueOf(newData)
 
-//     switch oldType {
-//         case reflect.TypeOf(account{}):
-//             tableName = "ACCOUNT_INFO"
-//         case reflect.TypeOf(healthdata{}):
-//             tableName = "HEALTH_INFO"
-//         case reflect.TypeOf(pr{}):
-//             tableName = "PR_TRACKER"
-//     }
+    switch oldType {
+        case reflect.TypeOf(account{}):
+            tableName = "ACCOUNT_INFO"
+    }
 
-//     for i := 0; i < newType.NumField(); i++ {
-//         field := newType.Field(i)
-//         columnName := strings.ToLower(field.Name)
-//         columnValue := newValue.Field(i).Interface()
+    for i := 0; i < newType.NumField(); i++ {
+        field := newType.Field(i)
+        columnName := strings.ToLower(field.Name)
+        columnValue := newValue.Field(i).Interface()
 
-//         setValues = append(setValues, fmt.Sprintf("%s='%v'", columnName, columnValue))
-//     }
+        setValues = append(setValues, fmt.Sprintf("%s='%v'", columnName, columnValue))
+    }
 
-//     for i := 0; i < oldType.NumField(); i++ {
-//         field := oldType.Field(i)
-//         columnName := strings.ToLower(field.Name)
-//         columnValue := oldValue.Field(i).Interface()
+    for i := 0; i < oldType.NumField(); i++ {
+		field := oldType.Field(i)
+		columnName := strings.ToLower(field.Name)
+		columnValue := oldValue.Field(i).Interface()
+	
+		whereValues = append(whereValues, fmt.Sprintf("%s='%v'", columnName, columnValue))
+	}
 
-//         whereValues = append(whereValues, fmt.Sprintf("%s='%v'", columnName, columnValue))
-//     }
+    sql := fmt.Sprintf("UPDATE %s SET %s WHERE %s", tableName, strings.Join(setValues, ","), strings.Join(whereValues, " AND "))
+	
+    result, err := connect(sql)
+    if err != nil {
+        return err
+    }
+    defer result.Close()
+	
+	if newType == reflect.TypeOf(account{}) {
+		//check if new data is on database and old data is not on database
+        if checkUpdate(newData.(account)) && !checkUpdate(oldData.(account)) {
+            return nil
+        } else {
+            return &s.UpdateNotCompleteError{Msg: "Update Was not complete"}
+        }
+    }
 
-//     sql := fmt.Sprintf("UPDATE %s SET %s WHERE %s", tableName, strings.Join(setValues, ","), strings.Join(whereValues, " AND "))
-    
-//     result, err := connect(sql)
-//     if err != nil {
-//         return err
-//     }
-//     defer result.Close()
 
-//     return nil
-// }
+    return nil
+}
+//*RETURN: true if update was made properly
+func checkUpdate(newData account) bool{
+	exist_acc := map[string]interface{}{
+		"ID"       : newData.ID,
+		"Fname"    : newData.Fname,
+		"Lname"    : newData.Lname,
+		"Fullname" : newData.Fullname,
+		"Email"    : newData.Email,
+		"Pwd" 	   : newData.Pwd,
+		"Pnum"     : newData.Pnum,
+		"Age"      : newData.Age,
+		"Username" : newData.Username,
+	}
+	
+	results := Accounts_GET(exist_acc)
+	
+	return len(results) > 0
+}
