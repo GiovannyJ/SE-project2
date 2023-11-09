@@ -1,0 +1,42 @@
+edit account to add access level column
+new struct for Posts: id, title, description, genre, authorID, numUp, numDown, picID
+
+database methods
+-login
+    -bind session to account
+    -bind session to guest -> guest account in database
+-accounts
+    -create
+    -edit
+    -delete
+- posts 
+    -create
+    -edit
+    -delete
+
+ROUTES:
+
+login -> POST :: pass username and pwd and check in db RETURN all account info
+login/guest -> POST :: pass username and pwd as GUEST to db RETURN guest account info
+
+DONE account -> GET :: grab all accounts in db (maybe not all info gets passed)
+DONE account?id=NUM -> GET :: grab account by id
+account?fname=STR -> GET ::
+account?lname=STR -> GET ::
+account?fullname=STR -> GET ::
+account?sort=STR[param_UP/DOWN] -> GET :: all accounts sorted by param either ascending or descending
+account/new -> POST :: create new account using account struct
+account/update -> PATCH :: update account 
+account/delete -> DELETE :: delete account
+
+DONE posts -> GET:: will grab all posts (limit by certain number to reduce bottle neck)
+DONE posts?id=NUM -> GET:: will grab post with ID
+posts?authID=NUM -> GET :: all posts with the authors id
+posts?genre=STR -> GET :: all posts under same genera
+posts?sort=STR[param_UP/DOWN] -> GET :: all posts sorted by param either ascending or descending
+posts/create -> POST :: make new posts using title, description, genre, authorID (inits id auto, numUp/numDown init 0)
+posts/update -> PATCH :: update post using post ID
+posts/delete -> DELETE :: delete post using post ID
+DONE posts/fullcontext -> GET :: grabs all info from post
+
+make table for images -> id, postID, imgName

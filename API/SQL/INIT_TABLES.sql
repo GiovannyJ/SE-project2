@@ -1,12 +1,30 @@
-CREATE TABLE `ACCOUNT_INFO` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `fname` varchar(225) NOT NULL,
-  `lname` varchar(225) NOT NULL,
-  `fullname` varchar(225) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `pwd` varchar(225) NOT NULL,
-  `pnum` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `age` int DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE ACCOUNTS (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fname VARCHAR(50) NOT NULL,
+    lname VARCHAR(50) NOT NULL,
+    fullname VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    pwd VARCHAR(100) NOT NULL,
+    pnum VARCHAR(15),
+    username VARCHAR(50) NOT NULL,
+    accesslvl INT NOT NULL
+);
+
+CREATE TABLE IMAGES (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    imgname VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE POSTS (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    descr TEXT NOT NULL,
+    genre VARCHAR(50) NOT NULL,
+    authorID INT NOT NULL,
+    numUp INT DEFAULT 0,
+    numDown INT DEFAULT 0,
+    picID INT  NULL,
+    FOREIGN KEY (authorID) REFERENCES ACCOUNTS(id),
+    FOREIGN KEY (picID) REFERENCES IMAGES(id)
+);
