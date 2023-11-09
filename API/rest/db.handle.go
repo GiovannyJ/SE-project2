@@ -21,9 +21,12 @@ func GetAccounts(c *gin.Context){
 	var query = make(map[string]interface{})
 	
 	IDQ := c.Query("ID")
+	idq := c.Query("id")
 	
 	if len(IDQ) > 0{
 		query["ID"] = IDQ
+	}else if len(idq) > 0{
+		query["id"] = idq
 
 	}
 	c.IndentedJSON(http.StatusOK, db.Accounts_GET(query))
