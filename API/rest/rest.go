@@ -25,15 +25,14 @@ func API(){
 	/*
 	*=========================PATCH METHODS================================
 	*/
-	// router.PATCH("/account/update", UpdateAcc)
-	// router.PATCH("/posts/update",UpdatePost)
-
+	router.PATCH("/account/update", UpdateAcc)
+	router.PATCH("/posts/update",UpdatePost)
 
 	/*
 	*=========================DELETE METHODS================================
 	*/
-	// router.DELETE("/account/delete:/THING", DelAccount)
-	// router.DELETE("/posts/delete:/THING", DelPost)
+	router.DELETE("/account/delete/:id", DelAccount)
+	router.DELETE("/posts/delete/:id", DelPost)
 
 
 	//*activate the server

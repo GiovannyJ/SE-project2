@@ -5,6 +5,8 @@ import (
 	s "API/models"
 	"fmt"
 	"net/http"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,8 +15,8 @@ type account = s.Account
 type updateAcc = s.UpdateAccount
 type post = s.Posts
 type updatePost = s.UpdatePosts
-type images = s.Images
-type updateImages = s.UpdateImages
+// type images = s.Images
+// type updateImages = s.UpdateImages
 type loginData = s.LogIn
 
 /*
@@ -205,7 +207,8 @@ returns limited version of account struct
 Note: if username and password as passed as guest then its guest login
 */
 func Login(c *gin.Context) {
-    var login loginData
+    c.Header("Access-Control-Allow-Origin", "*")
+	var login loginData
 
     if err := c.BindJSON(&login); err != nil {
         c.IndentedJSON(http.StatusBadRequest, "cannot bind")
@@ -254,25 +257,110 @@ func Login(c *gin.Context) {
 /*
 *=================PATCH METHOD HANDLERS==================
 */
-// func UpdateAcc(c *gin.Context) {
-//     c.Header("Access-Control-Allow-Origin", "*")
+
+/*
+*TESTED WORKING
+updates account in database
+request body shaped like updateAccount struct
+*/
+func UpdateAcc(c *gin.Context) {
+    c.Header("Access-Control-Allow-Origin", "*")
     
-//     var upACC updateAcc
+    var upACC updateAcc
 
-//     if err := c.BindJSON(&upACC); err != nil {
-//         c.IndentedJSON(http.StatusBadRequest, nil)
-//         return 
-//     }
+    if err := c.BindJSON(&upACC); err != nil {
+        c.IndentedJSON(http.StatusBadRequest, nil)
+        return 
+    }
 
-// 	err := db.UpdateData(upACC.Old, upACC.New)
+	err := db.UpdateData(upACC.Old, upACC.New)
 
-//     if err != nil {
-// 		if _, ok := err.(*s.UpdateNotCompleteError); ok{
-// 			c.IndentedJSON(http.StatusFailedDependency, nil)
-// 		}else{
-// 			c.IndentedJSON(http.StatusInternalServerError, nil)
-// 		}
-//         return 
-// 	}
-//     c.IndentedJSON(http.StatusOK, upACC.New)
-// }
+    if err != nil {
+		if _, ok := err.(*s.UpdateNotCompleteError); ok{
+			c.IndentedJSON(http.StatusFailedDependency, nil)
+		}else{
+			c.IndentedJSON(http.StatusInternalServerError, nil)
+		}
+        return 
+	}
+    c.IndentedJSON(http.StatusOK, upACC.New)
+}
+
+/*
+*TESTED WORKING
+Updates post in database
+request body shaped like updatePost Struct
+*/
+func UpdatePost(c *gin.Context) {
+    c.Header("Access-Control-Allow-Origin", "*")
+	var upPOST updatePost
+
+    if err := c.BindJSON(&upPOST); err != nil {
+        c.IndentedJSON(http.StatusBadRequest, nil)
+        return 
+    }
+
+	err := db.UpdateData(upPOST.Old, upPOST.New)
+
+    if err != nil {
+		if _, ok := err.(*s.UpdateNotCompleteError); ok{
+			c.IndentedJSON(http.StatusFailedDependency, nil)
+		}else{
+			c.IndentedJSON(http.StatusInternalServerError, nil)
+		}
+        return 
+	}
+    c.IndentedJSON(http.StatusOK, upPOST.New)
+}
+
+/*
+*=================DELETE METHOD HANDLERS==================
+*/
+
+/*
+*TESTED WORKING
+DELETES account from database using id as last tag
+*/
+func DelAccount(c *gin.Context){
+	c.Header("Access-Control-Allow-Origin", "*")
+	id := c.Param("id")
+    
+    intID, err := strconv.Atoi(id)
+    if err != nil {
+        c.IndentedJSON(http.StatusBadRequest, nil)
+        return
+    }
+
+	err = db.DeleteAccount(intID)
+
+    if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, nil)
+        return 
+	}
+
+    c.IndentedJSON(http.StatusOK, fmt.Sprintf("account %d deleted", intID))
+}
+
+/*
+*TESTED WORKING
+DELETES post from database using id as last tag
+*/
+func DelPost(c *gin.Context){
+	c.Header("Access-Control-Allow-Origin", "*")
+	id := c.Param("id")
+    
+    intID, err := strconv.Atoi(id)
+    if err != nil {
+        c.IndentedJSON(http.StatusBadRequest, nil)
+        return
+    }
+
+	err = db.DeletePost(intID)
+
+    if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, nil)
+        return 
+	}
+
+    c.IndentedJSON(http.StatusOK, fmt.Sprintf("post %d deleted", intID))
+}
