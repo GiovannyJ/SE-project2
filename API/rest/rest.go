@@ -11,17 +11,16 @@ func API(){
 	/*
 	*=========================GET METHODS================================
 	*/
-	router.GET("/account", GetAccounts) //W query strings
-	router.GET("/posts", GetPosts) //W query strings
+	router.GET("/account", GetAccounts)
+	router.GET("/posts", GetPosts)
 	router.GET("/posts/fullcontext", GetPostsFullContext)
 
 	/*
 	*=========================POST METHODS================================
 	*/
-	// router.POST("/account/new", NewAccount)
-	// router.POST("/login",Login)
-	// router.POST("/login/guest", LoginGuest)
-	// router.POST("/posts/create", NewPost)
+	router.POST("/account/new", NewAccount)
+	router.POST("/posts/create", NewPost)
+	router.POST("/login",Login)
 
 	/*
 	*=========================PATCH METHODS================================
@@ -33,8 +32,8 @@ func API(){
 	/*
 	*=========================DELETE METHODS================================
 	*/
-	// router.DELETE("/account/delete", DelAccount)
-	// router.DELETE("/posts/delete", DelPost)
+	// router.DELETE("/account/delete:/THING", DelAccount)
+	// router.DELETE("/posts/delete:/THING", DelPost)
 
 
 	//*activate the server

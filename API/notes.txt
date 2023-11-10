@@ -16,27 +16,27 @@ database methods
 
 ROUTES:
 
-login -> POST :: pass username and pwd and check in db RETURN all account info
-login/guest -> POST :: pass username and pwd as GUEST to db RETURN guest account info
+    GET ROUTES:
+        DONE account ->  grab all accounts in db (maybe not all info gets passed)
+            QUERY STRINGS :: id, fname, lname, fullname, email, username, order
+        DONE posts ->  will grab all posts (limit by certain number to reduce bottle neck)
+            QUERY STRING :: id, title, genre, authorID, numUp, numDown, date, order
+        DONE posts/fullcontext -> grabs all info from post
+            QUERY STRINGS :: postId, authorID, fullname, username, title, numUp, numDown, genre, date, order
 
-DONE account -> GET :: grab all accounts in db (maybe not all info gets passed)
-DONE account?id=NUM -> GET :: grab account by id
-account?fname=STR -> GET ::
-account?lname=STR -> GET ::
-account?fullname=STR -> GET ::
-account?sort=STR[param_UP/DOWN] -> GET :: all accounts sorted by param either ascending or descending
-account/new -> POST :: create new account using account struct
-account/update -> PATCH :: update account 
-account/delete -> DELETE :: delete account
+            (SHOULD WE ADD GREATER OR LESS THAN FOR NUMUP/DOWN)
 
-DONE posts -> GET:: will grab all posts (limit by certain number to reduce bottle neck)
-DONE posts?id=NUM -> GET:: will grab post with ID
-posts?authID=NUM -> GET :: all posts with the authors id
-posts?genre=STR -> GET :: all posts under same genera
-posts?sort=STR[param_UP/DOWN] -> GET :: all posts sorted by param either ascending or descending
-posts/create -> POST :: make new posts using title, description, genre, authorID (inits id auto, numUp/numDown init 0)
-posts/update -> PATCH :: update post using post ID
-posts/delete -> DELETE :: delete post using post ID
-DONE posts/fullcontext -> GET :: grabs all info from post
+    POST ROUTES:
+        DONE posts/create ->  make new posts using title, description, genre, authorID (inits id auto, numUp/numDown init 0)
+        DONE account/new ->  create new account using account struct
+        
+        DONE login ->  pass username and pwd and check in db RETURN all account info
+        login/guest ->  pass username and pwd as GUEST to db RETURN guest account info
 
-make table for images -> id, postID, imgName
+    PATCH ROUTES:
+        account/update -> PATCH :: update account 
+        posts/update -> PATCH :: update post using post ID
+    
+    DELETE ROUTES:
+        account/delete ->  DELETE :: delete account
+        posts/delete -> DELETE :: delete post using post ID

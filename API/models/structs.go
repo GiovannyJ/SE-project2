@@ -11,7 +11,7 @@ type Account struct {
 	Pwd 	 	string 	`json:"pwd,omitempty"`
 	Pnum     	int    	`json:"pnum,omitempty"`
 	Username 	string 	`json:"username"`
-	Accesslvl 	int		`json:"acesslevel,omitempty"`
+	Accesslvl 	string	`json:"acesslevel"`
 }
 
 type UpdateAccount struct {
@@ -59,6 +59,7 @@ type Posts struct{
 	NumUp 		int 	`json:"numUp"`
 	NumDown 	int 	`json:"numDown"`
 	PicID 		int 	`json:"picId,omitempty"`
+	PostedDate 	string		`json:"postedDate"`
 }
 
 type UpdatePosts struct{
@@ -75,4 +76,11 @@ type FullContextPost struct{
 	NumUp 		int 	`json:"numUp"`
 	NumDown 	int 	`json:"numDown"`
 	ImageInfo 	Images 	`json:"picInfo"`
+	PostedDate 	string		`json:"postedDate"`
+}
+
+type LogIn struct {
+    Username *string `json:"username"`
+    Email 	 *string `json:"email"`
+	Password *string `json:"password"`
 }

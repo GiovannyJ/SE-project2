@@ -7,7 +7,7 @@ import (
 	"log"
 	// "reflect"
 	"strings"
-
+	"errors"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -57,17 +57,23 @@ func Accounts_GET(params map[string]interface{}) ([]account) {
     var sql strings.Builder
     sql.WriteString("SELECT * FROM ACCOUNTS")
 
-	if len(params) > 0 { 
-        sql.WriteString(" WHERE ")
-        var conditions []string
+	if len(params) > 0 {
+		var conditions []string
+		var orderby string
         for name, value := range params {
-            condition := fmt.Sprintf("%s='%v'", name, value)
-            conditions = append(conditions, condition)
+			if name == "order"{
+				orderby = fmt.Sprintf(" ORDER BY %s", value)
+				}else{
+				condition := fmt.Sprintf("%s='%v'", name, value)
+				conditions = append(conditions, condition)
+			}
         }
-
-        sql.WriteString(strings.Join(conditions, " AND "))
+		if len(conditions) > 0{
+			sql.WriteString(" WHERE ")
+			sql.WriteString(strings.Join(conditions, " AND "))
+		}
+		sql.WriteString(orderby)
     }
-
 
     result, err := connect(sql.String())
     if err != nil {
@@ -80,16 +86,16 @@ func Accounts_GET(params map[string]interface{}) ([]account) {
     for result.Next(){
 		var t account
 		if err := result.Scan(
-				&t.ID, 
-				&t.Fname, 
-				&t.Lname,
-				&t.Fullname,
-				&t.Email,
-				&t.Pwd,
-				&t.Pnum,
-				&t.Username,
-				&t.Accesslvl,
-				); err != nil{
+			&t.ID,
+			&t.Fname,
+			&t.Lname,
+			&t.Fullname,
+			&t.Email,
+			&t.Pwd,
+			&t.Pnum,
+			&t.Username,
+			&t.Accesslvl,
+		); err != nil {
 			return values
 		}
 		values = append(values, t)
@@ -98,25 +104,35 @@ func Accounts_GET(params map[string]interface{}) ([]account) {
     if err = result.Err(); err != nil{
 		return values
     }
-        
+
     return values
 }
 
+/*
+*TESTED WORKING
+Gets all posts from table
+*/
 func Posts_GET(params map[string]interface{}) ([]posts) {
     var sql strings.Builder
     sql.WriteString("SELECT * FROM POSTS")
 
-	if len(params) > 0 { 
-        sql.WriteString(" WHERE ")
-        var conditions []string
+	if len(params) > 0 {
+		var conditions []string
+		var orderby string
         for name, value := range params {
-            condition := fmt.Sprintf("%s='%v'", name, value)
-            conditions = append(conditions, condition)
+			if name == "order"{
+				orderby = fmt.Sprintf(" ORDER BY %s", value)
+				}else{
+				condition := fmt.Sprintf("%s='%v'", name, value)
+				conditions = append(conditions, condition)
+			}
         }
-
-        sql.WriteString(strings.Join(conditions, " AND "))
+		if len(conditions) > 0{
+			sql.WriteString(" WHERE ")
+			sql.WriteString(strings.Join(conditions, " AND "))
+		}
+		sql.WriteString(orderby)
     }
-
 
     result, err := connect(sql.String())
     if err != nil {
@@ -137,6 +153,7 @@ func Posts_GET(params map[string]interface{}) ([]posts) {
 				&t.NumUp,
 				&t.NumDown,
 				&t.PicID,
+				&t.PostedDate,
 				); err != nil{
 			return values
 		}
@@ -150,6 +167,11 @@ func Posts_GET(params map[string]interface{}) ([]posts) {
     return values
 }
 
+/*
+*TESTED WORKING
+gets all posts from database in full context
+joined POSTS with ACCOUNTS and IMAGES
+*/
 func PostsFullContext_GET(params map[string]interface{}) ([]fullcontextpost, error) {
     var sql strings.Builder
     sql.WriteString("SELECT p.*, a.fullname, a.username, i.imgname FROM POSTS p")
@@ -157,13 +179,21 @@ func PostsFullContext_GET(params map[string]interface{}) ([]fullcontextpost, err
     sql.WriteString(" INNER JOIN IMAGES i ON p.picID = i.id")
 
     if len(params) > 0 {
-        sql.WriteString(" WHERE ")
-        var conditions []string
+		var conditions []string
+		var orderby string
         for name, value := range params {
-            condition := fmt.Sprintf("p.%s='%v'", name, value)
-            conditions = append(conditions, condition)
+			if name == "order"{
+				orderby = fmt.Sprintf(" ORDER BY %s", value)
+				}else{
+				condition := fmt.Sprintf("%s='%v'", name, value)
+				conditions = append(conditions, condition)
+			}
         }
-        sql.WriteString(strings.Join(conditions, " AND "))
+		if len(conditions) > 0{
+			sql.WriteString(" WHERE ")
+			sql.WriteString(strings.Join(conditions, " AND "))
+		}
+		sql.WriteString(orderby)
     }
 
 	result, err := connect(sql.String())
@@ -188,6 +218,7 @@ func PostsFullContext_GET(params map[string]interface{}) ([]fullcontextpost, err
             &t.NumUp,
             &t.NumDown,
 			&image.ID,
+			&t.PostedDate,
             &author.Fullname,
             &author.Username,
 			&image.ImgName,
@@ -216,30 +247,134 @@ POST TO: ACCOUNTS table
 DATA: model after account struct
 RETURN: error when applicable nil if no error
 */
-// func CreateNewAccount(data account) error {
-// 	if accountExist(data.Username) {
-// 		return &s.AccountExistsError{Username: data.Username}
-// 	}
+func CreateNewAccount(data account) error {
+	if accountExist(data.Username) {
+		return &s.AccountExistsError{Username: data.Username}
+	}
 
-// 	sql := fmt.Sprintf("INSERT INTO ACCOUNTS(fname, lname, fullname, email, pwd, pnum, age, username) VALUES('%s', '%s', '%s', '%s', '%s', %d, %d, '%s')",
-// 		data.Fname, data.Lname, data.Fullname, data.Email, data.Pwd, data.Pnum, data.Age, data.Username)
+	sql := fmt.Sprintf("INSERT INTO ACCOUNTS(fname, lname, fullname, email, pwd, pnum, username, accesslvl) VALUES('%s', '%s', '%s', '%s', '%s', %d, '%s', 'user')",
+		data.Fname, data.Lname, data.Fullname, data.Email, data.Pwd, data.Pnum, data.Username)
 
-// 	result, err := connect(sql)
-// 	if err != nil {
-// 	    return err
-// 	}
-// 	defer result.Close()
+	result, err := connect(sql)
+	if err != nil {
+	    return err
+	}
+	defer result.Close()
 
-// 	return nil
-// }
+	return nil
+}
+//*HELPER METHOD: checks if the account exits already RETURNS true if account exits and false if not
+func accountExist(id string) bool{
+    exist_acc := map[string]interface{}{"username": id}
 
-// func accountExist(id string) bool{
-//     exist_acc := map[string]interface{}{"username": id}
-
-//     exists := Accounts_GET(exist_acc)
+    exists := Accounts_GET(exist_acc)
     
-//     return len(exists) > 0
-// }
+    return len(exists) > 0
+}
+
+/*
+*TESTED WORKING
+POSTS TO POSTS table
+DATA: model after Posts struct
+RETURN: error when applicable nil when not
+*/
+func CreateNewPost(data posts) error {
+	sql := fmt.Sprintf("INSERT INTO POSTS(title, descr, genre, authorID, picID, postedDate) VALUES('%s', '%s', '%s', '%d', 1, CURDATE())",
+		 data.Title, data.Descr, data.Genre, data.AuthorID)
+
+	result, err := connect(sql)
+	if err != nil {
+	    return err
+	}
+	defer result.Close()
+
+	return nil
+}
+
+
+/*
+*TESTED WORKING
+Using either email or username, compares password to value in database
+RETURNS account if password valid nil if not
+*/
+func GetLoginInfo(username *string, password *string, email *string) (*account, error) {
+    var sql strings.Builder
+    q := "SELECT id, email, username, pwd FROM ACCOUNTS"
+
+    switch {
+    case username != nil:
+        q += fmt.Sprintf(" WHERE username='%s'", *username)
+    case email != nil:
+        q += fmt.Sprintf(" WHERE email='%s'", *email)
+    default:
+        break
+    }
+
+    sql.WriteString(q)
+
+    result, err := connect(sql.String())
+    if err != nil {
+        return nil, err
+    }
+    defer result.Close()
+
+    if result.Next() {
+        var t account
+        if err := result.Scan(
+            &t.ID,
+            &t.Email,
+            &t.Username,
+			&t.Pwd,
+        ); err != nil {
+            return nil, err
+        }
+        if password != nil && t.Pwd != *password {
+            return nil, errors.New("invalid password")
+        }
+        return &t, nil
+    }
+    return nil, errors.New("user not found")
+}
+
+/*
+*TESTED WORKING
+Grabs guest account from database and returns its values
+*/
+func GuestLogin() ([]account){
+    q := "SELECT * FROM ACCOUNTS WHERE username = 'guest' and pwd='guest'"
+	result, err := connect(q)
+	if err != nil{
+		return nil
+	}
+	defer result.Close()
+	var values []account
+    
+    for result.Next(){
+		var t account
+		if err := result.Scan(
+			&t.ID,
+			&t.Fname,
+			&t.Lname,
+			&t.Fullname,
+			&t.Email,
+			&t.Pwd,
+			&t.Pnum,
+			&t.Username,
+			&t.Accesslvl,
+		); err != nil {
+			return values
+		}
+		values = append(values, t)
+	}
+
+    if err = result.Err(); err != nil{
+		return values
+    }
+
+    return values
+}
+
+
 
 
 /*

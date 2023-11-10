@@ -7,7 +7,7 @@ CREATE TABLE ACCOUNTS (
     pwd VARCHAR(100) NOT NULL,
     pnum VARCHAR(15),
     username VARCHAR(50) NOT NULL,
-    accesslvl INT NOT NULL
+    accesslvl ENUM('guest', 'user', 'verified user', 'admin') NOT NULL 
 );
 
 CREATE TABLE IMAGES (
