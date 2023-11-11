@@ -1,0 +1,21 @@
+
+{
+    "old":
+    {
+        "id": 1,
+        "title": "How to get better at golf",
+        "descr": "I suck at golf how do i do better please help",
+        "genre": "Technology",
+        "authorId": 1,
+        "picId": 1
+    },
+    "new":
+    {
+        "id": 1,
+        "title": "How to get better at golf",
+        "descr": "I suck at golf how do i do better please help",
+        "genre": "Technology",
+        "authorId": 1,
+        "picId": 1
+    }
+}

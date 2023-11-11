@@ -74,7 +74,6 @@ func Accounts_GET(params map[string]interface{}) ([]account) {
 		}
 		sql.WriteString(orderby)
     }
-
     result, err := connect(sql.String())
     if err != nil {
         return nil
@@ -133,7 +132,6 @@ func Posts_GET(params map[string]interface{}) ([]posts) {
 		}
 		sql.WriteString(orderby)
     }
-
     result, err := connect(sql.String())
     if err != nil {
         return nil
@@ -195,7 +193,6 @@ func PostsFullContext_GET(params map[string]interface{}) ([]fullcontextpost, err
 		}
 		sql.WriteString(orderby)
     }
-
 	result, err := connect(sql.String())
     if err != nil {
         return nil, err
@@ -254,7 +251,6 @@ func CreateNewAccount(data account) error {
 
 	sql := fmt.Sprintf("INSERT INTO ACCOUNTS(fname, lname, fullname, email, pwd, pnum, username, accesslvl) VALUES('%s', '%s', '%s', '%s', '%s', %d, '%s', 'user')",
 		data.Fname, data.Lname, data.Fullname, data.Email, data.Pwd, data.Pnum, data.Username)
-
 	result, err := connect(sql)
 	if err != nil {
 	    return err
@@ -281,7 +277,6 @@ RETURN: error when applicable nil when not
 func CreateNewPost(data posts) error {
 	sql := fmt.Sprintf("INSERT INTO POSTS(title, descr, genre, authorID, picID, postedDate) VALUES('%s', '%s', '%s', '%d', 1, CURDATE())",
 		 data.Title, data.Descr, data.Genre, data.AuthorID)
-
 	result, err := connect(sql)
 	if err != nil {
 	    return err
@@ -311,7 +306,6 @@ func GetLoginInfo(username *string, password *string, email *string) (*account, 
     }
 
     sql.WriteString(q)
-
     result, err := connect(sql.String())
     if err != nil {
         return nil, err
@@ -421,7 +415,6 @@ func UpdateData(oldData interface{}, newData interface{}) error {
 	}
 
     sql := fmt.Sprintf("UPDATE %s SET %s WHERE %s", tableName, strings.Join(setValues, ","), strings.Join(whereValues, " AND "))
-	
     result, err := connect(sql)
     if err != nil {
         return err
