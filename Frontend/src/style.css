@@ -1,0 +1,32 @@
+nav img {
+    width:15%;
+    height: auto;
+}
+nav ul{
+    list-style: none;
+    display:flex;
+    margin-right: 200px;
+}
+
+nav a {
+    text-decoration: none;
+    display: inline;
+}
+
+#search-container {
+    width: 25%;
+    height: auto;
+}
+
+#question-title ul{
+    list-style: none;
+    display: flex;
+}
+
+#answer {
+    border-style: solid;
+}
+
+.login {
+    text-align: center;
+}
