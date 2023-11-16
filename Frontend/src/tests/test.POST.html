@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>POST Requests</title>
+        <script src="../../logic/logic.js"></script>
+    </head>
+    <body>
+
+        <!-- NOT WORKING NEED TO MAKE SURE THAT BINDS TO DATA CORRECTLY -->
+<h2>Create Account</h2>
+<form id="accountForm">
+    <label for="accountFname">First Name:</label>
+    <input type="text" id="accountFname" name="Fname" required><br>
+  
+    <label for="accountLname">Last Name:</label>
+    <input type="text" id="accountLname" name="Lname" required><br>
+  
+    <label for="accountFullname">Full Name:</label>
+    <input type="text" id="accountFullname" name="Fullname" required><br>
+  
+    <label for="accountEmail">Email:</label>
+    <input type="email" id="accountEmail" name="Email" required><br>
+  
+    <label for="accountPwd">Password:</label>
+    <input type="password" id="accountPwd" name="pwd" required><br>
+  
+    <label for="accountPnum">Phone Number:</label>
+    <input type="text" id="accountPnum" name="Pnum" required><br>
+  
+    <label for="accountUsername">Username:</label>
+    <input type="text" id="accountUsername" name="Username" required><br>
+
+  <button type="button" onclick="createAccount()">Create Account</button>
+</form>
+
+<table id="accountTable" border="1"></table>
+
+<!-- NOT WORKING NEED TO MAKE SURE THAT IT BINDS TO FORM DATA CORRECTLY -->
+<h2>Create Post</h2>
+<form id="postForm">
+    <label for="postId">Post ID:</label>
+    <input type="text" id="postId" name="id" required><br>
+  
+    <label for="postTitle">Title:</label>
+    <input type="text" id="postTitle" name="title" required><br>
+  
+    <label for="postDescr">Description:</label>
+    <textarea id="postDescr" name="descr" required></textarea><br>
+  
+    <label for="postGenre">Genre:</label>
+    <input type="text" id="postGenre" name="genre" required><br>
+  
+    <label for="postAuthorId">Author ID:</label>
+    <input type="text" id="postAuthorId" name="authorId" required><br>
+  
+    <label for="postPicId">Picture ID:</label>
+    <input type="text" id="postPicId" name="picId" required><br>
+  
+    <button type="button" onclick="createPost()">Create Post</button>
+</form>
+
+<table id="postTable" border="1"></table>
+
+<!-- WORKING PROPERLY -->
+<h2>Login</h2>
+<form id="loginForm">
+  <label for="loginUsername">Username:</label>
+  <input type="text" id="loginUsername" name="username" required><br>
+
+  <label for="loginPassword">Password:</label>
+  <input type="password" id="loginPassword" name="password" required><br>
+
+  <label for="loginEmail">Email:</label>
+  <input type="text" id="loginEmail" name="email" required><br>
+
+  <button type="button" onclick="login()">Login</button>
+</form>
+
+<table id="loginTable" border="1"></table>
+
+
+</body>
+</html>

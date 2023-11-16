@@ -59,7 +59,7 @@ type Posts struct{
 	NumUp 		int 	`json:"numUp"`
 	NumDown 	int 	`json:"numDown"`
 	PicID 		int 	`json:"picId,omitempty"`
-	PostedDate 	string		`json:"postedDate"`
+	PostedDate 	string	`json:"postedDate"`
 }
 
 type UpdatePosts struct{

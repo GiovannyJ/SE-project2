@@ -7,7 +7,7 @@ import (
 
 func API(){
 	router := gin.Default()
-	
+
 	/*
 	*=========================GET METHODS================================
 	*/
