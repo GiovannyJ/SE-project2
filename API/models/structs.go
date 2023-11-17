@@ -11,7 +11,7 @@ type Account struct {
 	Pwd 	 	string 	`json:"pwd,omitempty"`
 	Pnum     	int    	`json:"pnum,omitempty"`
 	Username 	string 	`json:"username"`
-	Accesslvl 	string	`json:"acesslevel"`
+	Accesslvl 	string	`json:"accesslevel"`
 }
 
 type UpdateAccount struct {
