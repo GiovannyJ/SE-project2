@@ -23,18 +23,33 @@
           </nav>
     </header>
     <main>
-        <div id="login">
-            <label for="uname"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="uname" required>
-            <br>
-            <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" name="email" required>
-            <br>
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
-            <br>
-            <button type="submit">Login</button>
-            <label>
+        <br>
+        <div id="createacct">
+            <h2>Create Account</h2>
+            <form id="accountForm">
+                <label for="accountFname">First Name:</label><br>
+                <input type="text" id="accountFname" name="Fname" required><br>
+            
+                <label for="accountLname">Last Name:</label><br>
+                <input type="text" id="accountLname" name="Lname" required><br>
+            
+                <label for="accountFullname">Full Name:</label><br>
+                <input type="text" id="accountFullname" name="Fullname" required><br>
+            
+                <label for="accountEmail">Email:</label><br>
+                <input type="email" id="accountEmail" name="Email" required><br>
+            
+                <label for="accountPwd">Password:</label><br>
+                <input type="password" id="accountPwd" name="pwd" required><br>
+            
+                <label for="accountPnum">Phone Number:</label><br>
+                <input type="text" id="accountPnum" name="Pnum" required><br>
+            
+                <label for="accountUsername">Username:</label><br>
+                <input type="text" id="accountUsername" name="Username" required><br>
+
+            <button type="button" onclick="createAccount()">Create Account</button>
+            </form>
         </div>
     </main>
     <footer>

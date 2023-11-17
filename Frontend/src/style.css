@@ -27,6 +27,13 @@ nav a {
     border-style: solid;
 }
 
-.login {
+#createacct{
     text-align: center;
 }
+
+#login{
+    text-align: center;
+}
+
+
+

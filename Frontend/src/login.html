@@ -23,15 +23,23 @@
           </nav>
     </header>
     <main>
+        <br>
         <div id="login">
-            <label for="uname"><b>Username/Email</b></label>
-            <input type="text" placeholder="Enter Username" name="uname" required>
-            <br>
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
-            <br>
-            <button type="submit">Login</button>
-            <label>
+            <h2>Login</h2>
+            <form id="login">
+            <label for="uname">Username:</label><br>
+            <input type="text" id="uname" name="username" required><br>
+
+            <label for="psw">Password:</label><br>
+            <input type="password" id="psw" name="password" required><br>
+
+            <label for="loginEmail">Email:</label><br>
+            <input type="text" id="loginEmail" name="email" required><br>
+
+            <button type="button" onclick="login()">Login</button>
+            </form>
+            <p>Forgot password? <a href="#forgotpassword"> Reset here.</a></p>
+            <p>Don't have a Debug account? <a href="#createacct"> Create one.</a></p>
         </div>
     </main>
     <footer>
