@@ -1,23 +1,77 @@
-nav img {
-    width:15%;
-    height: auto;
+/*Changes to body of all the pages*/
+body,html {
+    margin: 0;
+    padding:0;
 }
-nav ul{
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*Changes made to guest nav*/
+.logo{
+    float: left;
+    width: 15%;
+    height:auto;
+}
+nav {
+    float: right;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+}
+nav .rest {
+    float:right;
+}
+nav ul {
     list-style: none;
-    display:flex;
-    margin-right: 200px;
+}
+
+nav li{
+    display: inline-block;
+}
+
+header nav .nav-button1 {
+    padding: 3px;
+    margin:10px;
+}
+header nav .nav-button2 {
+    border-style: inset;
+    border-radius: 8px;
+    border-color:indigo;
+    padding: 3px;
+    margin:10px;
 }
 
 nav a {
-    text-decoration: none;
-    display: inline;
+    text-decoration:none;
+    font-size: large;
+    color:black;
 }
 
-#search-container {
-    width: 25%;
-    height: auto;
+#search-box {
+    margin:0;
+    padding:5px;
+    margin-right:20px;
+    margin-left:20px;
+    float:center;
 }
 
+#search-input {
+    width: 400px;
+    height: 20px;
+    padding: 5px;
+    margin:0;
+}
+
+#pfp{
+    border-color:pink;
+}
+
+/*Changes for main forum pages*/
 #question-title ul{
     list-style: none;
     display: flex;
@@ -27,13 +81,17 @@ nav a {
     border-style: solid;
 }
 
-#createacct{
+/*Changes made to create acct page*/
+#createacct {
     text-align: center;
 }
 
+/*Changes made to login page*/
 #login{
     text-align: center;
 }
+
+
 
 
 

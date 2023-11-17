@@ -8,19 +8,21 @@
 <body>
     <header>
         <nav>
-            <ul>
-                <li><a href="#"><img src="logo2.png"></a></li>
-                <li><div id="search-box">
-                    <input type="text" id="search-input" placeholder="Search...">
-                    <button id="search-button" onclick="searchDatabase()">Search</button>
-                    <!--need to create searchDatabase() to search database for query-->
-                </div></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Support</a></li>
-                <li><a href="#">Sign In</a></li>
-                <li><a href="#">Create Account</a></li>
+            <a href="#"><img src="logo2.png" class="logo"></a>
+            <ul class="rest">
+                <li>
+                    <div id="search-box">
+                        <input type="text" id="search-input" placeholder="Search...">
+                        <button id="search-button" onclick="searchDatabase()">Search</button>
+                        <!--need to create searchDatabase() to search database for query-->
+                    </div>   
+                </li>
+                <li><a href="#" class="nav-button1">About Us</a></li>
+                <li><a href="#" class="nav-button1">Support</a></li>
+                <li><a href="login.html" class="nav-button2">Sign In</a></li>
+                <li><a href="createacct.html" class="nav-button2">Create Account</a></li>
             </ul>
-          </nav>
+        </nav>
     </header>
     <main>
         <br>
@@ -39,7 +41,7 @@
             <button type="button" onclick="login()">Login</button>
             </form>
             <p>Forgot password? <a href="#forgotpassword"> Reset here.</a></p>
-            <p>Don't have a Debug account? <a href="#createacct"> Create one.</a></p>
+            <p>Don't have a Debug account? <a href="createacct.html"> Create one.</a></p>
         </div>
     </main>
     <footer>
