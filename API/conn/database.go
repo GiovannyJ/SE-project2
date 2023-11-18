@@ -55,7 +55,7 @@ func connect(query string) (*sql.Rows, error) {
 getting all accounts query
 returns: all accounts in database
 */
-func Accounts_GET(params map[string]interface{}) ([]account) {
+func Accounts_GET(params map[string]interface{}) ([]account, error) {
     var sql strings.Builder
     sql.WriteString("SELECT * FROM ACCOUNTS")
 
@@ -79,7 +79,7 @@ func Accounts_GET(params map[string]interface{}) ([]account) {
 
     result, err := connect(sql.String())
     if err != nil {
-        return nil
+        return nil, err
     }
     defer result.Close()
 
@@ -98,23 +98,23 @@ func Accounts_GET(params map[string]interface{}) ([]account) {
 			&t.Username,
 			&t.Accesslvl,
 		); err != nil {
-			return values
+			return values, err
 		}
 		values = append(values, t)
 	}
 
     if err = result.Err(); err != nil{
-		return values
+		return values, err
     }
 
-    return values
+    return values, nil
 }
 
 /*
 *TESTED WORKING
 Gets all posts from table
 */
-func Posts_GET(params map[string]interface{}) ([]posts) {
+func Posts_GET(params map[string]interface{}) ([]posts, error) {
     var sql strings.Builder
     sql.WriteString("SELECT * FROM POSTS")
 
@@ -137,7 +137,7 @@ func Posts_GET(params map[string]interface{}) ([]posts) {
     }
     result, err := connect(sql.String())
     if err != nil {
-        return nil
+        return nil, err
     }
     defer result.Close()
 
@@ -156,16 +156,16 @@ func Posts_GET(params map[string]interface{}) ([]posts) {
 				&t.PicID,
 				&t.PostedDate,
 				); err != nil{
-			return values
+			return values, nil
 		}
 		values = append(values, t)
 	}
 
     if err = result.Err(); err != nil{
-		return values
+		return values, err
     }
         
-    return values
+    return values, nil
 }
 
 /*
@@ -239,7 +239,10 @@ func PostsFullContext_GET(params map[string]interface{}) ([]fullcontextpost, err
 }
 
 
-/**/
+/*
+*TESTED WORKING
+gets all comments associated with postID and query strings
+*/
 func Comments_GET(params map[string]interface{}, postID int) ([]comments, error) {
     var sql strings.Builder
     sql.WriteString("SELECT * FROM COMMENTS")
@@ -303,7 +306,10 @@ func Comments_GET(params map[string]interface{}, postID int) ([]comments, error)
 }
 
 
-/***/
+/*
+*TESTED WORKING
+gets all comments associated with postID in full context
+*/
 func CommentsFullContext_GET(params map[string]interface{}, postID int) ([]commentfullcontext, error) {
     var sql strings.Builder
 	sql.WriteString("SELECT c.id, c.numUp as numUpComments, c.numDown as numDownComments, ")
@@ -403,6 +409,59 @@ func CommentsFullContext_GET(params map[string]interface{}, postID int) ([]comme
     return values, nil
 }
 
+/*
+*TESTED WORKING
+gets all info from IMAGES table
+*/
+func Images_GET(params map[string]interface{}) ([]images, error) {
+    var sql strings.Builder
+    sql.WriteString("SELECT * FROM IMAGES")
+
+	if len(params) > 0 {
+		var conditions []string
+		var orderby string
+        for name, value := range params {
+			if name == "order"{
+				orderby = fmt.Sprintf(" ORDER BY %s", value)
+				}else{
+				condition := fmt.Sprintf("%s='%v'", name, value)
+				conditions = append(conditions, condition)
+			}
+        }
+		if len(conditions) > 0{
+			sql.WriteString(" WHERE ")
+			sql.WriteString(strings.Join(conditions, " AND "))
+		}
+		sql.WriteString(orderby)
+    }
+    result, err := connect(sql.String())
+    if err != nil {
+        return nil, err
+    }
+    defer result.Close()
+
+    var values []images
+    
+    for result.Next(){
+		var t images
+		if err := result.Scan(
+				&t.ID, 
+				&t.ImgName, 
+				&t.Size,
+				&t.Date,
+				); err != nil{
+			return values, nil
+		}
+		values = append(values, t)
+	}
+
+    if err = result.Err(); err != nil{
+		return values, err
+    }
+        
+    return values, nil
+}
+
 
 //**+++++++++++++++++++++INSERT QUERIES++++++++++++++++++++++++++++
 
@@ -431,7 +490,10 @@ func CreateNewAccount(data account) error {
 func accountExist(id string) bool{
     exist_acc := map[string]interface{}{"username": id}
 
-    exists := Accounts_GET(exist_acc)
+    exists, err := Accounts_GET(exist_acc)
+	if err != nil{
+		return false
+	}
     
     return len(exists) > 0
 }
@@ -455,7 +517,8 @@ func CreateNewPost(data posts) error {
 }
 
 /*
-*
+*TESTED WORKING
+creates new comment when body supplied with postID, authorId, and content
 */
 func CreateNewComment(data comments) error {
 	sql := fmt.Sprintf("INSERT INTO COMMENTS(postID, authorID, content, postedDate) VALUES('%d', '%d', '%s', CURDATE())",
@@ -466,6 +529,17 @@ func CreateNewComment(data comments) error {
 	}
 	defer result.Close()
 
+	return nil
+}
+
+func CreateNewImage(data images) error{
+	sql := fmt.Sprintf("INSERT INTO IMAGES(imgname, size, date) VALUES('%s', '%s', CURDATE())",
+			data.ImgName, data.Size)
+	result, err := connect(sql)
+	if err != nil{
+		return err
+	}
+	defer result.Close()
 	return nil
 }
 
@@ -632,7 +706,10 @@ func checkUpdate(newData account) bool{
 		"Accesslvl": newData.Accesslvl,
 	}
 	
-	results := Accounts_GET(exist_acc)
+	results, err := Accounts_GET(exist_acc)
+	if err != nil{
+		return false
+	}
 	
 	return len(results) > 0
 }
@@ -672,7 +749,9 @@ func DeletePost(user int) error{
 }
 
 /*
-*
+*TESTED WORKING
+deletes comment from database
+returns error if applicable
 */
 func DeleteComment(commentID int) error{
 	sql := fmt.Sprintf("DELETE FROM COMMENTS WHERE id= %d ", commentID)

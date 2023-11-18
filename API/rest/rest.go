@@ -39,6 +39,14 @@ func API(){
 	router.DELETE("/posts/delete/:id", DelPost)
 	router.DELETE("/posts/delete/comment/:id", DelComment)
 
+	/*
+	*=========================FILE METHODS================================
+	*/
+	router.GET("/uploads/:file", RetrieveFile)
+	router.GET("/fileinfo", GetFileInfo)
+	router.POST("/uploads", UploadFile)
+	router.PATCH("/filein")
+
 
 	//*activate the server
 	router.Run("localhost:8080")

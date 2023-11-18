@@ -19,6 +19,7 @@ type updateComment = s.UpdateComment
 // type images = s.Images
 // type updateImages = s.UpdateImages
 type loginData = s.LogIn
+type jsondata = s.JSONData
 
 /*
 *=================GET METHOD HANDLERS==================
@@ -55,7 +56,13 @@ func GetAccounts(c *gin.Context){
 		query[queryKey] = queryParams[queryKey]
 	}
 
-	c.IndentedJSON(http.StatusOK, db.Accounts_GET(query))
+	results, err := db.Accounts_GET(query)
+	if err != nil{
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, results)
 }
 
 /*
@@ -90,7 +97,13 @@ func GetPosts(c *gin.Context){
 		query[queryKey] = queryParams[queryKey]
 	}
 
-	c.IndentedJSON(http.StatusOK, db.Posts_GET(query))
+	results, err := db.Posts_GET(query)
+	if err != nil{
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, results)
 }
 
 /*
@@ -130,8 +143,7 @@ func GetPostsFullContext(c *gin.Context){
 
 	results, err := db.PostsFullContext_GET(query)
 	if err != nil{
-		fmt.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, nil)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
 	c.IndentedJSON(http.StatusOK, results)
@@ -177,10 +189,10 @@ func GetPostsComments(c *gin.Context) {
 
 	results, err := db.Comments_GET(query, postID)
 	if err != nil {
-		fmt.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
+
 	c.IndentedJSON(http.StatusOK, results)
 }
 
@@ -223,8 +235,7 @@ func GetPostsCommentsFullContext(c *gin.Context) {
 
 	results, err := db.CommentsFullContext_GET(query, postID)
 	if err != nil {
-		fmt.Println(err)
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
 	c.IndentedJSON(http.StatusOK, results)
@@ -253,17 +264,23 @@ func NewAccount(c *gin.Context){
 	err := db.CreateNewAccount(newAcc)
 	if err != nil{
 		if _, ok := err.(*s.AccountExistsError); ok{
-			c.IndentedJSON(http.StatusBadRequest, "Account Already Exits")
+			c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "account already exists"})
 		}else{
 			c.IndentedJSON(http.StatusInternalServerError, nil)
 		}
 		return
 	}
+
 	q := map[string]interface{}{
 		"username": newAcc.Username,
 	}
 
-	c.IndentedJSON(http.StatusCreated, db.Accounts_GET(q))
+	results, err := db.Accounts_GET(q)
+	if err != nil{
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+		return
+	}
+	c.IndentedJSON(http.StatusCreated, results)
 }
 
 /*
@@ -277,40 +294,42 @@ func NewPost(c *gin.Context){
 	var newPost post
 
 	if err := c.BindJSON(&newPost); err != nil{
-		c.IndentedJSON(http.StatusBadRequest, nil)
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
 	err := db.CreateNewPost(newPost)
 	if err != nil{
-		if _, ok := err.(*s.AccountExistsError); ok{
-			c.IndentedJSON(http.StatusBadRequest, "Account Already Exits")
-		}else{
-			c.IndentedJSON(http.StatusInternalServerError, nil)
-		}
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
 	
 	c.IndentedJSON(http.StatusCreated, "post created")
 }
 
+/*
+*TESTED WORKING
+Creates new comment when supplied with request body shaped like comment struct
+*/
 func NewComment(c *gin.Context){
 	c.Header("Access-Control-Allow-Origin", "*")
 
 	var newComment comment
 
 	if err := c.BindJSON(&newComment); err != nil{
-		fmt.Println(err)
-		c.IndentedJSON(http.StatusBadRequest, nil)
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
 	if err := db.CreateNewComment(newComment); err != nil{
-		c.IndentedJSON(http.StatusInternalServerError, nil)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
 
-	c.IndentedJSON(http.StatusCreated, "comment Created")
+	data := jsondata{
+		Data: "comment created",
+	}
+	c.IndentedJSON(http.StatusCreated, data)
 	
 }
 
@@ -326,7 +345,7 @@ func Login(c *gin.Context) {
 	var login loginData
 
     if err := c.BindJSON(&login); err != nil {
-        c.IndentedJSON(http.StatusBadRequest, "cannot bind")
+        c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
         return
     }
 
@@ -335,7 +354,7 @@ func Login(c *gin.Context) {
     }
 
     if (logicCheck(login.Username) || logicCheck(login.Email)) && logicCheck(login.Password) {
-        c.IndentedJSON(http.StatusBadRequest, "fail logic check")
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "fail logic check"})
         return
     }
 
@@ -349,9 +368,9 @@ func Login(c *gin.Context) {
 
     if err != nil {
         if err.Error() == "Invalid password" {
-            c.IndentedJSON(http.StatusUnauthorized, "invalid password")
+            c.IndentedJSON(http.StatusUnauthorized, gin.H{"error": err})
         } else {
-            c.IndentedJSON(http.StatusNotFound, "invalid password")
+            c.IndentedJSON(http.StatusNotFound, gin.H{"error": err})
         }
         return
     }
@@ -360,7 +379,12 @@ func Login(c *gin.Context) {
         userQ := map[string]interface{}{
             "id": data.ID,
         }
-        userDetails := db.Accounts_GET(userQ)
+		userDetails, err := db.Accounts_GET(userQ)
+		if err != nil{
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
+		}
+
         c.IndentedJSON(http.StatusOK, userDetails)
     } else {
         c.IndentedJSON(http.StatusNotFound, nil)
@@ -384,7 +408,7 @@ func UpdateAcc(c *gin.Context) {
     var upACC updateAcc
 
     if err := c.BindJSON(&upACC); err != nil {
-        c.IndentedJSON(http.StatusBadRequest, nil)
+        c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
         return 
     }
 
@@ -392,9 +416,10 @@ func UpdateAcc(c *gin.Context) {
 
     if err != nil {
 		if _, ok := err.(*s.UpdateNotCompleteError); ok{
-			c.IndentedJSON(http.StatusFailedDependency, nil)
+			c.IndentedJSON(http.StatusFailedDependency, gin.H{"error": err})
 		}else{
-			c.IndentedJSON(http.StatusInternalServerError, nil)
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
 		}
         return 
 	}
@@ -411,7 +436,7 @@ func UpdatePost(c *gin.Context) {
 	var upPOST updatePost
 
     if err := c.BindJSON(&upPOST); err != nil {
-        c.IndentedJSON(http.StatusBadRequest, nil)
+        c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
         return 
     }
 
@@ -419,9 +444,10 @@ func UpdatePost(c *gin.Context) {
 
     if err != nil {
 		if _, ok := err.(*s.UpdateNotCompleteError); ok{
-			c.IndentedJSON(http.StatusFailedDependency, nil)
+			c.IndentedJSON(http.StatusFailedDependency, gin.H{"error": err})
 		}else{
-			c.IndentedJSON(http.StatusInternalServerError, nil)
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
 		}
         return 
 	}
@@ -438,7 +464,7 @@ func UpdateComment(c *gin.Context){
 	var upComment updateComment
 
 	if err := c.BindJSON(&upComment); err != nil{
-		c.IndentedJSON(http.StatusBadRequest, nil)
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
@@ -446,9 +472,10 @@ func UpdateComment(c *gin.Context){
 
 	if err != nil{
 		if _, ok := err.(*s.UpdateNotCompleteError); ok{
-			c.IndentedJSON(http.StatusFailedDependency, nil)
+			c.IndentedJSON(http.StatusFailedDependency, gin.H{"error": err})
 		}else{
-			c.IndentedJSON(http.StatusInternalServerError, nil)
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
 		}
 		return
 	}
@@ -469,18 +496,21 @@ func DelAccount(c *gin.Context){
     
     intID, err := strconv.Atoi(id)
     if err != nil {
-        c.IndentedJSON(http.StatusBadRequest, nil)
+        c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
         return
     }
 
 	err = db.DeleteAccount(intID)
 
     if err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, nil)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
         return 
 	}
 
-    c.IndentedJSON(http.StatusOK, fmt.Sprintf("account %d deleted", intID))
+	data := jsondata{
+		Data: fmt.Sprintf("account %d deleted", intID),
+	}
+    c.IndentedJSON(http.StatusOK, data)
 }
 
 /*
@@ -493,34 +523,44 @@ func DelPost(c *gin.Context){
     
     intID, err := strconv.Atoi(id)
     if err != nil {
-        c.IndentedJSON(http.StatusBadRequest, nil)
+        c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
         return
     }
 
 	err = db.DeletePost(intID)
 
     if err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, nil)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
         return 
 	}
 
-    c.IndentedJSON(http.StatusOK, fmt.Sprintf("post %d deleted", intID))
+	data := jsondata{
+		Data: fmt.Sprintf("post %d deleted", intID),
+	}
+    c.IndentedJSON(http.StatusOK, data)
 }
 
+/*
+*TESTED WORKING
+deletes comment from database, need id of comment in path
+*/
 func DelComment(c *gin.Context){
 	c.Header("Access-Control-Allow-Origin", "*")
 	id := c.Param("id")
 	intId, err := strconv.Atoi(id)
 	if err != nil{
-		c.IndentedJSON(http.StatusBadRequest, nil)
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 	
 	err = db.DeleteComment(intId)
 	if err != nil{
-		c.IndentedJSON(http.StatusInternalServerError, nil)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, fmt.Sprintf("comment %d deleted", intId))
+	data := jsondata{
+		Data: fmt.Sprintf("comment %d deleted", intId),
+	}
+	c.IndentedJSON(http.StatusOK, data)
 }

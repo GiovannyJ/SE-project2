@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload and Display</title>
+</head>
+<body>
+
+    <h2>Upload Image</h2>
+    <form id="uploadForm">
+        <label for="image">Select Image:</label>
+        <input type="file" name="image" id="image" accept="image/*" required>
+        <br>
+        <button type="button" onclick="uploadImage()">Upload</button>
+    </form>
+
+    <hr>
+
+    <h2>Display Image</h2>
+    <form id="displayForm" action="#" method="get">
+        <label for="filename">Enter Filename:</label>
+        <input type="text" name="filename" id="filename" required>
+        <br>
+        <button type="button" onclick="displayImage()">Display</button>
+    </form>
+
+    <div id="imageContainer"></div>
+
+    <script>
+        function uploadImage() {
+            var fileInput = document.getElementById('image');
+            var file = fileInput.files[0];
+
+            var formData = new FormData();
+            formData.append('file', file);
+
+            fetch('http://localhost:8080/uploads', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('File uploaded successfully:', data);
+            })
+            .catch(error => {
+                console.error('Error uploading file:', error);
+            });
+        }
+
+        function displayImage() {
+            var filename = document.getElementById('filename').value;
+            var imageContainer = document.getElementById('imageContainer');
+            imageContainer.innerHTML = ''; // Clear previous image
+
+            var imageElement = document.createElement('img');
+            imageElement.src = 'http://localhost:8080/uploads/' + filename;
+            imageElement.alt = 'Image not found'; // Alt text if the image is not found
+            imageContainer.appendChild(imageElement);
+        }
+    </script>
+
+</body>
+</html>

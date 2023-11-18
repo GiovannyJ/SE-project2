@@ -1,6 +1,9 @@
 package models
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type Account struct {
 	ID       	int    	`json:"id"`
@@ -43,6 +46,14 @@ func (e *UpdateNotCompleteError) Error() string{
 type Images struct{
 	ID 		int `json:"id"`
 	ImgName string `json:"imgname"`
+	Size 	string `json:"size"`
+	Date 	string `json:"date"`
+}
+
+type FileUpload struct {
+	Name *string    `json:"name"`
+	Size *string     `json:"size"`
+	Date *time.Time `json:"date"`
 }
 
 type UpdateImages struct{
@@ -107,3 +118,8 @@ type UpdateComment struct{
 	Old Comment `json:"old"`
 	New Comment `json:"new"`
 }
+
+type JSONData struct{
+	Data interface{} `json:"data"`
+}
+
