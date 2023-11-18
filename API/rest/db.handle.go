@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,6 +14,8 @@ type account = s.Account
 type updateAcc = s.UpdateAccount
 type post = s.Posts
 type updatePost = s.UpdatePosts
+type comment = s.Comment
+type updateComment = s.UpdateComment
 // type images = s.Images
 // type updateImages = s.UpdateImages
 type loginData = s.LogIn
@@ -136,6 +137,100 @@ func GetPostsFullContext(c *gin.Context){
 	c.IndentedJSON(http.StatusOK, results)
 }
 
+
+/*
+*TESTED WORKING
+gets all comments under a post
+*/
+func GetPostsComments(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	id := c.Param("id")
+
+	postID, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid post ID"})
+		return
+	}
+
+	var query = make(map[string]interface{})
+
+	queryParams := map[string]string{
+		"id":         c.Query("id"),
+		"authorID":   c.Query("authorID"),
+		"numUp":      c.Query("numUp"), 
+		"numDown":    c.Query("numDown"),
+		"postedDate": c.Query("date"),
+		"order":      c.Query("order"),
+	}
+
+	queryKey := ""
+	for key, value := range queryParams {
+		if len(value) > 0 {
+			queryKey = key
+			break
+		}
+	}
+
+	if queryKey != "" {
+		query[queryKey] = queryParams[queryKey]
+	}
+
+	results, err := db.Comments_GET(query, postID)
+	if err != nil {
+		fmt.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		return
+	}
+	c.IndentedJSON(http.StatusOK, results)
+}
+
+/*
+*TESTED WORKING
+grabs all comments from post with comments full context
+*/
+func GetPostsCommentsFullContext(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	id := c.Param("id")
+
+	postID, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid post ID"})
+		return
+	}
+
+	var query = make(map[string]interface{})
+
+	queryParams := map[string]string{
+		"c.id": 				c.Query("c.id"), //comment id
+		"c.numUp":		 		c.Query("c.numUp"), //comment upvotes
+		"c.numDown":	 		c.Query("c.numDown"), //comment downvotes
+		"c.postedDate": 		c.Query("c.posteDate"), //comment posted date
+		"a2.id": 				c.Query("a2.id"), //comment author
+		"order":      			c.Query("order"),
+	}
+
+	queryKey := ""
+	for key, value := range queryParams {
+		if len(value) > 0 {
+			queryKey = key
+			break
+		}
+	}
+
+	if queryKey != "" {
+		query[queryKey] = queryParams[queryKey]
+	}
+
+	results, err := db.CommentsFullContext_GET(query, postID)
+	if err != nil {
+		fmt.Println(err)
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		return
+	}
+	c.IndentedJSON(http.StatusOK, results)
+}
+
+
 /*
 *=================POST METHOD HANDLERS==================
 */
@@ -197,6 +292,26 @@ func NewPost(c *gin.Context){
 	}
 	
 	c.IndentedJSON(http.StatusCreated, "post created")
+}
+
+func NewComment(c *gin.Context){
+	c.Header("Access-Control-Allow-Origin", "*")
+
+	var newComment comment
+
+	if err := c.BindJSON(&newComment); err != nil{
+		fmt.Println(err)
+		c.IndentedJSON(http.StatusBadRequest, nil)
+		return
+	}
+
+	if err := db.CreateNewComment(newComment); err != nil{
+		c.IndentedJSON(http.StatusInternalServerError, nil)
+		return
+	}
+
+	c.IndentedJSON(http.StatusCreated, "comment Created")
+	
 }
 
 /*
@@ -314,6 +429,33 @@ func UpdatePost(c *gin.Context) {
 }
 
 /*
+*TESTED WORKING
+UPDATES comment in database
+request must be shaped like updatecomment struct
+*/
+func UpdateComment(c *gin.Context){
+	c.Header("Access-Control-Allow-Origin", "*")
+	var upComment updateComment
+
+	if err := c.BindJSON(&upComment); err != nil{
+		c.IndentedJSON(http.StatusBadRequest, nil)
+		return
+	}
+
+	err := db.UpdateData(upComment.Old, upComment.New)
+
+	if err != nil{
+		if _, ok := err.(*s.UpdateNotCompleteError); ok{
+			c.IndentedJSON(http.StatusFailedDependency, nil)
+		}else{
+			c.IndentedJSON(http.StatusInternalServerError, nil)
+		}
+		return
+	}
+	c.IndentedJSON(http.StatusOK, upComment.New)
+}
+
+/*
 *=================DELETE METHOD HANDLERS==================
 */
 
@@ -363,4 +505,22 @@ func DelPost(c *gin.Context){
 	}
 
     c.IndentedJSON(http.StatusOK, fmt.Sprintf("post %d deleted", intID))
+}
+
+func DelComment(c *gin.Context){
+	c.Header("Access-Control-Allow-Origin", "*")
+	id := c.Param("id")
+	intId, err := strconv.Atoi(id)
+	if err != nil{
+		c.IndentedJSON(http.StatusBadRequest, nil)
+		return
+	}
+	
+	err = db.DeleteComment(intId)
+	if err != nil{
+		c.IndentedJSON(http.StatusInternalServerError, nil)
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, fmt.Sprintf("comment %d deleted", intId))
 }

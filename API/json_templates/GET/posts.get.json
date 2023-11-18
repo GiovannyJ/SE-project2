@@ -1,0 +1,57 @@
+[
+    {
+        "id": 2,
+        "title": "Post 2",
+        "descr": "This is post 2",
+        "genre": "Science",
+        "authorId": 2,
+        "numUp": 5,
+        "numDown": 0,
+        "picId": 2,
+        "postedDate": "2023-11-09 00:00:00"
+    },
+    {
+        "id": 3,
+        "title": "Post 3",
+        "descr": "A fun post about nature.",
+        "genre": "Nature",
+        "authorId": 3,
+        "numUp": 12,
+        "numDown": 3,
+        "picId": 3,
+        "postedDate": "2023-11-09 00:00:00"
+    },
+    {
+        "id": 5,
+        "title": "using computers for dummys",
+        "descr": "a post about how to not be dumb with computers",
+        "genre": "Technology",
+        "authorId": 1,
+        "numUp": 0,
+        "numDown": 0,
+        "picId": 1,
+        "postedDate": "2023-11-09 00:00:00"
+    },
+    {
+        "id": 7,
+        "title": "First Post",
+        "descr": "This is the content of the first post.",
+        "genre": "Technology",
+        "authorId": 1,
+        "numUp": 0,
+        "numDown": 0,
+        "picId": 1,
+        "postedDate": "2023-11-17 10:30:00"
+    },
+    {
+        "id": 8,
+        "title": "Second Post",
+        "descr": "A story about something interesting.",
+        "genre": "Science",
+        "authorId": 2,
+        "numUp": 0,
+        "numDown": 0,
+        "picId": 2,
+        "postedDate": "2023-11-18 12:45:00"
+    }
+]

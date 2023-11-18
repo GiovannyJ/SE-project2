@@ -40,3 +40,5 @@ ROUTES:
     DELETE ROUTES:
         account/delete ->  DELETE :: delete account
         posts/delete -> DELETE :: delete post using post ID
+
+need to check why quey isnt running for multiple params

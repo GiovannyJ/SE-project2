@@ -1,0 +1,76 @@
+[
+    {
+        "commentInfo": {
+            "id": 4,
+            "postID": 8,
+            "authorID": 0,
+            "content": "Interesting story. Looking forward to more!",
+            "numUp": 0,
+            "numDown": 0,
+            "postedDate": "2023-11-18 13:00:00"
+        },
+        "commenterInfo": {
+            "id": 1,
+            "email": "john.doe@example.com",
+            "username": "johndoe",
+            "accesslevel": "user"
+        },
+        "postInfo": {
+            "id": 8,
+            "title": "Second Post",
+            "descr": "A story about something interesting.",
+            "genre": "Science",
+            "authorId": 0,
+            "numUp": 0,
+            "numDown": 0,
+            "postedDate": "2023-11-18 12:45:00"
+        },
+        "postAuthorInfo": {
+            "id": 2,
+            "email": "alice.smith@example.com",
+            "username": "alicesmith",
+            "accesslevel": "verified user"
+        },
+        "imageInfo": {
+            "id": 0,
+            "imgname": "image2.png"
+        }
+    },
+    {
+        "commentInfo": {
+            "id": 6,
+            "postID": 8,
+            "authorID": 0,
+            "content": "THIS WAS NOT INTERESTING AT ALL KYS",
+            "numUp": 100,
+            "numDown": 0,
+            "postedDate": "2023-11-18 13:00:00"
+        },
+        "commenterInfo": {
+            "id": 1,
+            "email": "john.doe@example.com",
+            "username": "johndoe",
+            "accesslevel": "user"
+        },
+        "postInfo": {
+            "id": 8,
+            "title": "Second Post",
+            "descr": "A story about something interesting.",
+            "genre": "Science",
+            "authorId": 0,
+            "numUp": 0,
+            "numDown": 0,
+            "postedDate": "2023-11-18 12:45:00"
+        },
+        "postAuthorInfo": {
+            "id": 2,
+            "email": "alice.smith@example.com",
+            "username": "alicesmith",
+            "accesslevel": "verified user"
+        },
+        "imageInfo": {
+            "id": 0,
+            "imgname": "image2.png"
+        }
+    }
+]

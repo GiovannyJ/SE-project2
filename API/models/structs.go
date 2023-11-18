@@ -76,7 +76,7 @@ type FullContextPost struct{
 	NumUp 		int 	`json:"numUp"`
 	NumDown 	int 	`json:"numDown"`
 	ImageInfo 	Images 	`json:"picInfo"`
-	PostedDate 	string		`json:"postedDate"`
+	PostedDate 	string	`json:"postedDate"`
 }
 
 type LogIn struct {
@@ -85,6 +85,25 @@ type LogIn struct {
 	Password *string `json:"password"`
 }
 
-type JSONDate struct{
-	Data interface{} `json:"data"`
+type Comment struct{
+	ID 			int 	`json:"id"`
+	PostID		int		`json:"postID"`
+	AuthorID 	int 	`json:"authorID"`
+	Content		string 	`json:"content"`
+	NumUp 		int 	`json:"numUp"`
+	NumDown 	int 	`json:"numDown"`
+	PostedDate 	string	`json:"postedDate"`
+}
+
+type CommentFullContext struct{
+	CommentInfo Comment `json:"commentInfo"`
+	CommenterInfo Account `json:"commenterInfo"`
+	PostInfo Posts `json:"postInfo"`
+	PostAuthorInfo Account `json:"postAuthorInfo"`
+	ImageInfo Images `json:"imageInfo"`
+}
+
+type UpdateComment struct{
+	Old Comment `json:"old"`
+	New Comment `json:"new"`
 }

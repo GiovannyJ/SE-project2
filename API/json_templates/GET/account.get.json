@@ -1,0 +1,13 @@
+[
+    {
+        "id": 1,
+        "fname": "John",
+        "lname": "Doe",
+        "fullname": "John Doe",
+        "email": "john.doe@example.com",
+        "pwd": "password123",
+        "pnum": 1234567890,
+        "username": "johndoe",
+        "accesslevel": "user"
+    }
+]

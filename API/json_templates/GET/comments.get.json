@@ -1,0 +1,20 @@
+[
+    {
+        "id": 4,
+        "postID": 8,
+        "authorID": 1,
+        "content": "Interesting story. Looking forward to more!",
+        "numUp": 0,
+        "numDown": 0,
+        "postedDate": "2023-11-18 13:00:00"
+    },
+    {
+        "id": 6,
+        "postID": 8,
+        "authorID": 1,
+        "content": "THIS WAS NOT INTERESTING AT ALL KYS",
+        "numUp": 100,
+        "numDown": 0,
+        "postedDate": "2023-11-18 13:00:00"
+    }
+]

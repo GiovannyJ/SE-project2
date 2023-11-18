@@ -15,13 +15,14 @@ func API(){
 	router.GET("/posts", GetPosts)
 	router.GET("/posts/fullcontext", GetPostsFullContext)
 	router.GET("/posts/:id/comments", GetPostsComments)
+	router.GET("/posts/:id/commentsfullcontext", GetPostsCommentsFullContext)
 
 	/*
 	*=========================POST METHODS================================
 	*/
 	router.POST("/account/new", NewAccount)
 	router.POST("/posts/create", NewPost)
-	router.POST("/posts/:id/comment", NewComment)
+	router.POST("/comment/new", NewComment)
 	router.POST("/login",Login)
 
 	/*
@@ -29,14 +30,14 @@ func API(){
 	*/
 	router.PATCH("/account/update", UpdateAcc)
 	router.PATCH("/posts/update",UpdatePost)
-	router.PATCH("/posts/:id/comment", UpdateComment)
+	router.PATCH("/comment/update", UpdateComment)
 
 	/*
 	*=========================DELETE METHODS================================
 	*/
 	router.DELETE("/account/delete/:id", DelAccount)
 	router.DELETE("/posts/delete/:id", DelPost)
-	router.DELETE("/posts/:id/delete/:id", DelComment)
+	router.DELETE("/posts/delete/comment/:id", DelComment)
 
 
 	//*activate the server

@@ -13,6 +13,8 @@ import (
 
 type account = s.Account
 type posts = s.Posts
+type comments = s.Comment
+type commentfullcontext = s.CommentFullContext
 type fullcontextpost = s.FullContextPost
 type images = s.Images
 
@@ -74,6 +76,7 @@ func Accounts_GET(params map[string]interface{}) ([]account) {
 		}
 		sql.WriteString(orderby)
     }
+
     result, err := connect(sql.String())
     if err != nil {
         return nil
@@ -236,6 +239,171 @@ func PostsFullContext_GET(params map[string]interface{}) ([]fullcontextpost, err
 }
 
 
+/**/
+func Comments_GET(params map[string]interface{}, postID int) ([]comments, error) {
+    var sql strings.Builder
+    sql.WriteString("SELECT * FROM COMMENTS")
+
+	if len(params) > 0 {
+		var conditions []string
+		var orderby string
+        for name, value := range params {
+			if name == "order"{
+				orderby = fmt.Sprintf(" ORDER BY %s", value)
+				}else{
+				condition := fmt.Sprintf("%s='%v'", name, value)
+				conditions = append(conditions, condition)
+			}
+        }
+		if len(conditions) > 0{
+			sql.WriteString(" WHERE ")
+			sql.WriteString(strings.Join(conditions, " AND "))
+			postIDQuery := fmt.Sprintf(" AND postID = %d", postID)
+			sql.WriteString(postIDQuery)
+		}else{
+			postIDQuery := fmt.Sprintf(" WHERE postID = %d", postID)
+			sql.WriteString(postIDQuery)
+		}
+		sql.WriteString(orderby)
+    }else{
+		postIDQuery := fmt.Sprintf(" WHERE postID = %d", postID)
+		sql.WriteString(postIDQuery)
+	}
+
+
+    result, err := connect(sql.String())
+    if err != nil {
+        return nil, err
+    }
+    defer result.Close()
+
+    var values []comments
+    
+    for result.Next(){
+		var t comments
+		if err := result.Scan(
+				&t.ID, 
+				&t.PostID,
+				&t.AuthorID,
+				&t.Content,
+				&t.NumUp,
+				&t.NumDown,
+				&t.PostedDate,
+				); err != nil{
+			return values, nil
+		}
+		values = append(values, t)
+	}
+	
+    if err = result.Err(); err != nil{
+		return values, err
+    }
+        
+    return values, nil
+}
+
+
+/***/
+func CommentsFullContext_GET(params map[string]interface{}, postID int) ([]commentfullcontext, error) {
+    var sql strings.Builder
+	sql.WriteString("SELECT c.id, c.numUp as numUpComments, c.numDown as numDownComments, ")
+	sql.WriteString("c.postedDate as commentPostedDate, c.content, p.id as postID, p.title,")
+	sql.WriteString("p.descr, p.genre, p.numUp, p.numDown, p.postedDate as postPostedDate,")
+	sql.WriteString("i.imgname, ")
+	sql.WriteString("a.username as posterAuthor, a.email as posterEmail, a.id, a.accesslvl  ")
+	sql.WriteString(",a2.username as commenterAuthor, a2.email as commenterEmail, a2.id, a2.accesslvl")
+	sql.WriteString(" FROM COMMENTS c" )
+	sql.WriteString(" INNER JOIN POSTS p ON c.postID = p.id")
+	sql.WriteString(" INNER JOIN IMAGES i ON p.picID = i.id" )
+	sql.WriteString(" INNER JOIN ACCOUNTS a ON a.id  = p.authorID" )
+	sql.WriteString(" INNER JOIN ACCOUNTS a2 on a2.id = c.authorID")
+
+
+    if len(params) > 0 {
+		var conditions []string
+		var orderby string
+        for name, value := range params {
+			if name == "order"{
+				orderby = fmt.Sprintf(" ORDER BY %s", value)
+				}else{
+				condition := fmt.Sprintf("%s='%v'", name, value)
+				conditions = append(conditions, condition)
+			}
+        }
+		if len(conditions) > 0{
+			sql.WriteString(" WHERE ")
+			sql.WriteString(strings.Join(conditions, " AND "))
+			postIDQuery := fmt.Sprintf(" AND postID = %d", postID)
+			sql.WriteString(postIDQuery)
+		}else{
+			postIDQuery := fmt.Sprintf(" WHERE postID = %d", postID)
+			sql.WriteString(postIDQuery)
+		}
+		sql.WriteString(orderby)
+    }else{
+		postIDQuery := fmt.Sprintf(" WHERE postID = %d", postID)
+		sql.WriteString(postIDQuery)
+	}
+
+	result, err := connect(sql.String())
+    if err != nil {
+        return nil, err
+    }
+    defer result.Close()
+
+    var values []commentfullcontext
+
+    for result.Next() {
+        var t commentfullcontext
+		var commentInfo comments
+		var postAuthor account
+		var commentAuthor account
+		var i images
+		var postInfo posts
+
+        if err := result.Scan(
+			&commentInfo.ID,
+			&commentInfo.NumUp,
+			&commentInfo.NumDown,
+			&commentInfo.PostedDate,
+			&commentInfo.Content,
+			&postInfo.ID,
+			&postInfo.Title,
+			&postInfo.Descr,
+			&postInfo.Genre,
+			&postInfo.NumUp,
+			&postInfo.NumDown,
+			&postInfo.PostedDate,
+			&i.ImgName,
+			&postAuthor.Username,
+			&postAuthor.Email,
+			&postAuthor.ID,
+			&postAuthor.Accesslvl,
+			&commentAuthor.Username,
+			&commentAuthor.Email,
+			&commentAuthor.ID,
+			&commentAuthor.Accesslvl,
+        ); err != nil {
+            return values, err
+        }
+		t.CommentInfo = commentInfo
+		t.CommenterInfo = commentAuthor
+		t.PostInfo = postInfo
+		t.PostAuthorInfo = postAuthor
+		t.ImageInfo = i
+		t.CommentInfo.PostID = t.PostInfo.ID
+
+        values = append(values, t)
+    }
+
+    if err = result.Err(); err != nil {
+        return values, err
+    }
+
+    return values, nil
+}
+
+
 //**+++++++++++++++++++++INSERT QUERIES++++++++++++++++++++++++++++
 
 /*
@@ -277,6 +445,21 @@ RETURN: error when applicable nil when not
 func CreateNewPost(data posts) error {
 	sql := fmt.Sprintf("INSERT INTO POSTS(title, descr, genre, authorID, picID, postedDate) VALUES('%s', '%s', '%s', '%d', 1, CURDATE())",
 		 data.Title, data.Descr, data.Genre, data.AuthorID)
+	result, err := connect(sql)
+	if err != nil {
+	    return err
+	}
+	defer result.Close()
+
+	return nil
+}
+
+/*
+*
+*/
+func CreateNewComment(data comments) error {
+	sql := fmt.Sprintf("INSERT INTO COMMENTS(postID, authorID, content, postedDate) VALUES('%d', '%d', '%s', CURDATE())",
+		 data.PostID, data.AuthorID, data.Content)
 	result, err := connect(sql)
 	if err != nil {
 	    return err
@@ -396,6 +579,8 @@ func UpdateData(oldData interface{}, newData interface{}) error {
             tableName = "ACCOUNTS"
 		case reflect.TypeOf(posts{}):
 			tableName = "POSTS"
+		case reflect.TypeOf(comments{}):
+			tableName = "COMMENTS"
     }
 
     for i := 0; i < newType.NumField(); i++ {
@@ -479,6 +664,20 @@ func DeletePost(user int) error{
 	sql := fmt.Sprintf("DELETE FROM POSTS WHERE id=%d", user)
 	result, err := connect(sql)
 	
+	if err != nil{
+		return err
+	}
+	defer result.Close()
+	return nil
+}
+
+/*
+*
+*/
+func DeleteComment(commentID int) error{
+	sql := fmt.Sprintf("DELETE FROM COMMENTS WHERE id= %d ", commentID)
+	result, err := connect(sql)
+
 	if err != nil{
 		return err
 	}
