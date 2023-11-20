@@ -4,14 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Get Data and Load into Table</title>
-  <script src="../../logic/logic.js"></script>
+  <script src="../../logic/GET.logic.js"></script>
 </head>
 <body>
 
 <!-- ALL WORKING -->
-<button onclick="getAccount()">Get Account</button>
-<button onclick="getFullContextPosts()">Get Full Context Posts</button>
-<button onclick="getPosts()">Get Posts</button>
+<div>
+  <h2>Query string for all</h2>
+  sample query:
+  <ul>
+  <li>id=3</li>
+  <li>id=5&genre=Technology</li>
+  <li>order=asc</li>
+  </ul>
+  <input type="text" id="queryString" placeholder="query string">
+</div>
+<div>
+  <h2>Account</h2>
+  <button onclick="getAccount()">Get Account</button>
+</div>
+<div>
+  <h2>Posts</h2>
+  <button onclick="getFullContextPosts()">Get Full Context Posts</button>
+  <button onclick="getPosts()">Get Posts</button>
+</div>
+<div>
+  <br>
+</div>
+<div>
+  <h2>Comments</h2>
+  <button onclick="getComments()">Get Comments</button>
+  <button onclick="getCommentsFullContext()">Get Comments Full Context</button>
+  <input type="text" id="postId" placeholder="POST ID FOR COMMENTS">
+</div>
+<br>
+<div>
+  <h2>Images</h2>
+      <form id="displayForm" action="#" method="get">
+          <label for="filename">Enter Filename:</label>
+          <input type="text" name="filename" id="filename" required>
+          <button type="button" onclick="displayImage()">Display</button>
+      </form>
+  
+      <div id="imageContainer"></div>
+</div>
 
 <table border="1">
   <thead>

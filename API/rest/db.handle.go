@@ -253,6 +253,8 @@ Request body shaped like account struct without id and access level
 */
 func NewAccount(c *gin.Context){
 	c.Header("Access-Control-Allow-Origin", "*")
+    c.Header("Access-Control-Allow-Methods", "POST, OPTIONS")
+    c.Header("Access-Control-Allow-Headers", "Content-Type")
 	
 	var newAcc account
 

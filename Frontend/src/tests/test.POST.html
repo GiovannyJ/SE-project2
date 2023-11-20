@@ -4,11 +4,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>POST Requests</title>
-        <script src="../../logic/logic.js"></script>
+        <script src="../../logic/POST.logic.js"></script>
     </head>
     <body>
 
-        <!-- NOT WORKING NEED TO MAKE SURE THAT BINDS TO DATA CORRECTLY -->
+<!-- WORKING -->
 <h2>Create Account</h2>
 <form id="accountForm">
     <label for="accountFname">First Name:</label>
@@ -16,9 +16,6 @@
   
     <label for="accountLname">Last Name:</label>
     <input type="text" id="accountLname" name="Lname" required><br>
-  
-    <label for="accountFullname">Full Name:</label>
-    <input type="text" id="accountFullname" name="Fullname" required><br>
   
     <label for="accountEmail">Email:</label>
     <input type="email" id="accountEmail" name="Email" required><br>
@@ -37,12 +34,9 @@
 
 <table id="accountTable" border="1"></table>
 
-<!-- NOT WORKING NEED TO MAKE SURE THAT IT BINDS TO FORM DATA CORRECTLY -->
+<!-- WORKING -->
 <h2>Create Post</h2>
 <form id="postForm">
-    <label for="postId">Post ID:</label>
-    <input type="text" id="postId" name="id" required><br>
-  
     <label for="postTitle">Title:</label>
     <input type="text" id="postTitle" name="title" required><br>
   
@@ -57,11 +51,31 @@
   
     <label for="postPicId">Picture ID:</label>
     <input type="text" id="postPicId" name="picId" required><br>
+
+    <label for="image">Select Image:</label>
+    <input type="file" name="image" id="image" accept="image/*" required>
+    <br>
   
     <button type="button" onclick="createPost()">Create Post</button>
 </form>
-
 <table id="postTable" border="1"></table>
+
+<!-- WORKING -->
+<h2>Create Comment</h2>
+<form id="commentForm">
+
+  <label for="commentContent">Content:</label>
+  <textarea id="commentContent" name="commentContent" required></textarea><br>
+
+  <label for="commentAuthorId">Author ID:</label>
+  <input type="text" id="commentAuthorId" name="commentAuthorId" required><br>
+
+  <label for="postId">Post ID:</label>
+  <input type="text" id="postId" name="postId" required><br>
+
+  <button type="button" onclick="createNewComment()">Create Comment</button>
+</form>
+<table id="commentTable" border="1"></table>
 
 <!-- WORKING PROPERLY -->
 <h2>Login</h2>

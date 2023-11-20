@@ -1,0 +1,56 @@
+package conn
+func UpdateData(oldData interface{}, newData interface{}) error {
+    var (
+        tableName string
+        setValues []string
+        whereValues []string
+    )
+    
+    oldType := reflect.TypeOf(oldData)
+    oldValue := reflect.ValueOf(oldData)
+    newType := reflect.TypeOf(newData)
+    newValue := reflect.ValueOf(newData)
+
+    switch oldType {
+        case reflect.TypeOf(account{}):
+            tableName = "ACCOUNTS"
+		case reflect.TypeOf(posts{}):
+			tableName = "POSTS"
+		case reflect.TypeOf(comments{}):
+			tableName = "COMMENTS"
+    }
+
+    for i := 0; i < newType.NumField(); i++ {
+        field := newType.Field(i)
+        columnName := strings.ToLower(field.Name)
+        columnValue := newValue.Field(i).Interface()
+
+        setValues = append(setValues, fmt.Sprintf("%s='%v'", columnName, columnValue))
+    }
+
+    for i := 0; i < oldType.NumField(); i++ {
+		field := oldType.Field(i)
+		columnName := strings.ToLower(field.Name)
+		columnValue := oldValue.Field(i).Interface()
+	
+		whereValues = append(whereValues, fmt.Sprintf("%s='%v'", columnName, columnValue))
+	}
+
+    sql := fmt.Sprintf("UPDATE %s SET %s WHERE %s", tableName, strings.Join(setValues, ","), strings.Join(whereValues, " AND "))
+    fmt.Println(sql)
+	result, err := connect(sql)
+    if err != nil {
+        return err
+    }
+    defer result.Close()
+	
+	if newType == reflect.TypeOf(account{}) {
+		//check if new data is on database and old data is not on database
+        if checkUpdate(newData.(account)) && !checkUpdate(oldData.(account)) {
+            return nil
+        } else {
+            return &s.UpdateNotCompleteError{Msg: "Update Was not complete"}
+        }
+    }
+    return nil
+}

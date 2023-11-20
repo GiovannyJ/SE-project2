@@ -28,25 +28,29 @@
     <div id="imageContainer"></div>
 
     <script>
-        function uploadImage() {
-            var fileInput = document.getElementById('image');
-            var file = fileInput.files[0];
+        async function uploadImage() {
+  try {
+    var fileInput = document.getElementById('image');
+    var file = fileInput.files[0];
 
-            var formData = new FormData();
-            formData.append('file', file);
+    var formData = new FormData();
+    formData.append('file', file);
 
-            fetch('http://localhost:8080/uploads', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('File uploaded successfully:', data);
-            })
-            .catch(error => {
-                console.error('Error uploading file:', error);
-            });
-        }
+    const response = await fetch('http://localhost:8080/uploads', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const data = await response.json();
+    console.log('File uploaded successfully:', data);
+
+    return data; // Return the response data
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    throw error; // Re-throw the error to handle it at the calling site if needed
+  }
+}
+
 
         function displayImage() {
             var filename = document.getElementById('filename').value;

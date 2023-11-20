@@ -505,8 +505,8 @@ DATA: model after Posts struct
 RETURN: error when applicable nil when not
 */
 func CreateNewPost(data posts) error {
-	sql := fmt.Sprintf("INSERT INTO POSTS(title, descr, genre, authorID, picID, postedDate) VALUES('%s', '%s', '%s', '%d', 1, CURDATE())",
-		 data.Title, data.Descr, data.Genre, data.AuthorID)
+	sql := fmt.Sprintf("INSERT INTO POSTS(title, descr, genre, authorID, picID, postedDate) VALUES('%s', '%s', '%s', '%d', '%d', CURDATE())",
+		 data.Title, data.Descr, data.Genre, data.AuthorID, data.PicID)
 	result, err := connect(sql)
 	if err != nil {
 	    return err
@@ -532,6 +532,10 @@ func CreateNewComment(data comments) error {
 	return nil
 }
 
+/*
+*TESTED WORKING
+uploads image information into the database
+*/
 func CreateNewImage(data images) error{
 	sql := fmt.Sprintf("INSERT INTO IMAGES(imgname, size, date) VALUES('%s', '%s', CURDATE())",
 			data.ImgName, data.Size)
@@ -638,25 +642,26 @@ RETURN: error if applicable
 */
 func UpdateData(oldData interface{}, newData interface{}) error {
     var (
-        tableName string
-        setValues []string
+        tableName   string
+        setValues   []string
         whereValues []string
     )
-    
+
     oldType := reflect.TypeOf(oldData)
     oldValue := reflect.ValueOf(oldData)
     newType := reflect.TypeOf(newData)
     newValue := reflect.ValueOf(newData)
 
     switch oldType {
-        case reflect.TypeOf(account{}):
-            tableName = "ACCOUNTS"
-		case reflect.TypeOf(posts{}):
-			tableName = "POSTS"
-		case reflect.TypeOf(comments{}):
-			tableName = "COMMENTS"
+    case reflect.TypeOf(account{}):
+        tableName = "ACCOUNTS"
+    case reflect.TypeOf(posts{}):
+        tableName = "POSTS"
+    case reflect.TypeOf(comments{}):
+        tableName = "COMMENTS"
     }
 
+    // Loop through fields of newType to construct SET part of the query
     for i := 0; i < newType.NumField(); i++ {
         field := newType.Field(i)
         columnName := strings.ToLower(field.Name)
@@ -665,53 +670,26 @@ func UpdateData(oldData interface{}, newData interface{}) error {
         setValues = append(setValues, fmt.Sprintf("%s='%v'", columnName, columnValue))
     }
 
+    // Only include id from oldType in WHERE clause
     for i := 0; i < oldType.NumField(); i++ {
-		field := oldType.Field(i)
-		columnName := strings.ToLower(field.Name)
-		columnValue := oldValue.Field(i).Interface()
-	
-		whereValues = append(whereValues, fmt.Sprintf("%s='%v'", columnName, columnValue))
-	}
+        field := oldType.Field(i)
+        columnName := strings.ToLower(field.Name)
+        if columnName == "id" {
+            columnValue := oldValue.Field(i).Interface()
+            whereValues = append(whereValues, fmt.Sprintf("%s='%v'", columnName, columnValue))
+        }
+    }
 
     sql := fmt.Sprintf("UPDATE %s SET %s WHERE %s", tableName, strings.Join(setValues, ","), strings.Join(whereValues, " AND "))
+
     result, err := connect(sql)
     if err != nil {
         return err
     }
     defer result.Close()
-	
-	if newType == reflect.TypeOf(account{}) {
-		//check if new data is on database and old data is not on database
-        if checkUpdate(newData.(account)) && !checkUpdate(oldData.(account)) {
-            return nil
-        } else {
-            return &s.UpdateNotCompleteError{Msg: "Update Was not complete"}
-        }
-    }
 
-
+    
     return nil
-}
-//*RETURN: true if update was made properly
-func checkUpdate(newData account) bool{
-	exist_acc := map[string]interface{}{
-		"ID"       : newData.ID,
-		"Fname"    : newData.Fname,
-		"Lname"    : newData.Lname,
-		"Fullname" : newData.Fullname,
-		"Email"    : newData.Email,
-		"Pwd" 	   : newData.Pwd,
-		"Pnum"     : newData.Pnum,
-		"Username" : newData.Username,
-		"Accesslvl": newData.Accesslvl,
-	}
-	
-	results, err := Accounts_GET(exist_acc)
-	if err != nil{
-		return false
-	}
-	
-	return len(results) > 0
 }
 
 //**+++++++++++++++++++++DELETE QUERIES++++++++++++++++++++++++++++

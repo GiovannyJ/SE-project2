@@ -2,11 +2,17 @@ package rest
 
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-func API(){
+func API() {
 	router := gin.Default()
+
+	// Use CORS middleware
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"*"}  // You might want to limit this to specific origins in production
+	router.Use(cors.New(config))
 
 	/*
 	*=========================GET METHODS================================

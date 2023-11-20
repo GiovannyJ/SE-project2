@@ -60,12 +60,6 @@ func UploadFile(c *gin.Context) {
 	fileSize := strconv.Itoa(int(fileInfo.Size())) + " bytes"
 	fileDate := fileInfo.ModTime()
 	
-	
-	data :=  fileinfo{
-		Name: &fileName,
-		Size: &fileSize,
-		Date: &fileDate,
-	}
 	newImg := s.Images{
 		ImgName: fileName,
 		Size: fileSize,
@@ -73,8 +67,18 @@ func UploadFile(c *gin.Context) {
 	}
 	
 	db.CreateNewImage(newImg)
+
+	var query = make(map[string]interface{})
+	query["imgname"] = fileName
+
+	imgInfo, err  := db.Images_GET(query)
+	if err != nil{
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+		return
+	}
 	
-	c.IndentedJSON(http.StatusOK, data)
+	
+	c.IndentedJSON(http.StatusOK, imgInfo)
 }
 
 

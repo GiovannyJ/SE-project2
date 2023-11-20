@@ -12,7 +12,7 @@ type Account struct {
 	Fullname 	string 	`json:"fullname,omitempty"`
 	Email    	string 	`json:"email,omitempty"`
 	Pwd 	 	string 	`json:"pwd,omitempty"`
-	Pnum     	int    	`json:"pnum,omitempty"`
+	Pnum     	int    	`json:"pnum"`
 	Username 	string 	`json:"username"`
 	Accesslvl 	string	`json:"accesslevel"`
 }
@@ -122,4 +122,3 @@ type UpdateComment struct{
 type JSONData struct{
 	Data interface{} `json:"data"`
 }
-

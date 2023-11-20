@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Delete Data</title>
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Data</title>
+    <script src="../../logic/DELETE.logic.js"></script>
+  </head>
 <body>
 
 <h2>Delete Accounts</h2>
@@ -18,9 +19,13 @@
 <input type="text" id="postId" placeholder="Enter Post ID">
 <button onclick="deletePost()">Delete Post</button>
 
-<script src="../../logic/logic.js">
 
-</script>
+<h2>Delete Comment</h2>
+<label for="commentId">Post ID:</label>
+<input type="text" id="commentId" placeholder="Enter Comment ID">
+<button onclick="deleteComment()">Delete Comment</button>
+
+
 
 </body>
 </html>
