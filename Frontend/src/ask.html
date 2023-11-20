@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title></title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#"><img src="logo2.png" class="logo"></a>
+            <ul class="rest">
+                <li>
+                    <div id="search-box">
+                        <input type="text" id="search-input" placeholder="Search...">
+                        <button id="search-button" onclick="getPosts()">Search</button>
+                    </div>   
+                </li>
+                <li><a href="#" class="nav-button1">About Us</a></li>
+                <li><a href="#" class="nav-button1">Support</a></li>
+                <li><a href="login.html" class="nav-button2">Sign In</a></li>
+                <li><a href="createacct.html" class="nav-button2">Create Account</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+       <div id="forum">
+        <h2>Create Post</h2>
+        <form id="postForm">
+            <label for="postTitle">Title:</label><br>
+            <input type="text" id="postTitle" name="title" required><br>
+            <br>
+            <label for="postDescr">Description:</label><br>
+            <textarea id="postDescr" rows=12 name="descr" required></textarea><br>
+            <br>
+            <label for="postGenre">Genre:</label><br>
+            <input type="text" id="postGenre" name="genre" required><br>
+          
+            <label for="postAuthorId">Author ID:</label><br>
+            <input type="text" id="postAuthorId" name="authorId" required><br>
+          
+            <label for="postPicId">Picture ID:</label><br>
+            <input type="text" id="postPicId" name="picId" required><br>
+        
+            <label for="image">Select Image:</label><br>
+            <input type="file" name="image" id="image" accept="image/*" required>
+            <br>
+            <br>
+            <button id ="createPost" type="button" onclick="createPost()"><strong>Create Post</strong></button>
+        </form>        
+
+       </div>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>
