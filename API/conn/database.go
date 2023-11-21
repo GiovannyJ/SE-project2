@@ -175,7 +175,7 @@ joined POSTS with ACCOUNTS and IMAGES
 */
 func PostsFullContext_GET(params map[string]interface{}) ([]fullcontextpost, error) {
     var sql strings.Builder
-    sql.WriteString("SELECT p.*, a.fullname, a.username, i.imgname FROM POSTS p")
+    sql.WriteString("SELECT p.*, a.fullname, a.username, a.accesslvl, i.imgname FROM POSTS p")
     sql.WriteString(" INNER JOIN ACCOUNTS a ON p.authorID = a.id")
     sql.WriteString(" INNER JOIN IMAGES i ON p.picID = i.id")
 
@@ -221,6 +221,7 @@ func PostsFullContext_GET(params map[string]interface{}) ([]fullcontextpost, err
 			&t.PostedDate,
             &author.Fullname,
             &author.Username,
+			&author.Accesslvl,
 			&image.ImgName,
         ); err != nil {
             return values, err
