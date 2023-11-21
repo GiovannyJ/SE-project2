@@ -60,6 +60,7 @@ async function createAccount() {
         descr: formData.get('descr'),
         genre: formData.get('genre'),
         authorId: parseInt(formData.get('authorId')),
+        picId: 1,
       };
   
       // Check if a file is selected
