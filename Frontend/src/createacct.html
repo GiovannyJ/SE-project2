@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <title>Create Account</title>
-    <script src="script.js"></script>
+    <script src="../logic/POST.logic.js" type="module"></script>
 </head>
 <body>
     <header>
@@ -30,31 +30,32 @@
             <h2>Create Account</h2>
             <form id="accountForm">
                 <label for="accountFname">First Name:</label><br>
-                <input type="text" id="accountFname" name="Fname" required><br>
+                <input type="text" id="Fname" name="Fname" required><br>
             
                 <label for="accountLname">Last Name:</label><br>
-                <input type="text" id="accountLname" name="Lname" required><br>
-            
-                <label for="accountFullname">Full Name:</label><br>
-                <input type="text" id="accountFullname" name="Fullname" required><br>
+                <input type="text" id="Lname" name="Lname" required><br>
             
                 <label for="accountEmail">Email:</label><br>
-                <input type="email" id="accountEmail" name="Email" required><br>
+                <input type="email" id="Email" name="Email" required><br>
             
                 <label for="accountPwd">Password:</label><br>
-                <input type="password" id="accountPwd" name="pwd" required><br>
+                <input type="password" id="pwd" name="pwd" required><br>
             
                 <label for="accountPnum">Phone Number:</label><br>
-                <input type="text" id="accountPnum" name="Pnum" required><br>
+                <input type="text" id="Pnum" name="Pnum" required><br>
             
                 <label for="accountUsername">Username:</label><br>
-                <input type="text" id="accountUsername" name="Username" required><br>
+                <input type="text" id="Username" name="Username" required><br>
 
-            <button type="button" onclick="createAccount()">Create Account</button>
+            <button type="button" id="createAccount">Create Account</button>
             </form>
         </div>
     </main>
     <footer>
     </footer>
 </body>
+<script type="module">
+    import { createAccount } from "../logic/POST.logic.js";
+    document.getElementById('createAccount').addEventListener('click', createAccount);
+  </script>
 </html>

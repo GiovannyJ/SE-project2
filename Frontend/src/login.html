@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <title>Sign In</title>
-    <script src="script.js"></script>
+    <script src="../logic/POST.logic.js"></script>
 </head>
 <body>
     <header>
@@ -29,17 +29,17 @@
         <br>
         <div id="login">
             <h2>Login</h2>
-            <form id="login">
-            <label for="uname">Username:</label><br>
-            <input type="text" id="uname" name="username" required><br>
+            <form id="loginForm" >
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" required><br>
 
-            <label for="psw">Password:</label><br>
-            <input type="password" id="psw" name="password" required><br>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required><br>
 
-            <label for="loginEmail">Email:</label><br>
-            <input type="text" id="loginEmail" name="email" required><br>
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email"><br>
 
-            <button type="button" onclick="login()">Login</button>
+                <button type="button" id="loginButton">Login</button>
             </form>
             <p>Forgot password? <a href="#forgotpassword"> Reset here.</a></p>
             <p>Don't have a Debug account? <a href="createacct.html"> Create one.</a></p>
@@ -48,4 +48,8 @@
     <footer>
     </footer>
 </body>
+<script type="module">
+    import { login } from "../logic/POST.logic.js";
+    document.getElementById('loginButton').addEventListener('click', login);
+  </script>
 </html>

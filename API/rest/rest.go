@@ -51,7 +51,7 @@ func API() {
 	router.GET("/uploads/:file", RetrieveFile)
 	router.GET("/fileinfo", GetFileInfo)
 	router.POST("/uploads", UploadFile)
-	router.PATCH("/filein")
+	// router.PATCH("/filein")
 
 
 	//*activate the server
