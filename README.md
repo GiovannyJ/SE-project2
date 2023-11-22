@@ -9,4 +9,4 @@ To run:
  cd API
  go run main.go
  ```
-The API is not running and the pages can be viewed
+The API is now running and the pages can be viewed
