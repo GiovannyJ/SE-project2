@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <title>Create Account</title>
     <script src="../logic/POST.logic.js" type="module"></script>
 </head>
+
 <body>
     <header>
         <nav>
@@ -16,7 +18,7 @@
                         <input type="text" id="search-input" placeholder="Search...">
                         <button id="search-button" onclick="searchDatabase()">Search</button>
                         <!--need to create searchDatabase() to search database for query-->
-                    </div>   
+                    </div>
                 </li>
                 <li><a href="#" class="nav-button1">About Us</a></li>
                 <li><a href="#" class="nav-button1">Support</a></li>
@@ -31,23 +33,23 @@
             <form id="accountForm">
                 <label for="accountFname">First Name:</label><br>
                 <input type="text" id="Fname" name="Fname" required><br>
-            
+
                 <label for="accountLname">Last Name:</label><br>
                 <input type="text" id="Lname" name="Lname" required><br>
-            
+
                 <label for="accountEmail">Email:</label><br>
                 <input type="email" id="Email" name="Email" required><br>
-            
+
                 <label for="accountPwd">Password:</label><br>
                 <input type="password" id="pwd" name="pwd" required><br>
-            
+
                 <label for="accountPnum">Phone Number:</label><br>
                 <input type="text" id="Pnum" name="Pnum" required><br>
-            
+
                 <label for="accountUsername">Username:</label><br>
                 <input type="text" id="Username" name="Username" required><br>
 
-            <button type="button" id="createAccount">Create Account</button>
+                <button type="button" id="createAccount">Create Account</button>
             </form>
         </div>
     </main>
@@ -57,5 +59,6 @@
 <script type="module">
     import { createAccount } from "../logic/POST.logic.js";
     document.getElementById('createAccount').addEventListener('click', createAccount);
-  </script>
+</script>
+
 </html>

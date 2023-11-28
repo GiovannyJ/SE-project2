@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <title>Sign In</title>
     <script src="../logic/POST.logic.js"></script>
 </head>
+
 <body>
     <header>
         <nav>
@@ -16,7 +18,7 @@
                         <input type="text" id="search-input" placeholder="Search...">
                         <button id="search-button" onclick="searchDatabase()">Search</button>
                         <!--need to create searchDatabase() to search database for query-->
-                    </div>   
+                    </div>
                 </li>
                 <li><a href="#" class="nav-button1">About Us</a></li>
                 <li><a href="#" class="nav-button1">Support</a></li>
@@ -29,7 +31,7 @@
         <br>
         <div id="login">
             <h2>Login</h2>
-            <form id="loginForm" >
+            <form id="loginForm">
                 <label for="username">Username:</label><br>
                 <input type="text" id="username" name="username" required><br>
 
@@ -52,5 +54,6 @@
 <script type="module">
     import { login } from "../logic/POST.logic.js";
     document.getElementById('loginButton').addEventListener('click', login);
-  </script>
+</script>
+
 </html>
