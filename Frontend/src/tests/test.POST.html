@@ -29,7 +29,7 @@
     <label for="accountUsername">Username:</label>
     <input type="text" id="accountUsername" name="Username" required><br>
 
-  <button type="button" onclick="createAccount()">Create Account</button>
+  <button type="button" id="createAccount">Create Account</button>
 </form>
 
 <table id="accountTable" border="1"></table>
@@ -53,7 +53,7 @@
     <input type="file" name="image" id="image" accept="image/*" required>
     <br>
   
-    <button type="button" onclick="createPost()">Create Post</button>
+    <button type="button" id="createPost">Create Post</button>
 </form>
 <table id="postTable" border="1"></table>
 
@@ -70,7 +70,7 @@
   <label for="postId">Post ID:</label>
   <input type="text" id="postId" name="postId" required><br>
 
-  <button type="button" onclick="createNewComment()">Create Comment</button>
+  <button type="button" id="createComment">Create Comment</button>
 </form>
 <table id="commentTable" border="1"></table>
 
@@ -86,11 +86,18 @@
   <label for="loginEmail">Email:</label>
   <input type="text" id="loginEmail" name="email" required><br>
 
-  <button type="button" onclick="login()">Login</button>
+  <button type="button" id="login">Login</button>
 </form>
 
 <table id="loginTable" border="1"></table>
 
 
 </body>
+<script type="module">
+  import { createAccount, createPost, createNewComment, login } from "../../logic/POST.logic.js";
+  document.getElementById('createAccount').addEventListener('click', createAccount)
+  document.getElementById('createPost').addEventListener('click', createPost);
+  document.getElementById('createComment').addEventListener('click', createNewComment);
+  document.getElementById('login').addEventListener('click', login);
+</script>
 </html>
