@@ -3,11 +3,12 @@ package conn
 import (
 	s "API/models"
 	"database/sql"
+	"errors"
 	"fmt"
 	"log"
 	"reflect"
 	"strings"
-	"errors"
+
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -65,7 +66,7 @@ func Accounts_GET(params map[string]interface{}) ([]account, error) {
         for name, value := range params {
 			if name == "order"{
 				orderby = fmt.Sprintf(" ORDER BY %s", value)
-				}else{
+			}else{
 				condition := fmt.Sprintf("%s='%v'", name, value)
 				conditions = append(conditions, condition)
 			}
@@ -76,7 +77,7 @@ func Accounts_GET(params map[string]interface{}) ([]account, error) {
 		}
 		sql.WriteString(orderby)
     }
-
+	
     result, err := connect(sql.String())
     if err != nil {
         return nil, err
@@ -196,6 +197,7 @@ func PostsFullContext_GET(params map[string]interface{}) ([]fullcontextpost, err
 		}
 		sql.WriteString(orderby)
     }
+	
 	result, err := connect(sql.String())
     if err != nil {
         return nil, err
@@ -701,10 +703,24 @@ DELETES ACCOUNT from database
 returns error if applicable
 */
 func DeleteAccount(user int) error{
-	sql := fmt.Sprintf("DELETE FROM ACCOUNTS WHERE id=%d", user)
-	result, err := connect(sql)
+	// sql := fmt.Sprintf("DELETE a, p, c FROM ACCOUNTS a LEFT JOIN POSTS p ON a.id = p.authorID LEFT JOIN COMMENTS c ON a.id = c.authorID WHERE a.id = %d;", user)
+	deleteCommentsFromPostsSQL := fmt.Sprintf("DELETE FROM COMMENTS WHERE postID IN (SELECT id FROM POSTS WHERE authorID = %d)", user)
+	deleteCommentsSQL := fmt.Sprintf("DELETE FROM COMMENTS WHERE authorID = %d", user)
+	deletePostsSQL := fmt.Sprintf("DELETE FROM POSTS WHERE authorID = %d", user)
+
+	deleteAccountSQL := fmt.Sprintf("DELETE FROM ACCOUNTS WHERE id = %d", user)
 	
-	if err != nil{
+	execute(deleteCommentsFromPostsSQL)
+	execute(deleteCommentsSQL)
+	execute(deletePostsSQL)
+	execute(deleteAccountSQL)
+	
+	return nil
+}
+
+func execute(sql string) error{
+	result, err := connect(sql)
+	if err !=nil{
 		return err
 	}
 	defer result.Close()

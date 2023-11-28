@@ -42,12 +42,12 @@ ROUTES:
         posts/delete -> DELETE :: delete post using post ID
 
 need to check why quey isnt running for multiple params
-FIX QUERY STRING 
-full context posts
-full context comments
+DONE FIX QUERY STRING 
+DONE full context posts
+DONE full context comments
 
 ERRORS WITH DISPLAYING DATA IN Frontend/src/test
-DELETE ALL POSTS ASSOCIATED WITH ACCOUNT??
+DONE DELETE ALL POSTS ASSOCIATED WITH ACCOUNT??
 
 MAKE SURE NAMES ARE UNIQUE IN THE DATABASE FOR IMAGES
 MAKE SURE THAT BLANK ACCOUNTS CANNOT BE CREATED

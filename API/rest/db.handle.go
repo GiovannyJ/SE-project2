@@ -41,20 +41,15 @@ func GetAccounts(c *gin.Context){
 		"fullname": c.Query("fullname"),
 		"email":    c.Query("email"),
 		"username": c.Query("username"),
+		"accesslvl": c.Query("accesslvl"),
 		"order":	c.Query("order"),
 	}
 	
-	queryKey := ""
-	for key, value := range queryParams {
-		if len(value) > 0 {
-			queryKey = key
-			break
-		}
-	}
-	
-	if queryKey != "" {
-		query[queryKey] = queryParams[queryKey]
-	}
+    for key, value := range queryParams {
+        if len(value) > 0 {
+            query[key] = value
+        }
+    }
 
 	results, err := db.Accounts_GET(query)
 	if err != nil{
@@ -78,24 +73,18 @@ func GetPosts(c *gin.Context){
 		"id":     		c.Query("id"),
 		"title":    	c.Query("title"),
 		"genre": 		c.Query("genre"),
-		"authorId":		c.Query("authorID"),
+		"authorID":		c.Query("authorID"),
 		"numUp":   		c.Query("numUp"),
 		"numDown":  	c.Query("numDown"),
 		"postedDate": 	c.Query("date"),
 		"order":		c.Query("order"),
 	}
 	
-	queryKey := ""
 	for key, value := range queryParams {
-		if len(value) > 0 {
-			queryKey = key
-			break
-		}
-	}
-	
-	if queryKey != "" {
-		query[queryKey] = queryParams[queryKey]
-	}
+        if len(value) > 0 {
+            query[key] = value
+        }
+    }
 
 	results, err := db.Posts_GET(query)
 	if err != nil{
@@ -122,24 +111,18 @@ func GetPostsFullContext(c *gin.Context){
 		"fullname": 	c.Query("fullname"),
 		"username": 	c.Query("username"),
 		"title":    	c.Query("title"),
-		"numupq":   	c.Query("numUp"),
-		"numdown":  	c.Query("numDown"),
+		"p.numUp":   	c.Query("numUp"),
+		"numDown":  	c.Query("numDown"),
 		"genre": 		c.Query("genre"),
 		"postedDate": 	c.Query("date"),
 		"order":		c.Query("order"),
 	}
 	
-	queryKey := ""
 	for key, value := range queryParams {
-		if len(value) > 0 {
-			queryKey = key
-			break
-		}
-	}
-	
-	if queryKey != "" {
-		query[queryKey] = queryParams[queryKey]
-	}
+        if len(value) > 0 {
+            query[key] = value
+        }
+    }
 
 	results, err := db.PostsFullContext_GET(query)
 	if err != nil{
@@ -175,17 +158,11 @@ func GetPostsComments(c *gin.Context) {
 		"order":      c.Query("order"),
 	}
 
-	queryKey := ""
 	for key, value := range queryParams {
-		if len(value) > 0 {
-			queryKey = key
-			break
-		}
-	}
-
-	if queryKey != "" {
-		query[queryKey] = queryParams[queryKey]
-	}
+        if len(value) > 0 {
+            query[key] = value
+        }
+    }
 
 	results, err := db.Comments_GET(query, postID)
 	if err != nil {
@@ -221,17 +198,11 @@ func GetPostsCommentsFullContext(c *gin.Context) {
 		"order":      			c.Query("order"),
 	}
 
-	queryKey := ""
 	for key, value := range queryParams {
-		if len(value) > 0 {
-			queryKey = key
-			break
-		}
-	}
-
-	if queryKey != "" {
-		query[queryKey] = queryParams[queryKey]
-	}
+        if len(value) > 0 {
+            query[key] = value
+        }
+    }
 
 	results, err := db.CommentsFullContext_GET(query, postID)
 	if err != nil {
