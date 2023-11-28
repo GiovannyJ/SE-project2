@@ -140,7 +140,7 @@ export async function createPost() {
   /**
    * creates comment in database 
   */
-  async function createNewComment() {
+  export async function createNewComment() {
     const formData = new FormData(document.getElementById('commentForm'));
     const url = 'http://localhost:8080/comment/new';
   
