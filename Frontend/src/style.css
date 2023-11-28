@@ -1,23 +1,25 @@
 /*Changes to body of all the pages*/
-body,html {
+body,
+html {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding:0;
+    padding: 0;
     background-color: whitesmoke;
 }
 
-header{
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 /*Changes made to guest nav*/
-.logo{
+.logo {
     float: left;
     width: 19%;
-    height:auto;
+    height: auto;
 }
+
 nav {
     float: right;
     width: 100%;
@@ -25,51 +27,54 @@ nav {
     padding: 0;
 
 }
+
 nav .rest {
-    float:right;
+    float: right;
 }
+
 nav ul {
     list-style: none;
 }
 
-nav li{
+nav li {
     display: inline-block;
 }
 
 header nav .nav-button1 {
     padding: 3px;
-    margin:10px;
+    margin: 10px;
 }
+
 header nav .nav-button2 {
     border-style: inset;
     border-radius: 8px;
-    border-color:#4d0000;
+    border-color: #4d0000;
     padding: 3px;
-    margin:10px;
+    margin: 10px;
 }
 
 nav a {
-    text-decoration:none;
+    text-decoration: none;
     font-size: large;
-    color:black;
+    color: black;
 }
 
 #search-box {
-    margin:0;
-    padding:5px;
-    margin-right:20px;
-    margin-left:20px;
-    float:center;
+    margin: 0;
+    padding: 5px;
+    margin-right: 20px;
+    margin-left: 20px;
+    float: center;
 }
 
 #search-input {
     width: 400px;
     height: 20px;
     padding: 5px;
-    margin:0;
+    margin: 0;
 }
 
-#pfp{
+#pfp {
     width: 30px;
     height: auto;
     margin-right: 10px;
@@ -83,66 +88,75 @@ nav a {
 }
 
 /*Changes for main forum pages*/
-#question-title ul{
+#question-title ul {
     list-style: none;
     display: flex;
 }
 
 #title {
-    border-style:solid; 
-    padding-right: 1000px;
+    border-style: solid;
+    width: 60%;
     border-radius: 5px;
 }
 
 
 #votes ul {
-    list-style:none;
-    display:flex;
+    list-style: none;
+    display: flex;
 }
 
-#votes img{
+#votes img {
     width: 30px;
     height: auto;
-    
+
 }
 
 #answer {
     border-style: solid;
     border-radius: 5px;
     margin: 30px;
-    padding-left:10px;
+    padding-left: 10px;
     padding-right: 10px;
 }
 
 /*Changes made to create acct page*/
 #createacct {
+    padding-top: 5%;
     text-align: center;
 }
 
 /*Changes made to login page*/
-#login{
+#login {
+    padding-top: 5%;
     text-align: center;
 }
 
-#forum{
-    text-align:center;
+#forum {
     padding: 5%;
 }
 
-#postDescr{
-   width: 80%;
-   height: auto; 
-   
-}
-#postTitle{
-    width:70%
-}
-#createPost{
-    width: 80px;
+#postDescr {
+    width: 60%;
     height: auto;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+
 }
 
+#createPost {
+    width: 200px;
+    height: 50px;
+    font-size: x-large;
+    background-color: #4d0000;
+    color: #f5f5f5;
+    border-radius: 5px;
 
+}
 
-
-
+#postGenre {
+    width: 30%;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+}
