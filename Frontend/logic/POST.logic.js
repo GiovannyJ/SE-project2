@@ -141,14 +141,15 @@ export async function createPost() {
    * creates comment in database 
   */
   export async function createNewComment() {
+    const user = JSON.parse(localStorage.getItem('user'));
     const formData = new FormData(document.getElementById('commentForm'));
     const url = 'http://localhost:8080/comment/new';
   
     try {
       const requestBody = {
-        postID: parseInt(formData.get('postId')),
+        postID: parseInt(document.getElementById('postID').value),
         content: formData.get('commentContent'),
-        authorId: parseInt(formData.get('commentAuthorId')),
+        authorId: parseInt(user.id),
       };
   
       const response = await fetch(url, {
@@ -176,48 +177,48 @@ export async function createPost() {
    * needs: username OR email, and password
    * returns information about user 
    */
-export async function login() {
-  const formData = new FormData(document.getElementById('loginForm'));
-  const url = 'http://localhost:8080/login';
-
-  try {
-    const requestBody = {
-      username: formData.get('username'),
-      password: formData.get('password'),
-      email: formData.get('email'),
-    };
-
-    const response = await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(requestBody),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      if(response.status == '400'){
-        alert("Please enter your credentials")
-      }else{
-        alert("incorrect credentials")
+  export async function login() {
+    const formData = new FormData(document.getElementById('loginForm'));
+    const url = 'http://localhost:8080/login';
+  
+    try {
+      const requestBody = {
+        username: formData.get('username'),
+        password: formData.get('password'),
+        email: formData.get('email'),
+      };
+  
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(response)
+      if (!response.ok) {
+        if(response.status == '400'){
+          alert("Please enter your credentials")
+        }else{
+          alert("Incorrect credentials")
+        }
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const result = await response.json();
-    localStorage.setItem('user', JSON.stringify(result[0]))
-    // console.table(result[0])
-
-    if(result[0].username === 'guest'){
-      window.location.href = 'guest_view.html'
-    }else{
-      window.location.href = 'ask.html'
-    }
-
+  
+      const result = await response.json();
+      console.log(result);
+      localStorage.setItem('user', JSON.stringify(result[0]))
+  
+      if(result[0].username === 'guest'){
+        window.location.href = 'guest_view.html'
+      } else {
+        window.location.href = 'ask.html'
+      }
     } catch (error) {
       console.error('Error during POST request:', error.message);
     }
   }
+  
   
 
   /**

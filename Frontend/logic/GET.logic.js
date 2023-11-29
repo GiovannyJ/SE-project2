@@ -35,13 +35,13 @@ async function getAccount() {
   /**
    * gets all the posts in full context
   */
-  async function getFullContextPosts() {
-    var queryString = document.getElementById('queryString').value;
-    var url = 'http://localhost:8080/posts/fullcontext?';
+  export async function getFullContextPosts() {
+    // var queryString = document.getElementById('queryString').value;
+    var url = 'http://localhost:8080/posts/fullcontext?postID=5';
     
-    if (queryString){
-      url = url + queryString;
-    }
+    // if (queryString){
+    //   url = url + queryString;
+    // }
   
     try {
       const response = await fetch(url);
@@ -51,7 +51,7 @@ async function getAccount() {
       }
   
       const postsData = await response.json();
-      displayData(postsData);
+      displayPost(postsData);
     } catch (error) {
       console.error('Error during GET request:', error.message);
     }
@@ -60,7 +60,7 @@ async function getAccount() {
   /**
    * gets all the posts in the database 
   */
-  async function getPosts() {
+  export async function getPosts() {
     var queryString = document.getElementById('queryString').value;
     var url = 'http://localhost:8080/posts?';
   
@@ -76,11 +76,39 @@ async function getAccount() {
       }
   
       const postsData = await response.json();
-      displayData(postsData);
+      displayPost(postsData);
     } catch (error) {
       console.error('Error during GET request:', error.message);
     }
   }
+
+function displayPost(postsData) {
+  const post = postsData[0];
+
+  document.getElementById('postID').value = post.id;
+  document.getElementById('author').textContent = "Author: " + post.authorInfo.username;
+  document.getElementById('title').textContent = post.title;
+  document.getElementById('genre').textContent = "genre: " + post.genre; 
+  document.getElementById('date').textContent = "posted: " + post.postedDate;
+
+  // Check if numUp is null, and set a default value of 0
+  document.getElementById('numUp').value = post.numUp !== null ? post.numUp : 0;
+
+  // Check if numDown is null, and set a default value of 0
+  document.getElementById('numDown').value = post.numDown !== null ? post.numDown : 0;
+
+  document.getElementById('descr').innerHTML = post.descr;
+  
+  const imgName = post.picInfo.imgname;
+  if (imgName){
+    const imgElement = document.getElementById('img');
+
+    const imgHtml = `<img src='../uploads/${imgName}' alt='img not found' height='500' width='700'>`;
+
+    imgElement.innerHTML = imgHtml;
+  }
+}
+
   
   /**
    * gets all the comments relating to a post using postID
@@ -111,14 +139,15 @@ async function getAccount() {
   /**
    * gets comments in full context using postID
    */
-  async function getCommentsFullContext() {
-    const postId = document.getElementById('postId').value;
-    var queryString = document.getElementById('queryString').value;
+  export async function getCommentsFullContext() {
+    const postId = document.getElementById('postID').value;
+    // const postId = 14;
+    // var queryString = document.getElementById('queryString').value;
     var url = `http://localhost:8080/posts/${postId}/commentsfullcontext?`;
   
-    if (queryString){
-      url = url + queryString;
-    }
+    // if (queryString){
+    //   url = url + queryString;
+    // }
   
     try {
       const response = await fetch(url);
@@ -128,11 +157,43 @@ async function getAccount() {
       }
   
       const commentsData = await response.json();
-      displayData(commentsData);
+      displayComments(commentsData);
     } catch (error) {
       console.error('Error during GET request:', error.message);
     }
   }
+
+  function displayComments(commentsData) {
+    const commenterElement = document.getElementById('commenter');
+
+    // Clear existing comments
+    commenterElement.innerHTML = '';
+
+    // Iterate through commentsData and append each comment to the 'commenter' element
+    commentsData.forEach(comment => {
+        const commentContainer = document.createElement('div');
+        // commentContainer.classList.add('comment-container');
+        commentContainer.id = `comment${comment.commentInfo.id}`; // Assuming each comment has a unique ID
+        commentContainer.innerHTML = `
+            <ul>
+                <li><img src="pfp.png" id="pfp" alt="circle"></li>
+                <li>
+                    <div>
+                        <p class="comment-container">${comment.commentInfo.content}</p>
+                        <p>Author: ${comment.commenterInfo.username}</p>
+                        <p>Commented Date: ${comment.commentInfo.postedDate}</p>
+                        <p>NumUp: ${comment.commentInfo.numUp}</p>
+                        <p>NumDown: ${comment.commentInfo.numDown}</p>
+                    </div>
+                </li>
+            </ul>
+            <input type="hidden" id="commentId" value="${comment.commentInfo.id}">
+        `;
+
+        commenterElement.appendChild(commentContainer);
+    });
+}
+
   
   /**
    * displays image from database using imagename
@@ -187,3 +248,4 @@ async function getAccount() {
       tableBody.appendChild(row);
     });
   }
+
