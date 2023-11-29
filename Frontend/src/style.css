@@ -161,6 +161,15 @@ nav a {
     border-radius: 5px;
 }
 
+#about {
+    background-color: #4d0000;
+    border-style: solid;
+    border-radius: 10px;
+    margin: 5%;
+    padding: 3%;
+    color: whitesmoke;
+}
+
 #popup{
     display:none;
 }
