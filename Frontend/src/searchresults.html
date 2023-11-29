@@ -33,12 +33,12 @@
         <ul id="results-container">
             <li>
                 <div class="searchResults">
-                    <a href="#">
+                    <button id="postLink">
                         <h4 class="queryTitle">[Insert Title]</h4>
-                    </a>
-                    <a href="#">
+                    </button><br>
+                    <button id="profile">
                         <h6>Author</h6>
-                    </a>
+                    </button>
                     <h6>Date posted</h6>
                     <h6>Likes</h6>
                     <p>Lorem Lorem Lorem</p>
@@ -46,30 +46,42 @@
             </li>
             <li>
                 <div class="searchResults">
-                    <a href="#">
+                    <button id="postLink">
                         <h4 class="queryTitle">[Insert Title]</h4>
-                    </a>
-                    <a href="#">
+                    </button><br>
+                    <button id="profile">
                         <h6>Author</h6>
-                    </a>
+                    </button>
                     <h6>Date posted</h6>
+                    <h6>Likes</h6>
                     <p>Lorem Lorem Lorem</p>
                 </div>
             </li>
             <li>
                 <div class="searchResults">
-                    <a href="#">
+                    <button id="postLink">
                         <h4 class="queryTitle">[Insert Title]</h4>
-                    </a>
-                    <a href="#">
+                    </button><br>
+                    <button id="profile">
                         <h6>Author</h6>
-                    </a>
+                    </button>
                     <h6>Date posted</h6>
+                    <h6>Likes</h6>
                     <p>Lorem Lorem Lorem</p>
                 </div>
             </li>
-        </ul>
 
+
+
+        </ul>
+        <script type="module">
+            import { login } from "../logic/GET.logic.js";
+            document.addEventListener('DOMContentLoaded', () => {
+                document.getElementById('postLink').addEventListener('click', getPosts);
+                document.getElementById('profile').addEventListener('click', getAccount);
+            });
+
+        </script>
 
     </main>
     <footer>
