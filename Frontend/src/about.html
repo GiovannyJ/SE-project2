@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
-    <title></title>
+    <title>About Us</title>
 </head>
 
 <body>
@@ -28,34 +28,20 @@
     </header>
     <main>
         <div id="header">
-            <h2>Post Your Question</h2>
+            <h2>About Us</h2>
         </div>
-        <div id="forum">
-            <form id="postForm">
-                <label for="title">Title:</label><br>
-                <input type="text" id="title" name="title" required><br>
-                <br>
-                <label for="descr">Description:</label><br>
-                <textarea id="postDescr" rows=12 name="descr" required></textarea><br>
-                <br>
-                <label for="postGenre">Genre:</label><br>
-                <input type="text" id="postGenre" name="genre" required>
-                <br>
-                <br>
-                <label for="image">Select Image:</label><br>
-                <input type="file" name="image" id="image" accept="image/*" required>
-                <br>
-                <br>
-                <button id="createPost" onclick="createPost()"><strong>Create Post</strong></button>
-            </form>
+        <div id ="about">
+            <h2>Mission</h3>
+            <p>Lorem lorem lorem</p>
         </div>
+        <div id="about">
+            <h2>Collaborators</h3>
+            <p>Lorem lorem lorem</p>
+        </div>
+        
     </main>
     <footer>
     </footer>
 </body>
-<script type="module">
-    import { createPost } from "../logic/POST.logic.js";
-    document.getElementById('createPost').addEventListener('click', createPost);
-</script>
 
 </html>
