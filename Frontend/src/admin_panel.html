@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="../logic/POST.logic.js" type="module"></script>
+    <title></title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="#"><img src="logo2.png" class="logo"></a>
+            <ul class="rest">
+                <li>
+                    <div id="search-box">
+                        <input type="text" id="search-input" placeholder="Search...">
+                        <button id="search-button" onclick="getPosts()">Search</button>
+                    </div>
+                </li>
+                <li><a href="about.html" class="nav-button1">About Us</a></li>
+                <li><a href="#" class="nav-button1">Support</a></li>
+                <li><a href="login.html" class="nav-button2">Sign In</a></li>
+                <li><a href="createacct.html" class="nav-button2">Create Account</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div id="header">
+            <h2>Dashboard</h2>
+        </div>
+        <ul id="adminPanelList">
+            <li>
+                <div class="admin-control">
+                    <h1>Delete Account</h1>
+                </div>
+            </li>
+            <li>
+                <div class="admin-control">
+                    <h1>Delete Post</h1>
+                </div>
+            </li>
+            <li>
+                <div class="admin-control">
+                    <h1>Delete Comment</h1>
+                </div>
+            </li>
+        </ul>
+    </main>
+    <footer>
+    </footer>
+</body>
+
+</html>
