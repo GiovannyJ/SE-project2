@@ -52,10 +52,43 @@
             <ul>
                 <li><img src="thumbs down.jpg"></li>
                 <li><img src="thumbs up.jpg"></li>
-                <li><button onclick="createNewComment()" style="margin-left: 30px">Comment</button></li>
+                <li><button onclick="createComment()" style="margin-left: 30px">+</button></li>&emsp;Add Comment
+            </ul>
+        </div>
+        <div id="popup">
+            <form id="commentForm">
+
+                <label for="commentContent">Content:</label>
+                <textarea id="commentContent" name="commentContent" required></textarea><br>
+
+                <label for="commentAuthorId">Author ID:</label>
+                <input type="text" id="commentAuthorId" name="commentAuthorId" required><br>
+
+                <label for="postId">Post ID:</label>
+                <input type="text" id="postId" name="postId" required><br>
+
+                <button type="button" id="createComment">Create Comment</button>
+            </form>
+        </div>
+        <div id="commenter">
+            <ul>
+                <li><img src="pfp.png" id="pfp" alt="circle"></li>
+                <li>
+                    <div id="comment1">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et
+                            dolore magna aliqua. Aliquet porttitor lacus luctus accumsan tortor posuere. Nibh praesent
+                            tristique
+                            magna sit amet purus. Cras semper auctor neque vitae tempus quam pellentesque nec nam.</p>
+                    </div>
+                </li>
             </ul>
         </div>
 
+        <script type="module">
+            import { createNewComment } from "../../logic/POST.logic.js";
+            document.getElementById('createComment').addEventListener('click', createNewComment);
+        </script>
     </main>
     <footer>
     </footer>

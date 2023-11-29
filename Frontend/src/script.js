@@ -21,3 +21,13 @@ function renderVerifiedView(){
 function renderDefaultView(){
     window.location.href="guest_view.html"
 }
+
+function createComment() {
+    var popup = document.getElementById("popup")
+    popup.style.display = "flex";
+}
+
+
+
+
+

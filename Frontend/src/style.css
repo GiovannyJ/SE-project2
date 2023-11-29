@@ -160,3 +160,20 @@ nav a {
     border-width: 2px;
     border-radius: 5px;
 }
+
+#popup{
+    display:none;
+}
+
+#commenter ul {
+    list-style: none;
+    display: flex;
+}
+
+#comment1 {
+    border-style: solid;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right:30px;
+}
