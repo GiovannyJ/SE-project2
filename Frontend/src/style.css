@@ -238,3 +238,44 @@ nav a {
     height: 100%;
     background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
 }
+
+#searchResultBox {
+    border-style:solid;
+    border-style: solid;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin:30px;
+
+}
+
+.searchResults {
+    border-style:solid;
+    border-style: solid;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin:30px;
+    text-align: left;
+}
+
+#results-container{
+    list-style: none;
+    padding:0%;
+}
+
+.searchResults a {
+    text-decoration: none;
+    color: black;
+}
+
+.searchResults h6 {
+    margin-top:0px;
+    margin-bottom:0px;
+    margin-left:10px;
+    margin-right:10px;
+}
+
+.searchResults p,h4 {
+    margin:10px;
+}
