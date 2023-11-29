@@ -53,11 +53,12 @@ header nav .nav-button2 {
     margin: 10px;
 }
 
-nav a {
+nav a, button {
     text-decoration: none;
     font-size: large;
     color: black;
 }
+
 
 #search-box {
     margin: 0;
