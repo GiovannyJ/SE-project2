@@ -177,7 +177,9 @@ export async function createPost() {
    * needs: username OR email, and password
    * returns information about user 
    */
-  export async function login() {
+  export async function login(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+  
     const formData = new FormData(document.getElementById('loginForm'));
     const url = 'http://localhost:8080/login';
   
@@ -195,29 +197,34 @@ export async function createPost() {
           'Content-Type': 'application/json',
         },
       });
-      console.log(response)
+  
+      console.log(response);
+  
       if (!response.ok) {
-        if(response.status == '400'){
-          alert("Please enter your credentials")
-        }else{
-          alert("Incorrect credentials")
+        let errorMessage = 'An error occurred during login.';
+        if (response.status === 400) {
+          errorMessage = 'Please enter your credentials.';
+        } else if (response.status === 401) {
+          errorMessage = 'Incorrect credentials.';
         }
+  
+        alert(errorMessage);
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
   
       const result = await response.json();
       console.log(result);
-      localStorage.setItem('user', JSON.stringify(result[0]))
+      localStorage.setItem('user', JSON.stringify(result[0]));
   
-      if(result[0].username === 'guest'){
-        window.location.href = 'guest_view.html'
+      if (result[0].username === 'guest') {
+        window.location.href = 'guest_view.html';
       } else {
-        window.location.href = 'ask.html'
+        window.location.href = 'ask.html';
       }
     } catch (error) {
       console.error('Error during POST request:', error.message);
     }
-  }
+  }  
   
   
 

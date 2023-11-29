@@ -50,7 +50,7 @@
                 <label for="accountUsername">Username:</label><br>
                 <input type="text" id="Username" name="Username" required><br>
                 <br>
-                <button id="createAccount" >Create Account</button>
+                <button type="submit" id="createAccount" >Create Account</button>
             </form>
         </div>
     </main>
@@ -59,7 +59,9 @@
 </body>
 <script type="module">
     import { createAccount } from "../logic/POST.logic.js";
-    document.getElementById('createAccount').addEventListener('click', createAccount);
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('createAccount').addEventListener('click', createAccount);
+    });
 </script>
 
 </html>

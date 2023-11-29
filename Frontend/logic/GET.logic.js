@@ -37,7 +37,7 @@ async function getAccount() {
   */
   export async function getFullContextPosts() {
     // var queryString = document.getElementById('queryString').value;
-    var url = 'http://localhost:8080/posts/fullcontext?postID=5';
+    var url = 'http://localhost:8080/posts/fullcontext?postID=14';
     
     // if (queryString){
     //   url = url + queryString;
