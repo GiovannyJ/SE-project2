@@ -9,12 +9,9 @@ import (
 	"os"
 	"strconv"
 	"github.com/gin-gonic/gin"
-	"crypto/sha256"
-	"encoding/hex"
-	"path/filepath"
 )
 
-type fileinfo 	= s.FileUpload
+// type fileinfo 	= s.FileUpload
 
 var path = db.EnvVar("IMG_PATH")
 
@@ -41,22 +38,7 @@ func UploadFile(c *gin.Context) {
 	}
 	defer file.Close()
 
-	// Generate a unique hash for the filename using SHA-256
-	hash := sha256.New()
-	if _, err := io.Copy(hash, file); err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, nil)
-		return
-	}
-	hashInBytes := hash.Sum(nil)
-	hashString := hex.EncodeToString(hashInBytes)
-
-	// Create a unique filename using the hash value and the original file extension
-	fileExt := filepath.Ext(header.Filename)
-	uniqueFilename := hashString + fileExt
-
-	// Create the full path for saving the file
-	fullPath := filepath.Join(path, uniqueFilename)
-	out, err := os.Create(fullPath)
+	out, err := os.Create(path + header.Filename)
 	if err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, nil)
 		return
