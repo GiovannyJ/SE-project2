@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>About Us</title>
+    <script src="../logic/helper.js"></script>
+</head>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    if (userExists()){
+        renderHeader_signOut();
+    }else{
+        renderHeader_signIn();
+    }
+    });
+</script>
+<body>
+    <main>
+        <div id="header">
+            <h2>About Us</h2>
+        </div>
+        <div id ="about">
+            <h2>ERROR 404</h3>
+            <p>Oops! The page you are looking for cannot be found!</p>
+        </div>
+        
+    </main>
+    <footer>
+    </footer>
+</body>
+
+</html>
