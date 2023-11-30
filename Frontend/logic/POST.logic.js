@@ -166,8 +166,10 @@ export async function createPost(event) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
   
-      const result = await response.json();
-      displayResult('commentTable', result);
+      // const result = await response.json();
+      // displayResult('commentTable', result);
+      location.reload();
+
     } catch (error) {
       console.error('Error during POST request:', error.message);
     }

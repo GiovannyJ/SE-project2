@@ -35,9 +35,9 @@ async function getAccount() {
   /**
    * gets all the posts in full context
   */
-  export async function getFullContextPosts() {
+  export async function getFullContextPosts(postID) {
     // var queryString = document.getElementById('queryString').value;
-    var url = 'http://localhost:8080/posts/fullcontext?postID=43';
+    var url = `http://localhost:8080/posts/fullcontext?postID=${postID}`;
     
     // if (queryString){
     //   url = url + queryString;
@@ -51,63 +51,115 @@ async function getAccount() {
       }
   
       const postsData = await response.json();
-      displayPost(postsData);
+      displayPostFullContext(postsData);
     } catch (error) {
       console.error('Error during GET request:', error.message);
+    }
+  }
+
+  function displayPostFullContext(postsData) {
+    const post = postsData[0];
+  
+    document.getElementById('postID').value = post.id;
+    document.getElementById('author').textContent = "Author: " + post.authorInfo.username;
+    document.getElementById('title').textContent = post.title;
+    document.getElementById('genre').textContent = "genre: " + post.genre; 
+    document.getElementById('date').textContent = "posted: " + post.postedDate;
+  
+    // Check if numUp is null, and set a default value of 0
+    document.getElementById('numUp').value = post.numUp !== null ? post.numUp : 0;
+  
+    // Check if numDown is null, and set a default value of 0
+    document.getElementById('numDown').value = post.numDown !== null ? post.numDown : 0;
+  
+    document.getElementById('descr').innerHTML = post.descr;
+    
+    const imgName = post.picInfo.imgname;
+    if (imgName){
+      const imgElement = document.getElementById('img');
+  
+      const imgHtml = `<img src='../uploads/${imgName}' alt='img not found' height='500' width='700'>`;
+  
+      imgElement.innerHTML = imgHtml;
     }
   }
   
   /**
    * gets all the posts in the database 
   */
-  export async function getPosts() {
-    var queryString = document.getElementById('queryString').value;
-    var url = 'http://localhost:8080/posts?';
-  
-    if (queryString){
-      url = url + queryString;
+export async function getPosts() {
+  var url = 'http://localhost:8080/posts?';
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-  
-    try {
-      const response = await fetch(url);
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-  
-      const postsData = await response.json();
-      displayPost(postsData);
-    } catch (error) {
-      console.error('Error during GET request:', error.message);
-    }
-  }
 
-function displayPost(postsData) {
-  const post = postsData[0];
-
-  document.getElementById('postID').value = post.id;
-  document.getElementById('author').textContent = "Author: " + post.authorInfo.username;
-  document.getElementById('title').textContent = post.title;
-  document.getElementById('genre').textContent = "genre: " + post.genre; 
-  document.getElementById('date').textContent = "posted: " + post.postedDate;
-
-  // Check if numUp is null, and set a default value of 0
-  document.getElementById('numUp').value = post.numUp !== null ? post.numUp : 0;
-
-  // Check if numDown is null, and set a default value of 0
-  document.getElementById('numDown').value = post.numDown !== null ? post.numDown : 0;
-
-  document.getElementById('descr').innerHTML = post.descr;
-  
-  const imgName = post.picInfo.imgname;
-  if (imgName){
-    const imgElement = document.getElementById('img');
-
-    const imgHtml = `<img src='../uploads/${imgName}' alt='img not found' height='500' width='700'>`;
-
-    imgElement.innerHTML = imgHtml;
+    const postsData = await response.json();
+    displayPost(postsData);
+  } catch (error) {
+    console.error('Error during GET request:', error.message);
   }
 }
+
+function displayPost(postsData) {
+  const resultsContainer = document.getElementById("results-container");
+
+  // Clear existing content
+  resultsContainer.innerHTML = '';
+
+  // Loop through the postsData array and create elements for each post
+  postsData.forEach((post) => {
+    const listItem = document.createElement("li");
+    const postDiv = document.createElement("div");
+    const postLinkButton = document.createElement("button");
+    const profileButton = document.createElement("button");
+    const genreHeading = document.createElement("h4");
+    const titleHeading = document.createElement("h4");
+    const authorHeading = document.createElement("h5");
+    const dateHeading = document.createElement("h6");
+    const likesHeading = document.createElement("h6");
+    const descriptionParagraph = document.createElement("p");
+
+    
+    postLinkButton.textContent = "View Post";
+    postLinkButton.id = post.id;
+    postLinkButton.classList.add("nav-button2"); // Add the button-like class
+    postLinkButton.onclick = function () {
+      window.location.href = 'verified_view.html?id=' + post.id;
+    };
+    
+    titleHeading.textContent = "Title: " + post.title;
+    genreHeading.textContent = "Genre: " + post.genre;
+    authorHeading.textContent = "Author: " + post.authorId;
+    profileButton.textContent = "PROFILE"
+    profileButton.id = "profile" + post.authorId; 
+    descriptionParagraph.textContent = "content: " + post.descr;
+    dateHeading.textContent = "Date Posted: " + post.postedDate;
+    likesHeading.textContent = "Likes: " + post.numUp;
+
+    // Append elements to the postDiv
+    postDiv.appendChild(postLinkButton);
+    postDiv.appendChild(document.createElement("br"));
+    postDiv.appendChild(titleHeading);
+    postDiv.appendChild(genreHeading);
+    postDiv.appendChild(authorHeading);
+    postDiv.appendChild(profileButton);
+    postDiv.appendChild(descriptionParagraph);
+    postDiv.appendChild(dateHeading);
+    postDiv.appendChild(likesHeading);
+
+    // Set class for styling
+    postDiv.classList.add("searchResults");
+
+    // Append postDiv to the listItem, and listItem to the resultsContainer
+    listItem.appendChild(postDiv);
+    resultsContainer.appendChild(listItem);
+  });
+}
+  
 
   
   /**

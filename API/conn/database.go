@@ -718,14 +718,6 @@ func DeleteAccount(user int) error{
 	return nil
 }
 
-func execute(sql string) error{
-	result, err := connect(sql)
-	if err !=nil{
-		return err
-	}
-	defer result.Close()
-	return nil
-}
 
 /*
 *TESTED WORKING
@@ -733,10 +725,17 @@ DELETES POST from database
 returns error if applicable
 */
 func DeletePost(user int) error{
-	sql := fmt.Sprintf("DELETE FROM POSTS WHERE id=%d", user)
+	deletePostSQL := fmt.Sprintf("DELETE FROM POSTS WHERE id=%d", user)
+	deleteCommentsSQL := fmt.Sprintf("DELETE FROM COMMENTS WHERE postID=%d", user)
+
+	execute(deleteCommentsSQL)
+	execute(deletePostSQL)
+	return nil
+}
+
+func execute(sql string) error{
 	result, err := connect(sql)
-	
-	if err != nil{
+	if err !=nil{
 		return err
 	}
 	defer result.Close()
