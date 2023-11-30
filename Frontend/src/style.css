@@ -305,4 +305,22 @@ h4 {
     border-style:solid;
 }
 
+.menuItems {
+    border-style:solid;
+    padding:20px;
+}
+
+.menuItems h1{
+    margin:0%;
+    text-align:center;
+}
+
+.menuItems a h1 {
+    padding:0%;
+}
+
+#menu ul {
+    list-style: none;
+}
+
 
