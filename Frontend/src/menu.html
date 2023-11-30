@@ -4,84 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
-    <script src="../logic/POST.logic.js" type="module"></script>
+    <script src="../logic/helper.js"></script>
     <title></title>
 </head>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        renderHeader_signOut();
+        renderMenu();
+        });
+</script>
 <body>
-    <header>
-        <nav>
-            <a href="#"><img src="logo2.png" class="logo"></a>
-            <ul class="rest">
-                <li>
-                    <div id="search-box">
-                        <input type="text" id="search-input" placeholder="Search...">
-                        <button id="search-button" onclick="getPosts()">Search</button>
-                    </div>
-                </li>
-                <li><a href="about.html" class="nav-button1">About Us</a></li>
-                <li><a href="support.html" class="nav-button1">Support</a></li>
-                <li><button onclick="signOut()" class="nav-button2">Sign Out</a></li>
-                <li><a href="createacct.html" class="nav-button2">Create Account</a></li>
-            </ul>
-        </nav>
-    </header>
+    
     <main>
         <div id="header">
             <h2>Dashboard</h2>
         </div>
         <div id="menu">
-            <ul>
-                <li>
-                    <div class="menuItems">
-                        <a href="searchresults.html">
-                            <h1>Home</h1>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div class="menuItems">
-                        <a href="ask.html">
-                            <h1>Ask a Question</h1>
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div class="menuItems">
-                        <a href="updateAccount.html">
-                            <h1>Account Info</h1>
-                        </a>
-                <li>
-                    <div class="menuItems">
-                        <a href="admin_panel.html">
-                            <h1>Admin Panel</h1>
-                        </a>
-                    </div>
-                </li>
-
-        </div>
-        </li>
-        </ul>
-        </div>
-
-
-
-
-        <div id="question-title">
-            <a href="ask.html">ask.html</a>
-            <br>
-            <br>
-            <a href="searchresults.html">searchresults.html</a>
+            
         </div>
     </main>
     <footer>
     </footer>
 </body>
-<script>
-    function signOut() {
-        localStorage.clear();
-        window.location = 'login.html'
-    }
-</script>
-
 </html>
