@@ -20,7 +20,7 @@
                     </div>
                 </li>
                 <li><a href="about.html" class="nav-button1">About Us</a></li>
-                <li><a href="#" class="nav-button1">Support</a></li>
+                <li><a href="support.html" class="nav-button1">Support</a></li>
                 <li><button onclick="signOut()" class="nav-button2">Sign Out</a></li>
                 <li><a href="createacct.html" class="nav-button2">Create Account</a></li>
             </ul>
@@ -38,8 +38,11 @@
                 <label for="descr">Description:</label><br>
                 <textarea id="postDescr" rows=12 name="descr" required></textarea><br>
                 <br>
-                <label for="postGenre">Genre:</label><br>
-                <input type="text" id="postGenre" name="genre" required>
+                <label for="postGenre">Genre:</label>
+                <select id="postGenre" name="postGenre" required>
+                    <option value="TEST">TEST</option>
+                    <option value="other">other</option>
+                </select>
                 <br>
                 <br>
                 <label for="image">Select Image:</label><br>
