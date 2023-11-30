@@ -6,6 +6,14 @@
     <link rel="stylesheet" href="style.css">
     <title>About Us</title>
 </head>
+    <script type="module">
+        import { getPosts } from "../logic/GET.logic.js";
+            document.addEventListener('DOMContentLoaded', () => {
+                getPosts()
+                // document.getElementById('postLink').addEventListener('click', getPosts);
+                // document.getElementById('profile').addEventListener('click', getAccount);
+            });
+    </script>
 
 <body>
     <header>
@@ -21,7 +29,7 @@
                 </li>
                 <li><a href="about.html" class="nav-button1">About Us</a></li>
                 <li><a href="support.html" class="nav-button1">Support</a></li>
-                <li><a href="login.html" class="nav-button2">Sign In</a></li>
+                <li><button onclick="signOut()" class="nav-button2">Sign Out</a></li>
                 <li><a href="createacct.html" class="nav-button2">Create Account</a></li>
             </ul>
         </nav>
@@ -44,48 +52,23 @@
                     <p>Lorem Lorem Lorem</p>
                 </div>
             </li>
-            <li>
-                <div class="searchResults">
-                    <button id="postLink">
-                        <h4 class="queryTitle">[Insert Title]</h4>
-                    </button><br>
-                    <button id="profile">
-                        <h6>Author</h6>
-                    </button>
-                    <h6>Date posted</h6>
-                    <h6>Likes</h6>
-                    <p>Lorem Lorem Lorem</p>
-                </div>
-            </li>
-            <li>
-                <div class="searchResults">
-                    <button id="postLink">
-                        <h4 class="queryTitle">[Insert Title]</h4>
-                    </button><br>
-                    <button id="profile">
-                        <h6>Author</h6>
-                    </button>
-                    <h6>Date posted</h6>
-                    <h6>Likes</h6>
-                    <p>Lorem Lorem Lorem</p>
-                </div>
-            </li>
-
-
-
         </ul>
-        <script type="module">
-            import { login } from "../logic/GET.logic.js";
-            document.addEventListener('DOMContentLoaded', () => {
-                document.getElementById('postLink').addEventListener('click', getPosts);
-                document.getElementById('profile').addEventListener('click', getAccount);
-            });
-
-        </script>
-
     </main>
     <footer>
     </footer>
 </body>
+<script>
+    function signOut(){
+        localStorage.clear();
+        window.location = 'login.html'
+    }
+</script>
+<script type="module">
+    import { getPosts } from "../logic/GET.logic.js";
+    document.addEventListener('DOMContentLoaded', () => {
+        // document.getElementById('postLink').addEventListener('click', getPosts);
+        // document.getElementById('profile').addEventListener('click', getAccount);
+    });
+</script>
 
 </html>
