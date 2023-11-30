@@ -5,7 +5,13 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <title>About Us</title>
+    <script src="../logic/helper.js"></script>
 </head>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    renderHeader_signOut();
+    });
+</script>
     <script type="module">
         import { getPosts } from "../logic/GET.logic.js";
             document.addEventListener('DOMContentLoaded', () => {
@@ -16,24 +22,6 @@
     </script>
 
 <body>
-    <header>
-        <nav>
-            <a href="#"><img src="logo2.png" class="logo"></a>
-            <ul class="rest">
-                <li>
-                    <div id="search-box">
-                        <input type="text" id="search-input" placeholder="Search...">
-                        <button id="search-button" onclick="searchDatabase()">Search</button>
-                        <!--need to create searchDatabase() to search database for query-->
-                    </div>
-                </li>
-                <li><a href="about.html" class="nav-button1">About Us</a></li>
-                <li><a href="support.html" class="nav-button1">Support</a></li>
-                <li><button onclick="signOut()" class="nav-button2">Sign Out</a></li>
-                <li><a href="createacct.html" class="nav-button2">Create Account</a></li>
-            </ul>
-        </nav>
-    </header>
     <main>
         <div id="header">
             <h2>Search Results</h2>
@@ -57,12 +45,6 @@
     <footer>
     </footer>
 </body>
-<script>
-    function signOut(){
-        localStorage.clear();
-        window.location = 'login.html'
-    }
-</script>
 <script type="module">
     import { getPosts } from "../logic/GET.logic.js";
     document.addEventListener('DOMContentLoaded', () => {
