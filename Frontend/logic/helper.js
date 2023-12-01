@@ -166,7 +166,7 @@ function renderHeader_signOut(){
                 <li><a href="about.html" class="nav-button1">About Us</a></li>
                 <li><a href="support.html" class="nav-button1">Support</a></li>
                 <li><button onclick="signOut()" class="nav-button2">Sign Out</button></li>
-                <li><a href="createacct.html" class="nav-button2">Create Account</a></li>
+                <li><a href="updateacct.html" class="nav-button2">Update Account</a></li>
             </ul>
         </nav>
     `;
@@ -184,7 +184,7 @@ function addChildToFront(parent, newChild) {
 
 /**
  * check if user exists in local storage
- * @returns true if user exists and fasle if not
+ * @returns true if user exists and false if not
  */
 function userExists() {
     const user = JSON.parse(localStorage.getItem('user'));

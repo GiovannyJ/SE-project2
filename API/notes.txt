@@ -51,3 +51,7 @@ DONE DELETE ALL POSTS ASSOCIATED WITH ACCOUNT??
 
 MAKE SURE NAMES ARE UNIQUE IN THE DATABASE FOR IMAGES
 MAKE SURE THAT BLANK ACCOUNTS CANNOT BE CREATED
+
+-add redirects depending on user access level
+-disable features for guests on certain pages
+-add search bar functionality 
