@@ -57,6 +57,7 @@ DONE -disable features for guests on certain pages
 -add search bar functionality 
 DONE -add guest login functionality
 DONE -add reset pwd functionality
+DONE -add update page functionality
 
 
 admin:

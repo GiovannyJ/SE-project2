@@ -212,125 +212,179 @@ function renderAdminPanel(){
             pannelList.innerHTML = `
             <br>
             <div class="admin-control">
-                <h2><u>Delete Account</u></h2>
-                <input type="text" id="accountSearchInput" placeholder="Search Account">
-                <br>
-
-                <div id="deleteAccountTable"></div>
-                <br>
-                <button id="searchAccount">
-                    Search Account
-                </button>
-                <button id="deleteAccount">
-                    Delete Account
-                </button>
+                <form id="deleteAccForm">
+                    <h2><u>Delete Account</u></h2>
+                    
+    
+                    <table id="deleteAccountTable">
+                        <thead>
+                           
+                        </thead>
+                        <tbody>
+                           
+                        </tbody>
+                    </table>
+                    <br>
+                    <input type="text" id="accountSearchInput" placeholder="Search Account">
+                    <br>
+                    <br>
+                    <button id="searchAccount">
+                        Search Account
+                    </button>
+                </form>
             </div>
             <br>
         
             <div class="admin-control">
-                <h2><u>Delete Post</u></h2>
-                <input type="text" id="postSearchInput" placeholder="Search Post">
-                <br>
-
-                <div id="deletePostTable"></div>
-                <br>
-                <button id="searchPost">
-                    Search Post
-                </button>
-                <button id="deletePost">
-                    Delete Post
-                </button>
+                <form id="deletePostForm">
+                    <h2><u>Delete Post</u></h2>
+                    
+                    <table id="deletePostTable">
+                        <thead>
+                           
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                    <input type="text" id="postSearchInput" placeholder="Search Post">
+                    <br>
+                    <br>
+                    <button id="searchPost">
+                        Search Post
+                    </button>
+                </form>
             </div>
             <br>
         
             <div class="admin-control">
-                <h2><u>Delete Comment</u></h2>
-                <input type="text" id="commentSearchInput" placeholder="Search Comment">
-                <br>
-
-                <div id="deleteCommentTable"></div>
-                <br>
-                <button id="searchComment">
-                    Search Comment
-                </button>
-                <button id="deleteComment">
-                    Delete Comment
-                </button>
+                <form id="deleteCommentForm">
+                    <h2><u>Delete Comment</u></h2>
+                    
+                    <table id="deleteCommentTable">
+                        <thead>
+                           
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                    <br>
+                    
+                    *<input type="text" id="postID" placeholder="Post ID" required>
+                    <br>
+                    <br>
+                    <input type="text" id="commentSearchInput" placeholder="Search Comment">
+                    <br>
+                    <br>
+                    <button id="searchComment">
+                        Search Comment
+                    </button>
+                </form>
             </div>
             <br>
 
             <div class="admin-control">
-                <h2><u>Change Access Level</u></h2>
-                <input type="text" id="promoteAcc" placeholder="Search Account">
-                <br>
+                <form id="changeAccessLvlForm">
+                    <h2><u>Change Access Level</u></h2>
+                    
+                    <table id="promoteAccTable">
+                        <thead>
+                            
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                    <input type="text" id="promoteAcc" placeholder="Search Account">
+                    <br>
+                    <br>
+                    <button id="searchAcc">
+                        Search Account
+                    </button>
+                </form>
+            </div>
+        </ul>
+
+        <div id="popup">
+            <form id="updateAccessLevelModalForm">
                 
-                <div id="promoteAccTable"></div>
-                <br>
-                <button id="searchAcc">
-                    Search Account
-                </button>
-                <select id="newAccessLevel" placeholder="Select Privilege">
-                    <option value="0">Select Priv</option>
-                    <option value="user">User</option>
-                    <option value="verified user">Verified User</option>
-                    <option value="admin">Admin</option>
-                </select>
-                <button id="promoteButton">
+                <div>
+                    id:<input type="text" id="id" readonly>	
+                    first name:<input type="text" id="fname" readonly>
+                    last name: <input type="text" id="lname" readonly>
+                    fullname: <input type="text" id="fullname" readonly>
+                    email: <input type="text" id="email" readonly>
+                    password: <input type="text" id="pwd" readonly>
+                    phone number:<input type="text" id="pnum" readonly>
+                    username:<input type="text" id="username" readonly>
+                    Access Level:
+                    <select id="newAccessLevel" name="newAccessLevel" placeholder="Select Privilege">
+                        <option value="0">Select Priv</option>
+                        <option value="user">User</option>
+                        <option value="verified user">Verified User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" id="promoteButton">
                     Change Access Level
                 </button>
-            </div>
+            </form>
+        </div>
     `
     break;
     case "verified user":
         pannelList.innerHTML = `
-    <br>
-            <div class="admin-control">
-                <h2><u>Delete Account</u></h2>
-                <input type="text" id="accountSearchInput" placeholder="Search Account">
-                <br>
-
-                <div id="deleteAccountTable"></div>
-                <br>
-                <button id="searchAccount">
-                    Search Account
-                </button>
-                <button id="deleteAccount">
-                    Delete Account
-                </button>
-            </div>
-            <br>
-        
-            <div class="admin-control">
+        <br>
+    
+        <div class="admin-control">
+            <form id="deletePostForm">
                 <h2><u>Delete Post</u></h2>
+                
+                <table id="deletePostTable">
+                    <thead>
+                       
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
                 <input type="text" id="postSearchInput" placeholder="Search Post">
                 <br>
-
-                <div id="deletePostTable"></div>
                 <br>
                 <button id="searchPost">
                     Search Post
                 </button>
-                <button id="deletePost">
-                    Delete Post
-                </button>
-            </div>
-            <br>
-        
-            <div class="admin-control">
+            </form>
+        </div>
+        <br>
+    
+        <div class="admin-control">
+            <form id="deleteCommentForm">
                 <h2><u>Delete Comment</u></h2>
+                
+                <table id="deleteCommentTable">
+                    <thead>
+                       
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+                <br>
+                
+                *<input type="text" id="postID" placeholder="Post ID" required>
+                <br>
+                <br>
                 <input type="text" id="commentSearchInput" placeholder="Search Comment">
                 <br>
-
-                <div id="deleteCommentTable"></div>
                 <br>
                 <button id="searchComment">
                     Search Comment
                 </button>
-                <button id="deleteComment">
-                    Delete Comment
-                </button>
-            </div>
-            <br>
+            </form>
+        </div>
+        <br>
     `
     break;
     }

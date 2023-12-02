@@ -103,6 +103,3 @@ async function getAccount(param) {
       console.error('Error during GET request:', error.message);
     }
   }
-
-
-export async function updateAccessLevel(){}
