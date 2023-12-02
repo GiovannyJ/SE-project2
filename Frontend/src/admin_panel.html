@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <script src="../logic/helper.js"></script>
-    <title></title>
+    <title>Admin Panel</title>
 </head>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -16,22 +16,43 @@
 <body>
     <main>
         <div id="header">
-            <h2>Dashboard</h2>
+            <h2>Admin Panel</h2>
         </div>
         <ul id="adminPanelList">
-            <li>
+                <br>
                 <div class="admin-control">
-                    <h1>Delete Account</h1>
+                    <input type="text" id="accountSearchInput" placeholder="Search Account">
+                    <br>
+                    <button id="searchAccount">
+                        Search Account
+                    </button>
+                    <button id="deleteAccount">
+                        Delete Account
+                    </button>
                 </div>
-            </li>
-            <li>
+                <br>
+            
                 <div class="admin-control">
-                    <h1>Delete Post</h1>
+                    <input type="text" id="postSearchInput" placeholder="Search Post">
+                    <br>
+                    <button id="searchPost">
+                        Search Post
+                    </button>
+                    <button id="deletePost">
+                        Delete Post
+                    </button>
                 </div>
-            </li>
-            <li>
+                <br>
+            
                 <div class="admin-control">
-                    <h1>Delete Comment</h1>
+                    <input type="text" id="commentSearchInput" placeholder="Search Comment">
+                    <br>
+                    <button id="searchComment">
+                        Search Comment
+                    </button>
+                    <button id="deleteComment">
+                        Delete Comment
+                    </button>
                 </div>
             </li>
         </ul>
