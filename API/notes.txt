@@ -52,6 +52,23 @@ DONE DELETE ALL POSTS ASSOCIATED WITH ACCOUNT??
 MAKE SURE NAMES ARE UNIQUE IN THE DATABASE FOR IMAGES
 MAKE SURE THAT BLANK ACCOUNTS CANNOT BE CREATED
 
--add redirects depending on user access level
--disable features for guests on certain pages
+DONE -add redirects depending on user access level
+DONE -disable features for guests on certain pages
 -add search bar functionality 
+DONE -add guest login functionality
+DONE -add reset pwd functionality
+
+
+admin:
+    delete account
+    delete post
+    delete comment
+    promote account (user -> verified user -> admin)
+
+verified user:
+    delete post
+    delete comment
+
+CHANGE LOGIC:
+-load values into table -> add button that is used to delete/edit
+similar to the PoC pages

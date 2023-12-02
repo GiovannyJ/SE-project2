@@ -324,3 +324,35 @@ h4 {
 }
 
 
+/* Apply styling for the disabled state */
+#addComment:disabled {
+    background-color: #888; /* Set a darker color */
+    color: #555; /* Set text color for better visibility */
+    /* Add any other styling you want for the disabled state */
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+.styled-table th, .styled-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.styled-table th {
+    background-color: #333; /* Darker color for the header */
+    color: white; /* Text color for the header */
+}
+
+.styled-table td {
+    border-right: 1px solid #ddd; /* Vertical lines between columns */
+}
+
+.styled-table td:last-child {
+    border-right: none; /* Remove the right border for the last column */
+}

@@ -26,13 +26,13 @@
                 <label for="password">Password:</label><br>
                 <input type="password" id="password" name="password" required><br>
 
-                <label for="email">Email:</label><br>
-                <input type="text" id="email" name="email"><br>
+                <!-- <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email"><br> -->
                 <br>
                 <button type="submit" id="loginButton">Login</button>
-                <button id="guestLoginButton">GUEST Login</button>
+                <button type="submit" id="guestLoginButton">Login as Guest</button>
             </form>
-            <p>Forgot password? <a href="#forgotpassword"> Reset here.</a></p>
+            <p>Forgot password? <a href="resetpassword.html"> Reset here.</a></p>
             <p>Don't have a Debug account? <a href="createacct.html"> Create one.</a></p>
         </div>
     </main>
@@ -42,7 +42,8 @@
 <script type="module">
     import { login } from "../logic/POST.logic.js";
     document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('loginButton').addEventListener('click', login);
+        document.getElementById('loginButton').addEventListener('click', (event) => login(event, 'normal'));
+        document.getElementById('guestLoginButton').addEventListener('click', (event) => login(event, 'guest'));
     });
 
 </script>

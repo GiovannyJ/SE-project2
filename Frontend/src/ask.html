@@ -10,6 +10,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     renderHeader_signOut();
+    
+    if (getUserAccessLevel() === 'guest'){
+        redirectMenu();
+    }
+    
     });
 </script>
 <body>

@@ -10,6 +10,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     renderHeader_signOut();
+    const accessLevel = getUserAccessLevel()
+    if (accessLevel === "guest" || accessLevel === "user"){
+        redirectMenu();
+    }
+    // renderAdminPanel();
     });
 </script>
 
@@ -18,34 +23,65 @@
         <div id="header">
             <h2>Admin Panel</h2>
         </div>
-        <ul id="adminPanelList">
-                <br>
-                <div class="admin-control">
+        <ul id="adminPanelList">    
+            <br>
+            <div class="admin-control">
+                <form id="deleteAccForm">
+                    <h2><u>Delete Account</u></h2>
                     <input type="text" id="accountSearchInput" placeholder="Search Account">
+                    <br>
+    
+                    <table id="deleteAccountTable">
+                        <thead>
+                           
+                        </thead>
+                        <tbody>
+                           
+                        </tbody>
+                    </table>
                     <br>
                     <button id="searchAccount">
                         Search Account
                     </button>
-                    <button id="deleteAccount">
+                    <button type="submit" id="deleteAccount">
                         Delete Account
                     </button>
-                </div>
-                <br>
-            
-                <div class="admin-control">
+                </form>
+            </div>
+            <br>
+        
+            <div class="admin-control">
+                <form id="deletePostForm">
+                    <h2><u>Delete Post</u></h2>
                     <input type="text" id="postSearchInput" placeholder="Search Post">
+                    <br>
+    
+                    <table id="deletePostTable">
+                        <thead>
+                           
+                        </thead>
+                        <tbody>
+                           
+                        </tbody>
+                    </table>
                     <br>
                     <button id="searchPost">
                         Search Post
                     </button>
-                    <button id="deletePost">
+                    <button type="submit" id="deletePost">
                         Delete Post
                     </button>
-                </div>
-                <br>
-            
-                <div class="admin-control">
+                </form>
+            </div>
+            <br>
+        
+            <div class="admin-control">
+                <form id="deleteCommentForm">
+                    <h2><u>Delete Comment</u></h2>
                     <input type="text" id="commentSearchInput" placeholder="Search Comment">
+                    <br>
+    
+                    <div id="deleteCommentTable"></div>
                     <br>
                     <button id="searchComment">
                         Search Comment
@@ -53,12 +89,53 @@
                     <button id="deleteComment">
                         Delete Comment
                     </button>
-                </div>
-            </li>
+                </form>
+            </div>
+            <br>
+
+            <div class="admin-control">
+                <form id="changeAccessLvlForm">
+                    <h2><u>Change Access Level</u></h2>
+                    <input type="text" id="promoteAcc" placeholder="Search Account">
+                    <br>
+                    
+                    <div id="promoteAccTable"></div>
+                    <br>
+                    <button id="searchAcc">
+                        Search Account
+                    </button>
+                    <select id="newAccessLevel" placeholder="Select Privilege">
+                        <option value="0">Select Priv</option>
+                        <option value="user">User</option>
+                        <option value="verified user">Verified User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    <button id="promoteButton">
+                        Change Access Level
+                    </button>
+                </form>
+            </div>
         </ul>
     </main>
     <footer>
     </footer>
 </body>
+<script type="module">
+   import { updateAccessLevel } from "../logic/PATCH.logic.js";
+   import { deleteAccount, deletePost, deleteComment, displayAccount, displayPost} from "../logic/DELETE.logic.js"
+  
+    document.getElementById("searchAccount").addEventListener('click', function (event) {
+        event.preventDefault();
+        displayAccount(event, "delete");
+    });
+    document.getElementById("deleteAccount").addEventListener('click', deleteAccount)
+
+   
+    document.getElementById("searchPost").addEventListener("click", displayPost)
+    document.getElementById("deletePost").addEventListener('click', deletePost)
+
+//    document.getElementById("searchComment").addEventListener("click", loadComment)
+//    document.getElementById("deleteComment").addEventListener('click', deleteComment)
+</script>
 
 </html>

@@ -1,99 +1,108 @@
-let initialData; 
 
-async function loadAccountData(){
-    const url = 'http://localhost:8080/account';
-    const response = await fetch(url);
-    const accountData = await response.json();
+/*
+ *updates users password
+ confirms that pwd and confirm password match
+ confirms that pwd and pwd in db don't match 
+ updates pwd and then returns to login page
+ */
+export async function updatePwd(event){
+    event.preventDefault();
+    const formData = new FormData(document.getElementById('resetPwdForm'));
+    const updatePwdURL = 'http://localhost:8080/account/update'
+    
+    const cur_username      = formData.get('username');
+    const cur_pwd           = formData.get('pwd');
+    const cur_confirmPwd    = formData.get('confirm_pwd');
+    
+    if (cur_username === 'guest'){
+        alert('Cannot Reset Guest Password');
+        return;
+    }
+    
+    if (cur_pwd != cur_confirmPwd){
+        alert('Passwords do not match');
+        return;
+    }
+   
+    var query = "username=" + cur_username;
+    const accountData = await getAccount(query);
+    console.log(accountData)
+    
+    
+    if (cur_pwd === accountData[0].pwd){
+        alert("Password already used");
+        return;
+    }
+    
+    const old_body = {
+        id:		   accountData[0].id,
+        fname:      accountData[0].fname,
+        lname:      accountData[0].lname,
+        fullname:   accountData[0].fullname,
+        email:      accountData[0].email,
+        pwd:        accountData[0].pwd,
+        pnum:      accountData[0].pnum,
+        username:   accountData[0].username,
+        accesslevel: accountData[0].accesslevel,
+    }
 
-    const tableBody = document.getElementById('accountTableBody');
-    tableBody.innerHTML = '';
-
-    accountData.forEach(account => {
-        const row = tableBody.insertRow(-1);
-        const keys = Object.keys(account);
-
-        keys.forEach(key => {
-            // Save initial data when rendering rows
-            if (!initialData) {
-                initialData = { ...account };
-            }
-
-            const cell = row.insertCell(-1);
-            cell.textContent = account[key];
-        });
-
-        // Add Update button with onclick event
-        const updateCell = row.insertCell(-1);
-        const updateButton = document.createElement('button');
-        updateButton.textContent = 'Update';
-        updateButton.className = 'btn btn-warning';
-        updateButton.onclick = function () {
-            openUpdateModal(account);
+    const new_body = {
+        id:		   accountData[0].id,
+        fname:      accountData[0].fname,
+        lname:      accountData[0].lname,
+        fullname:   accountData[0].fullname,
+        email:      accountData[0].email,
+        pwd:        cur_pwd,
+        pnum:      accountData[0].pnum,
+        username:   accountData[0].username,
+        accesslevel: accountData[0].accesslevel,
+    }
+    
+    try{
+        const requestBody = {
+            old: old_body,
+            new: new_body,
         };
-        updateCell.appendChild(updateButton);
-    });
-}
-loadAccountData();
+        
 
-function openUpdateModal(account) {
-    // Populate the modal form fields with current data
-    const updateForm = document.getElementById('updateForm');
-    updateForm.innerHTML = ''; // Clear previous form content
-
-    Object.keys(account).forEach(key => {
-        const label = document.createElement('label');
-        label.textContent = key.charAt(0).toUpperCase() + key.slice(1);
-
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = account[key];
-        input.name = key;
-
-        // Make the "Id" column readonly
-        if (key.toLowerCase() === 'id') {
-            input.readOnly = true;
-            input.disabled = true;
+        const response = await fetch(updatePwdURL, {
+            method: 'PATCH',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if(!response.ok){
+            throw new Error(`HTTP error! Status: ${response.headers}`);
         }
-
-        updateForm.appendChild(label);
-        updateForm.appendChild(input);
-        updateForm.appendChild(document.createElement('br'));
-    });
-
-    $('#updateModal').modal('show');
-}
-
-
-async function submitUpdate() {
-    const updateForm = document.getElementById('updateForm');
-    const formData = new FormData(updateForm);
-
-    // Clone initialData using JSON
-    const oldData = JSON.parse(JSON.stringify(initialData));
-    const newData = {};
-
-    formData.forEach((value, key) => {
-        // Convert 'pnum' and 'id' to integers
-        oldData[key] = (key === 'pnum' || key === 'id') ? parseInt(value, 10) : value;
-        newData[key] = (key === 'pnum' || key === 'id') ? parseInt(value, 10) : value;
-    });
-
-    const requestBody = { old: oldData, new: newData };
-
-    const url = 'http://localhost:8080/account/update';
-    const response = await fetch(url, {
-        method: 'PATCH',
-        body: JSON.stringify(requestBody),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-
-    if (response.ok) {
-        // Handle success, e.g., close modal, refresh data
-        $('#updateModal').modal('hide');
-        loadAccountData();
-    } else {
-        console.error('Error during PATCH request:', response.status);
+        
+        alert("Password Updated!")
+        window.location.href = 'login.html'
+    }catch (error){
+        console.error(`Error during patch method:`, error.message)
     }
 }
+
+async function getAccount(param) {
+    var url = 'http://localhost:8080/account';
+    
+    if (param){
+      url = 'http://localhost:8080/account?' + param;
+    }
+  
+    try {
+      const response = await fetch(url);
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const accountData = await response.json();
+      return accountData
+    } catch (error) {
+      console.error('Error during GET request:', error.message);
+    }
+  }
+
+
+export async function updateAccessLevel(){}

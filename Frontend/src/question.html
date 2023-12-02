@@ -10,6 +10,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     renderHeader_signOut();
+    
+    if(getUserAccessLevel() === 'guest'){
+        const addComment = document.getElementById("addComment")
+        addComment.disabled = true;
+    }
     });
 </script>
 
@@ -57,7 +62,6 @@
             
         </div>
         <div id="img">
-            <!-- <img src='../uploads/schedule_spring.PNG' alt="img not found"> -->
         </div>
 
         <div id="votes">

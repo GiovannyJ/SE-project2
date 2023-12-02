@@ -16,7 +16,7 @@ function renderAdminView(){
     window.location.href=""
 }
 function renderVerifiedView(){
-    window.location.href="verified_view.html"
+    window.location.href="question.html"
 }
 function renderDefaultView(){
     window.location.href="guest_view.html"

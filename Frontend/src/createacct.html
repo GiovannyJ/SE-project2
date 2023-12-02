@@ -10,6 +10,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     renderHeader_signIn();
+    if(userExists()){
+        alert("Already logged in!")
+        window.location.href = 'menu.html'
+    }
+
     });
 </script>
 

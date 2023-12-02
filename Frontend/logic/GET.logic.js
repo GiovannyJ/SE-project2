@@ -10,12 +10,11 @@
 /**
  * gets all the accounts from the database
 */
-async function getAccount() {
-    var queryString = document.getElementById('queryString').value;
+export async function getAccount(param) {
     var url = 'http://localhost:8080/account';
     
-    if (queryString){
-      url = 'http://localhost:8080/account?' + queryString;
+    if (param){
+      url = 'http://localhost:8080/account?' + param;
     }
   
     try {
@@ -26,7 +25,7 @@ async function getAccount() {
       }
   
       const accountData = await response.json();
-      displayData(accountData);
+      return accountData
     } catch (error) {
       console.error('Error during GET request:', error.message);
     }
@@ -128,7 +127,7 @@ function displayPost(postsData) {
     postLinkButton.id = post.id;
     postLinkButton.classList.add("nav-button2"); // Add the button-like class
     postLinkButton.onclick = function () {
-      window.location.href = 'verified_view.html?id=' + post.id;
+      window.location.href = 'question.html?id=' + post.id;
     };
     
     titleHeading.textContent = "Title: " + post.title;
@@ -301,3 +300,5 @@ function displayPost(postsData) {
     });
   }
 
+
+  

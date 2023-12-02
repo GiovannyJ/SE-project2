@@ -51,7 +51,6 @@ function renderAdminMenu(container) {
         { label: "Ask a Question", href: "ask.html" },
         { label: "Account Info", href: "updateAccount.html" },
         { label: "Admin Panel", href: "admin_panel.html" },
-        { label: "Moderator Panel", href: "moderator_panel.hml"}
     ];
 
     renderMenuItems(container, menuItems);
@@ -89,7 +88,7 @@ function renderVerifiedUserMenu(container) {
         { label: "Home", href: "searchresults.html" },
         { label: "Ask a Question", href: "ask.html" },
         { label: "Account Info", href: "updateAccount.html" },
-        { label: "Moderator Panel", href: "moderator_panel.hml"}
+        { label: "Admin Panel", href: "admin_panel.html" },
         ];
 
     renderMenuItems(container, menuItems);
@@ -190,3 +189,155 @@ function userExists() {
     const user = JSON.parse(localStorage.getItem('user'));
     return user !== null;
 }
+
+function getUserAccessLevel(){
+    const user = JSON.parse(localStorage.getItem('user'))
+    return user.accesslevel;
+}
+
+function redirectMenu(){
+    alert('Your account does not have access to this page!')
+    window.location.href = 'menu.html';
+}
+
+
+
+function renderAdminPanel(){
+    const pannelList = document.getElementById('adminPanelList')
+
+    accesslevel = getUserAccessLevel()
+
+    switch(accesslevel){
+        case "admin":
+            pannelList.innerHTML = `
+            <br>
+            <div class="admin-control">
+                <h2><u>Delete Account</u></h2>
+                <input type="text" id="accountSearchInput" placeholder="Search Account">
+                <br>
+
+                <div id="deleteAccountTable"></div>
+                <br>
+                <button id="searchAccount">
+                    Search Account
+                </button>
+                <button id="deleteAccount">
+                    Delete Account
+                </button>
+            </div>
+            <br>
+        
+            <div class="admin-control">
+                <h2><u>Delete Post</u></h2>
+                <input type="text" id="postSearchInput" placeholder="Search Post">
+                <br>
+
+                <div id="deletePostTable"></div>
+                <br>
+                <button id="searchPost">
+                    Search Post
+                </button>
+                <button id="deletePost">
+                    Delete Post
+                </button>
+            </div>
+            <br>
+        
+            <div class="admin-control">
+                <h2><u>Delete Comment</u></h2>
+                <input type="text" id="commentSearchInput" placeholder="Search Comment">
+                <br>
+
+                <div id="deleteCommentTable"></div>
+                <br>
+                <button id="searchComment">
+                    Search Comment
+                </button>
+                <button id="deleteComment">
+                    Delete Comment
+                </button>
+            </div>
+            <br>
+
+            <div class="admin-control">
+                <h2><u>Change Access Level</u></h2>
+                <input type="text" id="promoteAcc" placeholder="Search Account">
+                <br>
+                
+                <div id="promoteAccTable"></div>
+                <br>
+                <button id="searchAcc">
+                    Search Account
+                </button>
+                <select id="newAccessLevel" placeholder="Select Privilege">
+                    <option value="0">Select Priv</option>
+                    <option value="user">User</option>
+                    <option value="verified user">Verified User</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <button id="promoteButton">
+                    Change Access Level
+                </button>
+            </div>
+    `
+    break;
+    case "verified user":
+        pannelList.innerHTML = `
+    <br>
+            <div class="admin-control">
+                <h2><u>Delete Account</u></h2>
+                <input type="text" id="accountSearchInput" placeholder="Search Account">
+                <br>
+
+                <div id="deleteAccountTable"></div>
+                <br>
+                <button id="searchAccount">
+                    Search Account
+                </button>
+                <button id="deleteAccount">
+                    Delete Account
+                </button>
+            </div>
+            <br>
+        
+            <div class="admin-control">
+                <h2><u>Delete Post</u></h2>
+                <input type="text" id="postSearchInput" placeholder="Search Post">
+                <br>
+
+                <div id="deletePostTable"></div>
+                <br>
+                <button id="searchPost">
+                    Search Post
+                </button>
+                <button id="deletePost">
+                    Delete Post
+                </button>
+            </div>
+            <br>
+        
+            <div class="admin-control">
+                <h2><u>Delete Comment</u></h2>
+                <input type="text" id="commentSearchInput" placeholder="Search Comment">
+                <br>
+
+                <div id="deleteCommentTable"></div>
+                <br>
+                <button id="searchComment">
+                    Search Comment
+                </button>
+                <button id="deleteComment">
+                    Delete Comment
+                </button>
+            </div>
+            <br>
+    `
+    break;
+    }
+
+
+
+    
+}
+
+

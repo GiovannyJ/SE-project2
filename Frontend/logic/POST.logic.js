@@ -181,18 +181,30 @@ export async function createPost(event) {
    * needs: username OR email, and password
    * returns information about user 
    */
-  export async function login(event) {
+  export async function login(event, mode) {
     event.preventDefault(); // Prevent the default form submission behavior
   
     const formData = new FormData(document.getElementById('loginForm'));
     const url = 'http://localhost:8080/login';
   
     try {
-      const requestBody = {
-        username: formData.get('username'),
-        password: formData.get('password'),
-        email: formData.get('email'),
-      };
+      let requestBody;
+
+      if (mode === 'guest') {
+        // Set username and password to 'guest' for guest mode
+        requestBody = {
+          username: 'guest',
+          password: 'guest',
+          email: formData.get('email'),
+        };
+      } else {
+        // Use form data for other modes
+        requestBody = {
+          username: formData.get('username'),
+          password: formData.get('password'),
+          email: formData.get('email'),
+        };
+      }
   
       const response = await fetch(url, {
         method: 'POST',
@@ -220,15 +232,13 @@ export async function createPost(event) {
       console.log(result);
       localStorage.setItem('user', JSON.stringify(result[0]));
   
-      if (result[0].username === 'guest') {
-        window.location.href = 'guest_view.html';
-      } else {
+      
         window.location.href = 'menu.html';
-      }
+      
     } catch (error) {
       console.error('Error during POST request:', error.message);
     }
-  }  
+}
   
   
 
