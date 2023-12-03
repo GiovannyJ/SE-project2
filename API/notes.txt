@@ -73,3 +73,12 @@ verified user:
 CHANGE LOGIC:
 -load values into table -> add button that is used to delete/edit
 similar to the PoC pages
+
+
+NEEDED:
+    -list of genres for posts
+    -search bar functionality
+    -fix update access for admin Panel
+    -add functionality to updateAccount page
+    -rename and reorganize pages
+    DONE -fix admin pannel DOM

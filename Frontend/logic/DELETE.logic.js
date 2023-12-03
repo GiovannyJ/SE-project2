@@ -147,7 +147,6 @@ export async function displayPost(event) {
     }
 
     const postsData = await response.json();
-    console.log(postsData[0])
     
     displayData('deletePostTable', postsData, "post");
     
