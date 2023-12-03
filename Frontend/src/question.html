@@ -42,20 +42,21 @@
             fetchData();
         </script>
         <div id="question-title">
-            <input type="hidden" id="postID">
-            <ul>
-                <li><img src="pfp.png" id="pfp" alt="circle"></li>
-                <li id="title">Insert question here...</li>
-            </ul>
             <br>
+            <br>
+            <input type="hidden" id="postID">
+            <ul style="padding-left:30px;">
+                <li><img src="pfp.png" id="pfp" alt="circle"></li>
+                <li id="title"></li>
+            </ul>
             <ul>
                 <li id="author">Author</li>
             </ul>
             <ul>
-                <li id="genre">Genre</li>
+                <li id="genre"></li>
             </ul>
             <ul>
-                <li id="date">Date</li>
+                <li id="date"></li>
             </ul>
         </div>
         <div id="descr">
@@ -70,25 +71,14 @@
                 <li><img src="thumbs up.jpg"><input type="number" id="numDown" name="numDown"></li>
             </ul>
             <ul>
-                <li><button id="addComment" style="margin-left: 30px">+</button></li>&emsp;Add Comment
+                <li><button id="addComment">+</button></li>&emsp;Add Comment
             </ul>
         </div>
-
-        
-        
-        <h2>Comment Section</h2>
-        
+        <h2 style="padding-left: 30px;">Comment Section</h2>
         <div id="commenter">
             <ul>
                 <li><img src="pfp.png" id="pfp" alt="circle"></li>
-                <li>
-                    <div id="comment1">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et
-                            dolore magna aliqua. Aliquet porttitor lacus luctus accumsan tortor posuere. Nibh praesent
-                            tristique
-                            magna sit amet purus. Cras semper auctor neque vitae tempus quam pellentesque nec nam.</p>
-                    </div>
+                <li id="comment1">
                 </li>
             </ul>
         </div>

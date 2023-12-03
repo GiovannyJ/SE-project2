@@ -60,10 +60,11 @@ function displayPostFullContext(postsData) {
   const post = postsData[0];
 
   document.getElementById('postID').value = post.id;
-  document.getElementById('author').textContent = "Author: " + post.authorInfo.username;
+  //document.getElementById('author').textContent = "Author: " + post.authorInfo.username;
   document.getElementById('title').textContent = post.title;
-  document.getElementById('genre').textContent = "genre: " + post.genre;
-  document.getElementById('date').textContent = "posted: " + post.postedDate;
+  document.getElementById('genre').textContent = "Genre: " + post.genre;
+  //document.getElementById('date').textContent = "posted: " + post.postedDate;
+  document.getElementById('author').textContent = "Posted by "+post.authorInfo.username+" on "+post.postedDate;
 
   // Check if numUp is null, and set a default value of 0
   document.getElementById('numUp').value = post.numUp !== null ? post.numUp : 0;
@@ -77,7 +78,7 @@ function displayPostFullContext(postsData) {
   if (imgName) {
     const imgElement = document.getElementById('img');
 
-    const imgHtml = `<img src='../uploads/${imgName}' alt='img not found' height='500' width='700'>`;
+    const imgHtml = `<img src='../uploads/${imgName}' alt='img not found' height='15%'; width='auto';>`;
 
     imgElement.innerHTML = imgHtml;
   }
@@ -138,7 +139,7 @@ function displayPost(postsData) {
     descriptionParagraph.textContent = post.descr;
     dateHeading.textContent = "Date Posted: " + post.postedDate;
     likesHeading.textContent = "Upvotes: " + post.numUp;
-
+ 
     // Append elements to the postDiv
     //postDiv.appendChild(document.createElement("br"));
     postDiv.appendChild(titleHeading);
@@ -231,10 +232,10 @@ function displayComments(commentsData) {
                 <li>
                     <div>
                         <p class="comment-container">${comment.commentInfo.content}</p>
-                        <p>Author: ${comment.commenterInfo.username}</p>
-                        <p>Commented Date: ${comment.commentInfo.postedDate}</p>
-                        <p>NumUp: ${comment.commentInfo.numUp}</p>
-                        <p>NumDown: ${comment.commentInfo.numDown}</p>
+                        <p>Posted by ${comment.commenterInfo.username} on ${comment.commentInfo.postedDate}</p>
+                        <!--<p>Commented Date: ${comment.commentInfo.postedDate}</p>-->
+                        <p>${comment.commentInfo.numUp} upvotes</p>
+                        <p>${comment.commentInfo.numDown} downvotes</p>
                     </div>
                 </li>
             </ul>
