@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Update Account</title>
+    <script src="../logic/helper.js"></script>
+</head>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    renderHeader_signIn();
+    }
+);
+</script>
+
+<body>
+    <main>
+        <div id="header">
+            <h2>Update Account Info</h2>
+        </div>
+        <div id="createacct">
+            <form id="accountForm">
+                <label for="accountFname">First Name:</label><br>
+                <input type="text" id="Fname" name="Fname" required><br>
+
+                <label for="accountLname">Last Name:</label><br>
+                <input type="text" id="Lname" name="Lname" required><br>
+
+                <label for="accountEmail">Email:</label><br>
+                <input type="email" id="Email" name="Email" required><br>
+
+                <label for="accountPwd">Password:</label><br>
+                <input type="password" id="pwd" name="pwd" required><br>
+
+                <label for="accountPnum">Phone Number:</label><br>
+                <input type="text" id="Pnum" name="Pnum" required><br>
+
+                <label for="accountUsername">Username:</label><br>
+                <input type="text" id="Username" name="Username" required><br>
+                <br>
+                <button type="submit" id="updateAccount" >Modify</button>
+            </form>
+        </div>
+    </main>
+    <footer>
+    </footer>
+</body>
+
+</html>

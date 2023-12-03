@@ -30,6 +30,9 @@ nav {
 
 nav .rest {
     float: right;
+    padding: 0px;
+    margin:0px;
+    margin-top:10px;
 }
 
 nav ul {
@@ -304,11 +307,22 @@ h4 {
 
 .admin-control {
     border-style:solid;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.admin-control h2 {
+    padding:0px;
+    margin:0px;
 }
 
 .menuItems {
     border-style:solid;
+    border-radius:50px;
     padding:20px;
+    margin-bottom: 20px;
+    background-color: #4d0000;
+    color:whitesmoke;
 }
 
 .menuItems h1{
@@ -318,10 +332,22 @@ h4 {
 
 .menuItems a h1 {
     padding:0%;
+    color: whitesmoke;
+}
+
+.menuItems a{
+    text-decoration: none;
+}
+#menu {
+    margin-top:20px;
+    margin-bottom: 20px;
+    margin-right:35%;
+    margin-left:35%
 }
 
 #menu ul {
     list-style: none;
+    padding:0px;
 }
 
 
@@ -356,4 +382,8 @@ h4 {
 
 .styled-table td:last-child {
     border-right: none; /* Remove the right border for the last column */
+}
+
+#support{
+    padding: 5%;
 }

@@ -88,7 +88,7 @@ function renderVerifiedUserMenu(container) {
         { label: "Home", href: "searchresults.html" },
         { label: "Ask a Question", href: "ask.html" },
         { label: "Account Info", href: "updateAccount.html" },
-        { label: "Admin Panel", href: "admin_panel.html" },
+        //{ label: "Admin Panel", href: "admin_panel.html" },
         ];
 
     renderMenuItems(container, menuItems);
@@ -164,8 +164,8 @@ function renderHeader_signOut(){
                 </li>
                 <li><a href="about.html" class="nav-button1">About Us</a></li>
                 <li><a href="support.html" class="nav-button1">Support</a></li>
+                <li><a href="menu.html" class="nav-button2">Dashboard</a></li>
                 <li><button onclick="signOut()" class="nav-button2">Sign Out</button></li>
-                <li><a href="updateacct.html" class="nav-button2">Update Account</a></li>
             </ul>
         </nav>
     `;
@@ -210,7 +210,6 @@ function renderAdminPanel(){
     switch(accesslevel){
         case "admin":
             pannelList.innerHTML = `
-            <br>
             <div class="admin-control">
                 <form id="deleteAccForm">
                     <h2><u>Delete Account</u></h2>
@@ -271,7 +270,7 @@ function renderAdminPanel(){
                     </table>
                     <br>
                     
-                    *<input type="text" id="postID" placeholder="Post ID" required>
+                    <input type="text" id="postID" placeholder="Post ID" required><strong style="color:red;">*<sup style="font-size: x-small;">Required</sup></strong>
                     <br>
                     <br>
                     <input type="text" id="commentSearchInput" placeholder="Search Comment">
