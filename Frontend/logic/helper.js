@@ -125,7 +125,7 @@ function renderHeader_signIn(){
     const header = document.createElement('header');
     header.innerHTML  = `
         <nav>
-            <a href="#"><img src="logo2.png" class="logo"></a>
+            <a href="searchresults.html"><img src="logo2.png" class="logo"></a>
             <ul class="rest">
                 <li><a href="about.html" class="nav-button1">About Us</a></li>
                 <li><a href="support.html" class="nav-button1">Support</a></li>
@@ -147,7 +147,7 @@ function renderHeader_signOut(){
     const header = document.createElement('header');
     header.innerHTML = `
     <nav>
-    <a href="#"><img src="logo2.png" class="logo"></a>
+    <a href="searchresults.html"><img src="logo2.png" class="logo"></a>
     <ul class="rest">
         <li>
             <div id="search-box">
