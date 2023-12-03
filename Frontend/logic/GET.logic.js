@@ -86,8 +86,8 @@ function displayPostFullContext(postsData) {
 /**
  * gets all the posts in the database 
 */
-export async function getPosts() {
-  var url = 'http://localhost:8080/posts?';
+export async function getPosts(query) {
+  var url = 'http://localhost:8080/posts?'+query;
 
   try {
     const response = await fetch(url);
@@ -99,7 +99,7 @@ export async function getPosts() {
     const postsData = await response.json();
     displayPost(postsData);
   } catch (error) {
-    console.error('Error during GET request:', error.message);
+    displayNoPosts()
   }
 }
 
@@ -159,6 +159,13 @@ function displayPost(postsData) {
   });
 }
 
+function displayNoPosts() {
+  const resultsContainer = document.getElementById("results-container");
+  const noPostsMessage = document.createElement("p");
+  noPostsMessage.textContent = "No posts found.";
+
+  resultsContainer.appendChild(noPostsMessage);
+}
 
 
 /**

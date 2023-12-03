@@ -127,13 +127,6 @@ function renderHeader_signIn(){
         <nav>
             <a href="#"><img src="logo2.png" class="logo"></a>
             <ul class="rest">
-                <li>
-                    <div id="search-box">
-                        <input type="text" id="search-input" placeholder="Search...">
-                        <button id="search-button" onclick="searchDatabase()">Search</button>
-                        <!--need to create searchDatabase() to search database for query-->
-                    </div>
-                </li>
                 <li><a href="about.html" class="nav-button1">About Us</a></li>
                 <li><a href="support.html" class="nav-button1">Support</a></li>
                 <li><a href="login.html" class="nav-button2">Sign In</a></li>
@@ -153,27 +146,50 @@ function renderHeader_signIn(){
 function renderHeader_signOut(){
     const header = document.createElement('header');
     header.innerHTML = `
-        <nav>
-            <a href="#"><img src="logo2.png" class="logo"></a>
-            <ul class="rest">
-                <li>
-                    <div id="search-box">
-                        <input type="text" id="search-input" placeholder="Search...">
-                        <button id="search-button" onclick="getPosts()">Search</button>
-                    </div>
-                </li>
-                <li><a href="about.html" class="nav-button1">About Us</a></li>
-                <li><a href="support.html" class="nav-button1">Support</a></li>
-                <li><a href="menu.html" class="nav-button2">Dashboard</a></li>
-                <li><button onclick="signOut()" class="nav-button2">Sign Out</button></li>
-            </ul>
-        </nav>
+    <nav>
+    <a href="#"><img src="logo2.png" class="logo"></a>
+    <ul class="rest">
+        <li>
+            <div id="search-box">
+                <select id="search-options">
+                    <option value="id">ID</option>
+                    <option value="title">Title</option>
+                    <option value="genre">Genre</option>
+                    <option value="authorID">Author ID</option>
+                    <option value="numUp">Num Up</option>
+                    <option value="numDown">Num Down</option>
+                    <option value="postedDate">Posted Date</option>
+                    <option value="order">Order</option>
+                </select>
+                <input type="text" id="search-input" placeholder="Search...">
+                <button id="search-button" onclick="searchPosts()">Search</button>
+            </div>
+        </li>
+        <li><a href="about.html" class="nav-button1">About Us</a></li>
+        <li><a href="support.html" class="nav-button1">Support</a></li>
+        <li><a href="menu.html" class="nav-button2">Dashboard</a></li>
+        <li><button onclick="signOut()" class="nav-button2">Sign Out</button></li>
+    </ul>
+</nav>
     `;
 
     const parentElement = document.querySelector('main');
 
     addChildToFront(parentElement, header);
 }
+
+function searchPosts() {
+    const searchOptions = document.getElementById('search-options');
+    const searchInput = document.getElementById('search-input').value;
+    const selectedOption = searchOptions.options[searchOptions.selectedIndex].value;
+
+    // Build the query string
+    const queryString = encodeURIComponent(selectedOption) + '=' + encodeURIComponent(searchInput);
+
+    // Redirect to searchresults.html with the query string
+    window.location.href = 'searchresults.html?' + queryString;
+}
+
 
 //helper method to make sure that header renders in correct spot before main
 function addChildToFront(parent, newChild) {

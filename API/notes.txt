@@ -77,7 +77,7 @@ similar to the PoC pages
 
 NEEDED:
     -list of genres for posts
-    -search bar functionality
+    DONE -search bar functionality
     -fix update access for admin Panel
     DONE -add functionality to updateAccount page
     -rename and reorganize pages
