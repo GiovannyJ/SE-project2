@@ -83,6 +83,75 @@ export async function updatePwd(event){
     }
 }
 
+export async function updateAccount(event){
+    event.preventDefault();
+    const formData = new FormData(document.getElementById('accountForm'));
+    const url = 'http://localhost:8080/account/update'
+    const curAccount = JSON.parse(localStorage.getItem('user'))
+
+    const newFname = formData.get('Fname');
+    const newLname = formData.get('Lname');
+    const newFullName = newFname + " " + newLname;
+    const newEmail = formData.get('Email');
+    const newPnum = formData.get('Pnum');
+    const newUserName = formData.get('Username');
+   
+    
+    
+    const old_body = {
+        id:		   curAccount.id,
+        fname:      curAccount.fname,
+        lname:      curAccount.lname,
+        fullname:   curAccount.fullname,
+        email:      curAccount.email,
+        pwd:        curAccount.pwd,
+        pnum:      curAccount.pnum,
+        username:   curAccount.username,
+        accesslevel: curAccount.accesslevel,
+    }
+
+    const new_body = {
+        id:		   curAccount.id,
+        fname:      newFname,
+        lname:      newLname,
+        fullname:   newFullName,
+        email:      newEmail,
+        pwd:        curAccount.pwd,
+        pnum:      parseInt(newPnum),
+        username:   newUserName,
+        accesslevel: curAccount.accesslevel,
+    }
+    
+    try{
+        const requestBody = {
+            old: old_body,
+            new: new_body,
+        };
+        
+        console.table(requestBody);
+        const response = await fetch(url, {
+            method: 'PATCH',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if(!response.ok){
+            throw new Error(`HTTP error! Status: ${response.headers}`);
+        }
+        
+        alert("Account Updated!")
+        // window.location.href = 'login.html'
+        localStorage.setItem('user', JSON.stringify(new_body));
+    }catch (error){
+        console.error(`Error during patch method:`, error.message)
+    }
+
+}
+
+
+
+
 async function getAccount(param) {
     var url = 'http://localhost:8080/account';
     

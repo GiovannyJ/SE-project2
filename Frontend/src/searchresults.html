@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
-    <title>About Us</title>
+    <title>Search Results</title>
     <script src="../logic/helper.js"></script>
 </head>
 <script>
@@ -14,11 +14,47 @@
 </script>
     <script type="module">
         import { getPosts } from "../logic/GET.logic.js";
-            document.addEventListener('DOMContentLoaded', () => {
-                getPosts()
-                // document.getElementById('postLink').addEventListener('click', getPosts);
-                // document.getElementById('profile').addEventListener('click', getAccount);
-            });
+
+            async function fetchData() {
+                try {
+                    // Get the id from the query string
+                    const urlParams = new URLSearchParams(window.location.search);
+                    function buildQueryString(params) {
+                        const queryString = Object.entries(params)
+                            .filter(([key, value]) => value !== null && value !== undefined)
+                            .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+                            .join('&');
+
+                        return queryString;
+                    }
+
+                    const postId = urlParams.get('id');
+                    const title = urlParams.get('title');
+                    const genre = urlParams.get('genre');
+                    const authorID = urlParams.get('authorID');
+                    const numUp = urlParams.get('numUp');
+                    const numDown = urlParams.get('numDown');
+                    const postedDate = urlParams.get('date');
+
+                    const query = buildQueryString({
+                        id: postId,
+                        title: title,
+                        genre: genre,
+                        authorID: authorID,
+                        numUp: numUp,
+                        numDown: numDown,
+                        date: postedDate,
+                    });
+
+                    await getPosts(query)
+                    
+                } catch (error) {
+                    console.error('Error during data fetching:', error.message);
+                }
+            }
+
+            fetchData();
+
     </script>
 
 <body>
@@ -45,12 +81,4 @@
     <footer>
     </footer>
 </body>
-<script type="module">
-    import { getPosts } from "../logic/GET.logic.js";
-    document.addEventListener('DOMContentLoaded', () => {
-        // document.getElementById('postLink').addEventListener('click', getPosts);
-        // document.getElementById('profile').addEventListener('click', getAccount);
-    });
-</script>
-
 </html>

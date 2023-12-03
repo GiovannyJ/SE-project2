@@ -88,7 +88,7 @@ function renderVerifiedUserMenu(container) {
         { label: "Home", href: "searchresults.html" },
         { label: "Ask a Question", href: "ask.html" },
         { label: "Account Info", href: "updateAccount.html" },
-        //{ label: "Admin Panel", href: "admin_panel.html" },
+        { label: "Admin Panel", href: "admin_panel.html" },
         ];
 
     renderMenuItems(container, menuItems);
@@ -127,13 +127,6 @@ function renderHeader_signIn(){
         <nav>
             <a href="#"><img src="logo2.png" class="logo"></a>
             <ul class="rest">
-                <li>
-                    <div id="search-box">
-                        <input type="text" id="search-input" placeholder="Search...">
-                        <button id="search-button" onclick="searchDatabase()">Search</button>
-                        <!--need to create searchDatabase() to search database for query-->
-                    </div>
-                </li>
                 <li><a href="about.html" class="nav-button1">About Us</a></li>
                 <li><a href="support.html" class="nav-button1">Support</a></li>
                 <li><a href="login.html" class="nav-button2">Sign In</a></li>
@@ -153,27 +146,50 @@ function renderHeader_signIn(){
 function renderHeader_signOut(){
     const header = document.createElement('header');
     header.innerHTML = `
-        <nav>
-            <a href="#"><img src="logo2.png" class="logo"></a>
-            <ul class="rest">
-                <li>
-                    <div id="search-box">
-                        <input type="text" id="search-input" placeholder="Search...">
-                        <button id="search-button" onclick="getPosts()">Search</button>
-                    </div>
-                </li>
-                <li><a href="about.html" class="nav-button1">About Us</a></li>
-                <li><a href="support.html" class="nav-button1">Support</a></li>
-                <li><a href="menu.html" class="nav-button2">Dashboard</a></li>
-                <li><button onclick="signOut()" class="nav-button2">Sign Out</button></li>
-            </ul>
-        </nav>
+    <nav>
+    <a href="#"><img src="logo2.png" class="logo"></a>
+    <ul class="rest">
+        <li>
+            <div id="search-box">
+                <select id="search-options">
+                    <option value="id">ID</option>
+                    <option value="title">Title</option>
+                    <option value="genre">Genre</option>
+                    <option value="authorID">Author ID</option>
+                    <option value="numUp">Num Up</option>
+                    <option value="numDown">Num Down</option>
+                    <option value="postedDate">Posted Date</option>
+                    <option value="order">Order</option>
+                </select>
+                <input type="text" id="search-input" placeholder="Search...">
+                <button id="search-button" onclick="searchPosts()">Search</button>
+            </div>
+        </li>
+        <li><a href="about.html" class="nav-button1">About Us</a></li>
+        <li><a href="support.html" class="nav-button1">Support</a></li>
+        <li><a href="menu.html" class="nav-button2">Dashboard</a></li>
+        <li><button onclick="signOut()" class="nav-button2">Sign Out</button></li>
+    </ul>
+</nav>
     `;
 
     const parentElement = document.querySelector('main');
 
     addChildToFront(parentElement, header);
 }
+
+function searchPosts() {
+    const searchOptions = document.getElementById('search-options');
+    const searchInput = document.getElementById('search-input').value;
+    const selectedOption = searchOptions.options[searchOptions.selectedIndex].value;
+
+    // Build the query string
+    const queryString = encodeURIComponent(selectedOption) + '=' + encodeURIComponent(searchInput);
+
+    // Redirect to searchresults.html with the query string
+    window.location.href = 'searchresults.html?' + queryString;
+}
+
 
 //helper method to make sure that header renders in correct spot before main
 function addChildToFront(parent, newChild) {
@@ -201,196 +217,19 @@ function redirectMenu(){
 }
 
 
+function renderAdminPanel() {
+    const pannelList = document.getElementById('adminPanelList');
+    const accesslevel = getUserAccessLevel();
 
-function renderAdminPanel(){
-    const pannelList = document.getElementById('adminPanelList')
-
-    accesslevel = getUserAccessLevel()
-
-    switch(accesslevel){
-        case "admin":
-            pannelList.innerHTML = `
-            <div class="admin-control">
-                <form id="deleteAccForm">
-                    <h2><u>Delete Account</u></h2>
-                    
-    
-                    <table id="deleteAccountTable">
-                        <thead>
-                           
-                        </thead>
-                        <tbody>
-                           
-                        </tbody>
-                    </table>
-                    <br>
-                    <input type="text" id="accountSearchInput" placeholder="Search Account">
-                    <br>
-                    <br>
-                    <button id="searchAccount">
-                        Search Account
-                    </button>
-                </form>
-            </div>
-            <br>
-        
-            <div class="admin-control">
-                <form id="deletePostForm">
-                    <h2><u>Delete Post</u></h2>
-                    
-                    <table id="deletePostTable">
-                        <thead>
-                           
-                        </thead>
-                        <tbody>
-                            
-                        </tbody>
-                    </table>
-                    <input type="text" id="postSearchInput" placeholder="Search Post">
-                    <br>
-                    <br>
-                    <button id="searchPost">
-                        Search Post
-                    </button>
-                </form>
-            </div>
-            <br>
-        
-            <div class="admin-control">
-                <form id="deleteCommentForm">
-                    <h2><u>Delete Comment</u></h2>
-                    
-                    <table id="deleteCommentTable">
-                        <thead>
-                           
-                        </thead>
-                        <tbody>
-                            
-                        </tbody>
-                    </table>
-                    <br>
-                    
-                    <input type="text" id="postID" placeholder="Post ID" required><strong style="color:red;">*<sup style="font-size: x-small;">Required</sup></strong>
-                    <br>
-                    <br>
-                    <input type="text" id="commentSearchInput" placeholder="Search Comment">
-                    <br>
-                    <br>
-                    <button id="searchComment">
-                        Search Comment
-                    </button>
-                </form>
-            </div>
-            <br>
-
-            <div class="admin-control">
-                <form id="changeAccessLvlForm">
-                    <h2><u>Change Access Level</u></h2>
-                    
-                    <table id="promoteAccTable">
-                        <thead>
-                            
-                        </thead>
-                        <tbody>
-                            
-                        </tbody>
-                    </table>
-                    <input type="text" id="promoteAcc" placeholder="Search Account">
-                    <br>
-                    <br>
-                    <button id="searchAcc">
-                        Search Account
-                    </button>
-                </form>
-            </div>
-        </ul>
-
-        <div id="popup">
-            <form id="updateAccessLevelModalForm">
-                
-                <div>
-                    id:<input type="text" id="id" readonly>	
-                    first name:<input type="text" id="fname" readonly>
-                    last name: <input type="text" id="lname" readonly>
-                    fullname: <input type="text" id="fullname" readonly>
-                    email: <input type="text" id="email" readonly>
-                    password: <input type="text" id="pwd" readonly>
-                    phone number:<input type="text" id="pnum" readonly>
-                    username:<input type="text" id="username" readonly>
-                    Access Level:
-                    <select id="newAccessLevel" name="newAccessLevel" placeholder="Select Privilege">
-                        <option value="0">Select Priv</option>
-                        <option value="user">User</option>
-                        <option value="verified user">Verified User</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div>
-                <button type="submit" id="promoteButton">
-                    Change Access Level
-                </button>
-            </form>
-        </div>
-    `
-    break;
-    case "verified user":
-        pannelList.innerHTML = `
-        <br>
-    
-        <div class="admin-control">
-            <form id="deletePostForm">
-                <h2><u>Delete Post</u></h2>
-                
-                <table id="deletePostTable">
-                    <thead>
-                       
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-                <input type="text" id="postSearchInput" placeholder="Search Post">
-                <br>
-                <br>
-                <button id="searchPost">
-                    Search Post
-                </button>
-            </form>
-        </div>
-        <br>
-    
-        <div class="admin-control">
-            <form id="deleteCommentForm">
-                <h2><u>Delete Comment</u></h2>
-                
-                <table id="deleteCommentTable">
-                    <thead>
-                       
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-                <br>
-                
-                *<input type="text" id="postID" placeholder="Post ID" required>
-                <br>
-                <br>
-                <input type="text" id="commentSearchInput" placeholder="Search Comment">
-                <br>
-                <br>
-                <button id="searchComment">
-                    Search Comment
-                </button>
-            </form>
-        </div>
-        <br>
-    `
-    break;
+    if (accesslevel === "verified user") {
+        const deleteAccountDiv = document.getElementById('deleteAccount');
+        const changeAccessLvlDiv = document.getElementById('changeAccess')
+        if (deleteAccountDiv && changeAccessLvlDiv) {
+            pannelList.removeChild(deleteAccountDiv);
+            pannelList.removeChild(changeAccessLvlDiv);
+        }
     }
-
-
-
-    
 }
+   
 
 
