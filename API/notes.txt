@@ -79,6 +79,6 @@ NEEDED:
     -list of genres for posts
     -search bar functionality
     -fix update access for admin Panel
-    -add functionality to updateAccount page
+    DONE -add functionality to updateAccount page
     -rename and reorganize pages
     DONE -fix admin pannel DOM

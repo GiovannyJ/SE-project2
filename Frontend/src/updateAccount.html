@@ -11,6 +11,18 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     renderHeader_signOut();
+
+    function renderUpdAccForm(){
+        const user = JSON.parse(localStorage.getItem('user'))
+        document.getElementById("Fname").value = user.fname
+        document.getElementById("Lname").value = user.lname
+        document.getElementById("Email").value = user.email
+        document.getElementById("Pnum").value = user.pnum
+        document.getElementById("Username").value = user.username
+    }
+
+    renderUpdAccForm()
+
     }
 );
 </script>
@@ -22,6 +34,7 @@
         </div>
         <div id="createacct">
             <form id="accountForm">
+                <h2>Current Information:</h2>
                 <label for="accountFname">First Name:</label><br>
                 <input type="text" id="Fname" name="Fname" required><br>
 
@@ -30,9 +43,6 @@
 
                 <label for="accountEmail">Email:</label><br>
                 <input type="email" id="Email" name="Email" required><br>
-
-                <label for="accountPwd">Password:</label><br>
-                <input type="password" id="pwd" name="pwd" required><br>
 
                 <label for="accountPnum">Phone Number:</label><br>
                 <input type="text" id="Pnum" name="Pnum" required><br>
@@ -47,5 +57,11 @@
     <footer>
     </footer>
 </body>
+<script type="module">
+    import {updateAccount} from "../logic/PATCH.logic.js"
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById("updateAccount").addEventListener("click", updateAccount)
+    })
+</script>
 
 </html>

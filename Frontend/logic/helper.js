@@ -212,8 +212,6 @@ function renderAdminPanel() {
             pannelList.removeChild(deleteAccountDiv);
             pannelList.removeChild(changeAccessLvlDiv);
         }
-
-
     }
 }
    
