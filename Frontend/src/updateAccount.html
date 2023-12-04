@@ -10,8 +10,11 @@
 
 <script>
     const user = JSON.parse(localStorage.getItem('user'));
-    if (user !== undefined) {
+    if (user === undefined) {
         window.location.href = 'login.html';
+    }
+    if (getUserAccessLevel() === 'guest'){
+        redirectMenu()
     }
     document.addEventListener('DOMContentLoaded', function() {
     renderHeader_signOut();

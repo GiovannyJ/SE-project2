@@ -17,7 +17,7 @@
     if (accessLevel === null) {
         document.location.href = 'login.html';
     }
-    if(accessLevel === "guest"){
+    if(getUserAccessLevel() === "guest"){
         const addComment = document.getElementById("addComment");
         addComment.disabled = true;
     }

@@ -82,3 +82,4 @@ NEEDED:
     DONE -add functionality to updateAccount page
     -rename and reorganize pages
     DONE -fix admin pannel DOM
+    -make usage doc on how to start the application
