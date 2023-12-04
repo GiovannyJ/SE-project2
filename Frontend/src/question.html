@@ -10,9 +10,15 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     renderHeader_signOut();
+    const user = JSON.parse(localStorage.getItem('user'));
     
-    if(getUserAccessLevel() === 'guest'){
-        const addComment = document.getElementById("addComment")
+    // Redirect non-existing users
+    let accessLevel = user === null ? null : user.accessLevel;
+    if (accessLevel === null) {
+        document.location.href = 'login.html';
+    }
+    if(accessLevel === "guest"){
+        const addComment = document.getElementById("addComment");
         addComment.disabled = true;
     }
     });
@@ -77,7 +83,7 @@
         <h2 style="padding-left: 30px;">Comment Section</h2>
         <div id="commenter">
             <ul>
-                <li><img src="pfp.png" id="pfp" alt="circle"></li>
+                <li><img src="pfp.png" id="pfp" alt="profile picture"></li>
                 <li id="comment1">
                 </li>
             </ul>

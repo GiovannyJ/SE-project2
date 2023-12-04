@@ -9,6 +9,11 @@
 </head>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user === null) {
+        window.location.href = 'login.html';
+    }
+
     renderHeader_signOut();
     });
 </script>
@@ -18,6 +23,7 @@
             import { getFullContextPosts, getCommentsFullContext } from "../logic/GET.logic.js";
 
             async function fetchData() {
+
                 try {
                     await getFullContextPosts();
                     await getCommentsFullContext();

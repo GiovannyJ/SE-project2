@@ -4,6 +4,8 @@
 
 
 
+
+
   /**
    * clears local storage and returns to login page
    */
@@ -22,6 +24,11 @@ function renderMenu() {
   
     // Clear existing menu items
     menuContainer.innerHTML = '<ul></ul>';
+
+    if (!userExists()) {
+        document.location.href = 'login.html';
+        return;
+    }
   
     switch (user.accesslevel) {
       case "admin":
@@ -207,7 +214,11 @@ function userExists() {
 }
 
 function getUserAccessLevel(){
-    const user = JSON.parse(localStorage.getItem('user'))
+    const user = JSON.parse(localStorage.getItem('user'));
+    // Treat non-existing users as guests
+    if (user === null) {
+        return "guest";
+    }
     return user.accesslevel;
 }
 
@@ -230,6 +241,3 @@ function renderAdminPanel() {
         }
     }
 }
-   
-
-

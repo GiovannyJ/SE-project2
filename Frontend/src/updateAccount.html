@@ -9,6 +9,10 @@
 </head>
 
 <script>
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user !== undefined) {
+        window.location.href = 'login.html';
+    }
     document.addEventListener('DOMContentLoaded', function() {
     renderHeader_signOut();
 

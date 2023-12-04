@@ -17,6 +17,10 @@
 
             async function fetchData() {
                 try {
+                    const user = JSON.parse(localStorage.getItem('user'));
+                    if (user === null) {
+                        window.location.href = 'login.html';
+                    }
                     // Get the id from the query string
                     const urlParams = new URLSearchParams(window.location.search);
                     function buildQueryString(params) {

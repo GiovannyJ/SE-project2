@@ -223,6 +223,9 @@ export async function getCommentsFullContext() {
 }
 
 function displayComments(commentsData) {
+  if (!commentsData) {
+    return;
+  }
   const commenterElement = document.getElementById('commenter');
 
   // Clear existing comments
@@ -235,7 +238,7 @@ function displayComments(commentsData) {
     commentContainer.id = `comment${comment.commentInfo.id}`; // Assuming each comment has a unique ID
     commentContainer.innerHTML = `
             <ul>
-                <li><img src="pfp.png" id="pfp" alt="circle"></li>
+                <li><img src="pfp.png" id="pfp" alt="profile picture"></li>
                 <li>
                     <div>
                         <p class="comment-container">${comment.commentInfo.content}</p>
