@@ -143,6 +143,7 @@ export async function updateAccount(event){
         alert("Account Updated!")
         // window.location.href = 'login.html'
         localStorage.setItem('user', JSON.stringify(new_body));
+        window.location.reload();
     }catch (error){
         console.error(`Error during patch method:`, error.message)
     }

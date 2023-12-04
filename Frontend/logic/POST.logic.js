@@ -105,6 +105,7 @@ export async function createPost(event) {
 
 
       alert("Post Created!");
+      window.location.href = 'searchresults.html'
     } catch (error) {
       console.error('Error during POST request:', error.message);
     }
