@@ -163,8 +163,6 @@ function renderHeader_signOut(){
                     <option value="title">Title</option>
                     <option value="genre">Genre</option>
                     <option value="authorID">Author ID</option>
-                    <option value="numUp">Num Up</option>
-                    <option value="numDown">Num Down</option>
                     <option value="postedDate">Posted Date</option>
                     <option value="order">Order</option>
                 </select>
