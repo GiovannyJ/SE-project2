@@ -1,3 +1,34 @@
+# SE-project2
+
+Software Engineering Methodology Project 2: Debug
+
+Team Members: Angel Bajracharya, Derek Feliu, Giovanny Joseph, Nicole Magpantay, Christopher Miles
+
+# How to use
+
+**Requirements:**
+- GoLang
+- JavaScript
+- VScode
+    - extension [live server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
+
+Clone the repository
+```
+git clone https://github.com/GiovannyJ/SE-project2
+```
+
+Open the project in the terminal wherever it is downloaded
+
+Once in the project start the server by going to the API directory and running main.go
+```
+cd API
+go run main.go
+```
+
+Now start the web server at [login.html](../Frontend/src/login.html) using the [live server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension
+ and you can begin using the application
+
+
 # Access Levels
 
 - **Guest:**
@@ -78,3 +109,9 @@
 - Delete post (Admin, Verified User).
 - Delete comment (Admin, Verified User).
 - Change access level (Admin).
+
+
+
+# Extras
+
+For more information on how to use the API [click here](../API/HOWTOUSE.md)
