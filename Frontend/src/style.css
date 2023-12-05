@@ -375,12 +375,12 @@ div p {
     padding: 12px 15px;
     border-bottom: 1px solid #ddd;
 }
-.colored-box {
-    background-color: #dadee5;
- }
- .styled-box {
+.styled-box {
     background-color: #b11818; /*Brighter red so its easy to see text*/
-    color: #F5F5F5
+    color: whitesmoke;
+ 
+
+
 }
 .styled-table th {
     background-color: #333; /* Darker color for the header */
@@ -402,28 +402,3 @@ div p {
 #img {
     padding:30px;
 }
-#username1 {
-    margin-bottom:10px;
- }
- #password {
-    margin-bottom:10px;
- }
- #Fname {
-    margin-bottom:10px;
- }
- #Lname {
-    margin-bottom:10px;
- }
- #Email {
-    margin-bottom:10px;
- }
- #pwd {
-    margin-bottom:10px;
- }
- #Pnum {
-    margin-bottom:10px;
- }
- #Username {
-    margin-bottom:10px;
- }
- 
