@@ -66,11 +66,11 @@ function displayPostFullContext(postsData) {
   //document.getElementById('date').textContent = "posted: " + post.postedDate;
   document.getElementById('author').textContent = "Posted by "+post.authorInfo.username+" on "+post.postedDate;
 
-  // Check if numUp is null, and set a default value of 0
-  document.getElementById('numUp').value = post.numUp !== null ? post.numUp : 0;
+  // // Check if numUp is null, and set a default value of 0
+  // document.getElementById('numUp').value = post.numUp !== null ? post.numUp : 0;
 
-  // Check if numDown is null, and set a default value of 0
-  document.getElementById('numDown').value = post.numDown !== null ? post.numDown : 0;
+  // // Check if numDown is null, and set a default value of 0
+  // document.getElementById('numDown').value = post.numDown !== null ? post.numDown : 0;
 
   document.getElementById('descr').innerHTML = post.descr;
 
@@ -243,9 +243,9 @@ function displayComments(commentsData) {
                     <div>
                         <p class="comment-container">${comment.commentInfo.content}</p>
                         <p>Posted by ${comment.commenterInfo.username} on ${comment.commentInfo.postedDate}</p>
-                        <!--<p>Commented Date: ${comment.commentInfo.postedDate}</p>-->
+                        <!--<p>Commented Date: ${comment.commentInfo.postedDate}</p>
                         <p>${comment.commentInfo.numUp} upvotes</p>
-                        <p>${comment.commentInfo.numDown} downvotes</p>
+                        <p>${comment.commentInfo.numDown} downvotes</p>-->
                     </div>
                 </li>
             </ul>

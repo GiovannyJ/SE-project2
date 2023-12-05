@@ -220,7 +220,8 @@ div p {
 .comment-container {
     border-style: solid;
     border-radius: 5px;
-    margin:0px;
+    border-width:1px;
+    margin-right: 30px;
     padding:5px;
 }
 
