@@ -25,7 +25,7 @@ export async function createAccount(event) {
         const requestBody = {
           Fname: formData.get('Fname'),
           Lname: formData.get('Lname'),
-          Fullname: formData.get('Fname') + formData.get('Lname'),
+          Fullname: formData.get('Fname') + " " + formData.get('Lname'),
           Email: formData.get('Email'),
           pwd: formData.get('pwd'),
           Pnum: parseInt(formData.get('Pnum')),

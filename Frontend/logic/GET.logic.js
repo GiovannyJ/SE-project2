@@ -74,11 +74,11 @@ function displayPostFullContext(postsData) {
 
   document.getElementById('descr').innerHTML = post.descr;
 
-  const imgName = post.picInfo.imgname;
-  if (imgName) {
+  const imgId = post.picInfo.id;
+  if (imgId != 1) {
     const imgElement = document.getElementById('img');
 
-    const imgHtml = `<img src='../uploads/${imgName}' alt='img not found' height='15%'; width='auto';>`;
+    const imgHtml = `<img src='../uploads/${post.picInfo.imgname}' alt='img not found' height='15%'; width='auto';>`;
 
     imgElement.innerHTML = imgHtml;
   }
