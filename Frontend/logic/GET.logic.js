@@ -138,7 +138,7 @@ function displayPost(postsData) {
     profileButton.id = "profile" + post.authorId;
     descriptionParagraph.textContent = post.descr;
     dateHeading.textContent = "Date Posted: " + post.postedDate;
-    likesHeading.textContent = "Upvotes: " + post.numUp;
+    //likesHeading.textContent = "Upvotes: " + post.numUp;
  
     // Append elements to the postDiv
     //postDiv.appendChild(document.createElement("br"));
