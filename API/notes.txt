@@ -83,3 +83,18 @@ NEEDED:
     -rename and reorganize pages
     DONE -fix admin pannel DOM
     -make usage doc on how to start the application
+
+AGENDA:
+    -make script for walk through recording
+    -split up presentation sections
+    -delete all from database and walkthrough again
+    DONE -walk through application using flowchart guide
+    HALF DONE -check what we have done from the product backlog
+    DONE -note any errors/inconsistencies
+    DONE -see what we can fix/ work around
+
+IF API ISNT WORKING SENT TO error_page.html
+
+do demo
+talk about tech stack
+talk about services

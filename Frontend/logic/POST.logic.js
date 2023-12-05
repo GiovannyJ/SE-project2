@@ -74,7 +74,7 @@ export async function createPost(event) {
       let requestBody = {
         title: formData.get('title'),
         descr: formData.get('descr'),
-        genre: formData.get('genre'),
+        genre: formData.get('postGenre'),
         authorId: parseInt(user.id),
         picId: 1,
       };
