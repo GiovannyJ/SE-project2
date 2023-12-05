@@ -25,7 +25,7 @@ cd API
 go run main.go
 ```
 
-Now start the web server at [login.html](../Frontend/src/login.html) using the [live server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension
+Now start the web server at [SE-Project2/Frontend/src/login.html](../Frontend/src/login.html) using the [live server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension
  and you can begin using the application
 
 
@@ -114,4 +114,4 @@ Now start the web server at [login.html](../Frontend/src/login.html) using the [
 
 # Extras
 
-For more information on how to use the API [click here](../API/HOWTOUSE.md)
+For more information on how to use the API [click here](https://github.com/GiovannyJ/SE-project2/blob/main/API/HOWTOUSE.md)
