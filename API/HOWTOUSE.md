@@ -317,9 +317,3 @@ go run main.go
         ```
         "post POSTID deleted"
         ```
-
-
-## Notes for Future
-- should we delete all users posts when their account is deleted?
-- figure out way to handle photos (thinking of storing them on repo and having their name stored in database and calling with href on website)
-- ???
